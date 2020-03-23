@@ -1,0 +1,73 @@
+body{
+  background-color:skyblue;
+}
+
+#common-header{
+  height:100px;
+  max-width: 100%;
+  min-width: 1052px;
+  background-color:white;
+}
+
+#common-header .links{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 26px;
+  text-align:right;
+}
+
+#common-header .links a{
+  display:inline-block;
+  width:100px;
+  text-align:center;
+  background-color: #99dd99;
+  box-shadow: 2px 2px gray;
+
+}
+
+#common-header .links li{
+  list-style:none;
+  display:inline;
+  padding:5px;
+  margin: 0 15px 0 15px;
+}
+
+#common-header .links li a{
+text-decoration:none;
+}
+
+#aboutme-main-section{
+  height:auto;
+  margin:20px 0 20px 0;
+  background-color:white;
+}
+
+#aboutme-main-section .aboutme-main-section-subsection{
+  margin : 20px 75px 20px 75px;
+  padding-bottom:20px;
+}
+
+#aboutme-main-section .aboutme-main-section-subsection h1{
+  display:inline;
+}
+
+#common-footer{
+  height:100px;
+  clear:both;
+  background-color:white;
+  color:gray;
+  text-align:center;
+  position:relative;
+}
+
+#common-footer .common-footer-section{
+  position:absolute;
+  left:45%;
+  top:30%;
+}
+#common-footer .common-footer-section a{
+  color:gray;
+  text-decoration: none;
+
+}

@@ -1,0 +1,140 @@
+body{
+  background-color:skyblue;
+}
+
+#common-header{
+  height:100px;
+  max-width: 100%;
+  min-width: 1052px;
+  background-color:white;
+}
+
+#common-header .links{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 26px;
+  text-align:right;
+}
+
+#common-header .links a{
+  display:inline-block;
+  width:100px;
+  text-align:center;
+  background-color: #99dd99;
+  box-shadow: 2px 2px gray;
+
+}
+
+#common-header .links li{
+  list-style:none;
+  display:inline;
+  padding:5px;
+  margin: 0 15px 0 15px;
+}
+
+#common-header .links li a{
+text-decoration:none;
+}
+
+#index-main-section{
+  height:auto;
+  clear:both;
+  text-align:center;
+  background-color:white;
+  margin:20px 0 20px 0;
+}
+
+#index-main-section a:hover{
+  color:yellow;
+}
+
+#index-main-section a{
+  background-color: #99dd99;
+  padding: 30px 20px 30px 20px;
+  display:inline-block;
+  margin-bottom:20px;
+  text-decoration: none;
+  box-shadow: 2px 2px gray;
+  color:white;
+}
+
+#photo-main-section{
+  height:auto;
+  float:left;
+  text-align:center;
+  margin:20px 0 20px 0;
+  background-color: white;
+}
+#photo-main-section-1stSection{
+  height:auto;
+}
+
+#photo-main-section-1stSection-image{
+  float:left;
+  clear:both;
+  width:35%;
+  margin:20px 5% 5% 5%;
+  border:5px solid gray;
+
+}
+
+.photo-main-section-1stSection-dateDesc{
+  float:left;
+  width:35%;
+  left:auto;
+  text-align:left;
+  margin: 20px 0 20px 0;
+}
+
+#photo-main-section hr{
+  width:auto;
+  color:gray;
+  clear:both;
+  margin-bottom:40px;
+  max-width: 90%;
+  min-width: 1052px;
+}
+
+#photo-main-section-2ndSection{
+  height:auto;
+
+}
+#photo-main-section-2ndSection-image{
+  clear:both;
+  float:left;
+  width:35%;
+  margin:20px 5% 5% 5%;
+  border:5px solid gray;
+}
+
+.photo-main-section-2ndSection-dateDesc{
+  width:35%;
+  text-align:left;
+  margin: 20px 0 20px 0;
+  float:left;
+
+}
+
+
+
+
+#common-footer{
+  height:100px;
+  clear:both;
+  background-color:white;
+  color:gray;
+  text-align:center;
+  position:relative;
+}
+
+#common-footer .common-footer-section{
+  position:absolute;
+  left:45%;
+  top:30%;
+}
+#common-footer .common-footer-section a{
+  color:gray;
+  text-decoration: none;
+
+}
