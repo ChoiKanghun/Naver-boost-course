@@ -1,0 +1,54 @@
+#mainSection{
+	margin-left:35%;
+}
+
+#todoAddPost{
+	color:gray;
+}
+h1{
+	text-align:center;
+}
+
+.todoAddPost_title, .todoAddPost_name{
+		font-size:1.1em;
+	
+}
+
+.todoAddPost_title{
+	height: 30px;
+	width: 470px;
+
+}
+
+.todoAddPost_name{
+	height: 30px;
+	width : 200px;
+}
+
+#todoAddPost span{
+	color:black;
+	font-size:0.8em;
+}
+
+#todoAddPost .backButton, .submitButton, .initButton{
+	width : 120px;
+	height: 40px;
+	padding : 5px 0px 5px 0px;
+	text-align:center;
+	cursor:pointer;
+
+	
+}
+
+#todoAddPost .backButton{
+	text-decoration:underline;
+	font-size:1.05em;
+	
+}
+
+#todoAddPost  .submitButton, .initButton{
+ 	background:#46a6ab;
+	border:none;
+	color:white;
+}
+

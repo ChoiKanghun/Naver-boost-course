@@ -1,0 +1,120 @@
+#mainHeader {
+  height: 100px;
+  position: relative;
+}
+
+#mainHeader>.mainHeader_enrollTodo {
+  position: absolute;
+  top: 40%;
+  right: 1%;
+  background-color: #33cfff;
+  color: white;
+  padding: 10px 30px 10px 30px;  
+  cursor:pointer;
+  
+}
+#mainHeader .mainHeader_enrollTodo a{
+  text-decoration:none;
+  color:white;
+}
+#mainHeader .mainHeader_enrollTodo a:visited{
+  color:white;
+}
+
+#mainHeader>.mainHeader_mustDo {
+  transition: 0.5s all ease;
+  width: 200px;
+  height: 200px;
+  transform: rotate(-30deg);
+  position: absolute;
+  top: 55%;
+  left: 5%;
+  font-size: 1.5em;
+  color : #084363;
+  font-weight:bold;
+}
+
+ul{
+  width: 25%;
+  height : auto;
+  display:inline-block;
+  list-style:none;
+  float: left;
+  vertical-align: middle;
+  padding-left:0px;
+}
+
+#ul_todo{
+	margin-left:100px;
+}
+
+#ul_todo, #ul_doing, #ul_done {
+
+}
+
+ul .ul_title{
+  color: white;
+  font-size: 1.5em;
+  background-color: #084363;
+  height:50px;
+  margin-top: 10px;
+}
+
+ul li{
+  height:50px;
+  color: black;
+  font-size: 1.5em;
+  background-color: #36c7bd;
+  height:auto;
+  margin-top: 10px;
+  padding :15px 15px 15px 15px;
+}
+
+span.title{
+	display:inline-block;
+	font-size:20px;
+	
+	
+}
+
+span.content{
+	font-size:12px;
+}
+p{
+  display:inline-block;
+  vertical-align: middle;
+}
+
+.btn{
+	cursor:pointer;
+}
+
+#ul_todo {
+  height: auto;
+  margin-left: 10%;
+}
+
+.ul_title{
+}
+
+#ul_todo .ul_title {
+
+}
+
+#ul_doing {
+  margin-left: 2%;
+
+}
+
+#ul_doing .ul_title{
+
+}
+
+#ul_done {
+  margin-left: 2%;
+
+}
+
+#ul_done .ul_title{
+
+}
