@@ -18,35 +18,33 @@ import kr.or.connect.reservationManagement.service.ReservationManagementService;
 public class ReservationManagementAPIController {
 	
 	@Autowired
-	ReservationManagementService reservationManagementService;
+	private ReservationManagementService reservationManagementService;
 
-	//API for : /products
 	@GetMapping(path = "/api/products", produces = "application/json; charset=utf-8")
-	@ResponseBody
-	public Map<String, Object> reservationManagementProducts(
+	public Map<String, Object> getItemsTotalCount(
 			@RequestParam(defaultValue="0") int start,
 			@RequestParam(defaultValue = "0") int categoryId)
 	{
-		Map <String, Object> map = new HashMap<>();
+		Map <String, Object> resBody = new HashMap<>();
 		if (categoryId == 0)
 		{
 			List<Items> items = reservationManagementService.getLimitedProducts(start);
-			int totalCount = reservationManagementService.getAllCountProduct();
+			int totalCount = reservationManagementService.getAllCountOfProduct();
 
-			map.put("items", items);
-			map.put("totalCount", totalCount);
+			resBody.put("items", items);
+			resBody.put("totalCount", totalCount);
 		}
 		else
 		{
 			List<Items> items = reservationManagementService.getLimitedProductsByCategoryId(start, categoryId);
 			int totalCountByCategoryId = reservationManagementService.getAllCountProductByCategoryId(categoryId);
 			
-			map.put("items", items);
-			map.put("totalCount", totalCountByCategoryId);
+			resBody.put("items", items);
+			resBody.put("totalCount", totalCountByCategoryId);
 			
 
 		}
-		return map;
+		return resBody;
 	}
 
 	//get promotion info
@@ -54,20 +52,20 @@ public class ReservationManagementAPIController {
 	@ResponseBody
 	public Map<String, Object> getPromotionInformation(){
 		List<Items> items = reservationManagementService.getPromotionInfo();
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> resBody = new HashMap<>();
 		
-		map.put("items", items);
-		return (map);
+		resBody.put("items", items);
+		return (resBody);
 	}
 	
 	//get categories info
 	@GetMapping(path = "/api/categories", produces = "application/json; chaset=utf-8")
 	@ResponseBody
 	public Map<String, Object> getCategories(){
-		List<Items> items = reservationManagementService.getCategories();
-		Map<String, Object> map = new HashMap<>();
+		List<Items> items = reservationManagementService.getCategoriesInfoGroupByCategoryId();
+		Map<String, Object> resBody = new HashMap<>();
 		
-		map.put("items", items);
-		return (map);
+		resBody.put("items", items);
+		return (resBody);
 	}
 }

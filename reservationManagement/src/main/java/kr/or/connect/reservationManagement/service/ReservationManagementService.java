@@ -6,12 +6,12 @@ import kr.or.connect.reservationManagement.dto.Items;
 
 public interface ReservationManagementService {
 
-	Integer LIMIT = 4;
-	public int getAllCountProduct();	
-	public int getAllCountProductByCategoryId(Integer categoryId);
-	public List<Items> getAllProducts();
-	public List<Items> getLimitedProducts(Integer start);
-	public List<Items> getLimitedProductsByCategoryId(Integer start, Integer categoryId);
-	public List<Items> getPromotionInfo();
-	public List<Items> getCategories();
+	int LIMIT = 4;
+	int getAllCountOfProduct();	
+	int getAllCountProductByCategoryId(Integer categoryId);
+	List<Items> getAllProducts();
+	List<Items> getLimitedProducts(Integer start);
+	List<Items> getLimitedProductsByCategoryId(Integer start, Integer categoryId);
+	List<Items> getPromotionInfo();
+	List<Items> getCategoriesInfoGroupByCategoryId();
 }

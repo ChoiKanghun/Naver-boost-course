@@ -17,42 +17,37 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	
 	@Override
 	public List<Items> getAllProducts(){
-		List<Items> list = productsDao.selectAll();
-		return list;
+		return productsDao.selectAllProducts();
 	}
 	
 	@Override
 	public List<Items> getLimitedProducts(Integer start){
-		List<Items> list = productsDao.selectLimit(start, ReservationManagementService.LIMIT);
-		
-		return list;
+		return productsDao.selectLimitedProducts(start, ReservationManagementService.LIMIT);
 	}
 
 	@Override
 	public List<Items> getLimitedProductsByCategoryId(Integer start, Integer categoryId){
-		List<Items> list = productsDao.selectLimitByCategoryId(start, ReservationManagementService.LIMIT, categoryId);
-		
-		return list;
+		return productsDao.selectLimitedProductsByCategoryId(start, ReservationManagementService.LIMIT, categoryId);
 	}
 	
 	@Override
-	public List<Items> getCategories(){
-		return (productsDao.categories());
+	public List<Items> getCategoriesInfoGroupByCategoryId(){
+		return (productsDao.selectCategoriesInfoGroupByCategoryId());
 	}
 
 	@Override
-	public int getAllCountProduct() {
-		return productsDao.getAllCountProduct();
+	public int getAllCountOfProduct() {
+		return productsDao.getCountOfProduct();
 	}
 	
 	@Override
 	public int getAllCountProductByCategoryId(Integer categoryId) {
-		return productsDao.getAllCountProductByCategoryId(categoryId);
+		return productsDao.getCountOfProductByCategoryId(categoryId);
 	}
 
 	@Override
 	public List<Items> getPromotionInfo(){
-		return (productsDao.promotionInfo());
+		return (productsDao.getPromotionInfo());
 	}
 
 }

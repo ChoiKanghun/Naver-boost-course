@@ -4,7 +4,7 @@ import static kr.or.connect.reservationManagement.dao.Sqls.COUNT_ALL_PRODUCT;
 import static kr.or.connect.reservationManagement.dao.Sqls.COUNT_PRODUCT_BY_CATEGORY_ID;
 import static kr.or.connect.reservationManagement.dao.Sqls.PROMOTION_INFO;
 import static kr.or.connect.reservationManagement.dao.Sqls.SELECT_ALL_PRODUCTS;
-import static kr.or.connect.reservationManagement.dao.Sqls.SELECT_CATEGORIES_BY_CATEGORY_ID;
+import static kr.or.connect.reservationManagement.dao.Sqls.SELECT_CATEGORIES_INFO_GROUP_BY_CATEGORY_ID;
 import static kr.or.connect.reservationManagement.dao.Sqls.SELECT_LIMIT_PRODUCTS;
 import static kr.or.connect.reservationManagement.dao.Sqls.SELECT_LIMIT_PRODUCTS_BY_CATEGORY_ID;
 
@@ -34,7 +34,7 @@ public class ItemsDao {
 	}
 
 	//get LIMITED result of everything from product table and place_name from display_info
-	public List<Items> selectLimit(Integer start, Integer limit){
+	public List<Items> selectLimitedProducts(Integer start, Integer limit){
 		Map<String, Integer> params = new HashMap<>();
 		params.put("start", start);
 		params.put("limit", limit);
@@ -44,7 +44,7 @@ public class ItemsDao {
 
 	//get LIMITED result of everyting from product table and place_name from display_info
 	//WHERE CategoryId = ?
-	public List<Items> selectLimitByCategoryId(Integer start, Integer limit, Integer categoryId){
+	public List<Items> selectLimitedProductsByCategoryId(Integer start, Integer limit, Integer categoryId){
 		Map<String, Integer> params = new HashMap<>();
 		params.put("start", start);
 		params.put("limit", limit);
@@ -55,24 +55,24 @@ public class ItemsDao {
 	
 	
 	// get everything from product table and place_name from display_info
-	public List<Items> selectAll(){
+	public List<Items> selectAllProducts(){
 		return jdbc.query(SELECT_ALL_PRODUCTS, Collections.emptyMap(), rowMapper);
 	}
 	
 
 	//get category info group by id
-	public List<Items> categories(){
-		return jdbc.query(SELECT_CATEGORIES_BY_CATEGORY_ID, Collections.emptyMap(), rowMapper);
+	public List<Items> selectCategoriesInfoGroupByCategoryId(){
+		return jdbc.query(SELECT_CATEGORIES_INFO_GROUP_BY_CATEGORY_ID, Collections.emptyMap(), rowMapper);
 	}
 	
 	
 	//get Count of everything from product table
-	public int getAllCountProduct() {
+	public int getCountOfProduct() {
 		return jdbc.queryForObject(COUNT_ALL_PRODUCT, Collections.emptyMap(), Integer.class);
 	}
 	
 	//get Count of records from product WHERE categoryId = ?
-	public int getAllCountProductByCategoryId(Integer categoryId) {
+	public int getCountOfProductByCategoryId(Integer categoryId) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("categoryId", categoryId);
 		
@@ -81,7 +81,7 @@ public class ItemsDao {
 	
 
 	//get all the promotion info
-		public List<Items> promotionInfo(){
+		public List<Items> getPromotionInfo(){
 			return jdbc.query(PROMOTION_INFO, Collections.emptyMap(), rowMapper);
 		}
 

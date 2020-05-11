@@ -2,15 +2,15 @@ package kr.or.connect.reservationManagement.dto;
 
 public class Items {
 
-	int id;
-	int displayInfoId;
-	String productContent;
-	int productId;
-	String placeName;
-	String productDescription;
-	String productImageUrl;
-	String name;
-	int count;
+	private int id;
+	private int displayInfoId;
+	private String productContent;
+	private int productId;
+	private String placeName;
+	private String productDescription;
+	private String productImageUrl;
+	private String name;
+	private int count;
 	
 	public int getId() {
 		return id;
