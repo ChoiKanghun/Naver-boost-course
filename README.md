@@ -2,5 +2,5 @@
 | :-------------------------------------: | :---: | :-------------: | :--: |
 |             ✔️  about me              |   0   | 200316 - 200323 | easy |
 |             ✔️ Todo list             |   1   | 200324 - 200417 |      |
-| ✔️ Reservation <br />Management |   1   |   20200424 -    |      |
+| ✔️ Reservation <br />Management |   1   |   20200424 - 20200510   |      |
 |Reservation <br> Management2||20200511 - ||
