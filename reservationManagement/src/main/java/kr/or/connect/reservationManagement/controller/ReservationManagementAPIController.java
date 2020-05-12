@@ -7,9 +7,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.connect.reservationManagement.dto.DetailPageItems;
 import kr.or.connect.reservationManagement.dto.Items;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
@@ -47,9 +47,7 @@ public class ReservationManagementAPIController {
 		return resBody;
 	}
 
-	//get promotion info
 	@GetMapping(path = "/api/promotions", produces = "application/json; charset=utf-8")
-	@ResponseBody
 	public Map<String, Object> getPromotionInformation(){
 		List<Items> items = reservationManagementService.getPromotionInfo();
 		Map<String, Object> resBody = new HashMap<>();
@@ -58,11 +56,19 @@ public class ReservationManagementAPIController {
 		return (resBody);
 	}
 	
-	//get categories info
-	@GetMapping(path = "/api/categories", produces = "application/json; chaset=utf-8")
-	@ResponseBody
+	@GetMapping(path = "/api/categories", produces = "application/json; charset=utf-8")
 	public Map<String, Object> getCategories(){
 		List<Items> items = reservationManagementService.getCategoriesInfoGroupByCategoryId();
+		Map<String, Object> resBody = new HashMap<>();
+		
+		resBody.put("items", items);
+		return (resBody);
+	}
+	
+	@GetMapping(path = "/api/detail_page_items", produces = "application/json; charset=utf-8")
+	public Map<String, Object> getDetailPageItems(
+			@RequestParam(required = true) int id){
+		List<DetailPageItems> items = reservationManagementService.getDetailListItems(id);
 		Map<String, Object> resBody = new HashMap<>();
 		
 		resBody.put("items", items);

@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.connect.reservationManagement.dao.DetailPageItemsDao;
 import kr.or.connect.reservationManagement.dao.ItemsDao;
+import kr.or.connect.reservationManagement.dto.DetailPageItems;
 import kr.or.connect.reservationManagement.dto.Items;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
@@ -14,6 +16,9 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 
 	@Autowired
 	ItemsDao productsDao;
+	
+	@Autowired
+	DetailPageItemsDao detailPageItemsDao;
 	
 	@Override
 	public List<Items> getAllProducts(){
@@ -50,4 +55,8 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 		return (productsDao.getPromotionInfo());
 	}
 
+	@Override
+	public List<DetailPageItems> getDetailListItems(Integer id){
+		return (detailPageItemsDao.getDetailPageItemsById(id));
+	}
 }

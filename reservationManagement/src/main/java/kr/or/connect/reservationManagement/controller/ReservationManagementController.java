@@ -16,4 +16,14 @@ public class ReservationManagementController {
 	public String mainpage() {
 		return "mainpage";
 	}
+	
+	@GetMapping(path = "/detail")
+	public String detailPage() {
+		return "detail";
+	}
+	
+	@GetMapping(path = "/review")
+	public String reviewPage() {
+		return "review";
+	}
 }

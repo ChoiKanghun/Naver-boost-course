@@ -2,6 +2,7 @@ package kr.or.connect.reservationManagement.service;
 
 import java.util.List;
 
+import kr.or.connect.reservationManagement.dto.DetailPageItems;
 import kr.or.connect.reservationManagement.dto.Items;
 
 public interface ReservationManagementService {
@@ -14,4 +15,5 @@ public interface ReservationManagementService {
 	List<Items> getLimitedProductsByCategoryId(Integer start, Integer categoryId);
 	List<Items> getPromotionInfo();
 	List<Items> getCategoriesInfoGroupByCategoryId();
+	List<DetailPageItems> getDetailListItems(Integer id);
 }
