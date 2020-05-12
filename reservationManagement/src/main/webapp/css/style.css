@@ -1278,7 +1278,7 @@ button {
 .group_visual .visual_img {
     position: relative;
     min-height: 210px;
-    max-height: 210px;
+    max-height: 414px;
     font: 0/0 a;
     color: #fff;
     white-space: nowrap;
@@ -1293,7 +1293,7 @@ button {
 
 .group_visual .visual_img img {
 	width: 414px;
-    height: 210px;
+    height: 414px;
 }
 
 .group_visual .visual_img .item {
