@@ -68,8 +68,20 @@ public class Sqls {
 			+ "ON file_info.id = product_image.file_id "
 			+ "WHERE type='th' ";
 
-
-	
+	public static final String GET_DETAIL_PAGE_ITEMS_BY_ID
+	= "SELECT display_info.id AS display_info_id, " + 
+			"product.id AS product_id, product.description AS product_description, " + 
+			"display_info.place_name AS place_name,   product.content AS product_content, " + 
+			"file_info.save_file_name AS product_image_url " + 
+			"FROM product " + 
+			"JOIN display_info " + 
+			"ON product.id = display_info.product_id " + 
+			"JOIN product_image " + 
+			"ON display_info.product_id = product_image.product_id " + 
+			"JOIN file_info " + 
+			"ON file_info.id = product_image.file_id " + 
+			"WHERE (product_image.type='et' or product_image.type='ma') "
+			+ " and display_info.id = :id ";
 	
 
 
