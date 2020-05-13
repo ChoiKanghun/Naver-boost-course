@@ -8,7 +8,7 @@ public class DetailPageItems {
 	private String productContent;
 	private String placeName;
 	private String productImageUrl;
-	
+
 	public int getDisplayInfoId() {
 		return displayInfoId;
 	}

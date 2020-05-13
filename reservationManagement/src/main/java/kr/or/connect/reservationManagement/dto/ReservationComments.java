@@ -8,7 +8,15 @@ public class ReservationComments {
 	private String score;
 	private Date createDate = new Date();
 	private String ProductImageUrl;
+	private String reservationEmail;
 	
+	
+	public String getReservationEmail() {
+		return reservationEmail;
+	}
+	public void setReservationEmail(String reservationEmail) {
+		this.reservationEmail = reservationEmail;
+	}
 	public int getProductId() {
 		return productId;
 	}

@@ -97,7 +97,9 @@ public class Sqls {
 			"LEFT JOIN reservation_user_comment_image  " + 
 			"ON reservation_user_comment.id = reservation_user_comment_image.reservation_user_comment_id  " + 
 			"LEFT JOIN file_info " + 
-			"ON file_info.id = reservation_user_comment_image.file_id " + 
+			"ON file_info.id = reservation_user_comment_image.file_id " +
+			"LEFT JOIN reservation_info " +
+			"ON reservation_info.id = reservation_user_comment.reservation_info_id " +
 			"WHERE product.id = :id ";
 
 	public static final String GET_LIMITED_USER_COMMENTS_BY_ID
