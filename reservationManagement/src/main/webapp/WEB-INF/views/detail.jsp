@@ -49,7 +49,6 @@
                             <div class="container_visual" style="width:414px;">
                                 <ul class="visual_img detail_swipe">
                                     <!-- js will add container_visual_template here -->
-                                    
                                 </ul>
                             </div>
                             <div class="prev">
@@ -78,11 +77,11 @@
                     </div>
                 </div>
                 <div class="section_store_details">
-                    <!-- [D] 펼쳐보기 클릭 시 store_details에 close3 제거 -->
                     <div class="store_details close3">
                         <p class="dsc">
                         </p>
                     </div>
+                    <!-- [D] 펼쳐보기 클릭 시 store_details에 close3 제거 -->
                     <!-- [D] 토글 상황에 따라 bk_more에 display:none 추가 -->
                     <a href="#" class="bk_more _open"> <span class="bk_more_txt">펼쳐보기</span> <i class="fn fn-down2"></i> </a>
                     <a href="#" class="bk_more _close" style="display: none;"> <span class="bk_more_txt">접기</span> <i class="fn fn-up2"></i> </a>
@@ -109,41 +108,7 @@
                                 <span class="join_count"><em class="green">52건</em> 등록</span>
                             </div>
                             <ul class="list_short_review">
-                                <li class="list_item">
-                                    <div>
-                                        <div class="review_area">
-                                            <div class="thumb_area">
-                                                <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90" class="img_vertical_top" src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300" alt="리뷰이미지"> </a> <span class="img_count" style="display:none;">1</span>                                                </div>
-                                            <h4 class="resoc_name"></h4>
-                                            <p class="review">2층이어서 걱정했는데 꽤잘보여서 좋았습니다 고미오 너무 멋있었습니다 사진은 커튼콜때 찍었습니다 끝나고 퇴근길도 봐서 너무 좋았어요</p>
-                                        </div>
-                                        <div class="info_area">
-                                            <div class="review_info"> <span class="grade">4.0</span> <span class="name">dbfl****</span> <span class="date">2017.3.5. 방문</span> </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list_item">
-                                    <div>
-                                        <div class="review_area no_img">
-                                            <h4 class="resoc_name"></h4>
-                                            <p class="review">너무 재밌게봤구요~<br>마지막공연 후 뒷풀이도 잘봤습니다</p>
-                                        </div>
-                                        <div class="info_area">
-                                            <div class="review_info"> <span class="grade">5.0</span> <span class="name">yyck****</span> <span class="date">2017.3.5. 방문</span> </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list_item">
-                                    <div>
-                                        <div class="review_area no_img">
-                                            <h4 class="resoc_name"></h4>
-                                            <p class="review">좋은 공연이었습니다. <br>머큐쇼역활 하신분의 열창이 기억에 남는 반면에,,, 로미오는 별로 기억에 남지 않네요..</p>
-                                        </div>
-                                        <div class="info_area">
-                                            <div class="review_info"> <span class="grade">4.0</span> <span class="name">xero****</span> <span class="date">2017.3.4. 방문</span> </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                        
                             </ul>
                         </div>
                         <p class="guide"> <i class="spr_book2 ico_bell"></i> <span>네이버 예약을 통해 실제 방문한 이용자가 남긴 평가입니다.</span> </p>
@@ -233,6 +198,7 @@
     <div id="photoviwer"></div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="js/detail.js"></script>
 <script type="container_visual_template" id  = "container_visual_template">
 	<li class="item" style="width: 414px;"> 
@@ -249,5 +215,37 @@
         </div>
       </div>
     </li>
+</script>
+
+<script type="mytemplate" id = "commentTemplate">
+<li class="list_item">
+  <div>
+
+{{#if productImageUrl}}
+    <div class="review_area">
+       <div class="thumb_area">
+         <a href="#" class="thumb" title="이미지 크게 보기"> 
+            <img width="90" height="90" class="img_vertical_top" src={{productImageUrl}} alt="리뷰이미지"> 
+         </a> 
+         <span class="img_count" style="display:none;">{{productId}}</span>
+       </div>
+       <h4 class="resoc_name"></h4>
+       <p class="review">{{comment}}</p>
+     </div>
+{{else}}
+	<div class="review_area no_img">
+       <h4 class="resoc_name"></h4>
+       <p class="review">{{comment}}</p>
+    </div>
+{{/if}}
+       <div class="info_area">
+       <div class="review_info"> 
+         <span class="grade">{{score}}</span> 
+         <span class="name">익명의 등록자</span>
+         <span class="date">2017.3.5. 방문</span> 
+       </div>
+       </div>
+   </div>
+</li>
 </script>
 </html>
