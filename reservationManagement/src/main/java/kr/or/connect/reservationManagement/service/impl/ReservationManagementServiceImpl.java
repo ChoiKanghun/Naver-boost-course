@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import kr.or.connect.reservationManagement.dao.DetailPageItemsDao;
 import kr.or.connect.reservationManagement.dao.ItemsDao;
+import kr.or.connect.reservationManagement.dao.ReservationCommentsDao;
 import kr.or.connect.reservationManagement.dto.DetailPageItems;
 import kr.or.connect.reservationManagement.dto.Items;
+import kr.or.connect.reservationManagement.dto.ReservationComments;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
 @Service
@@ -19,6 +21,9 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	
 	@Autowired
 	DetailPageItemsDao detailPageItemsDao;
+	
+	@Autowired
+	ReservationCommentsDao reservationCommentsDao;
 	
 	@Override
 	public List<Items> getAllProducts(){
@@ -58,5 +63,15 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	@Override
 	public List<DetailPageItems> getDetailListItems(Integer id){
 		return (detailPageItemsDao.getDetailPageItemsById(id));
+	}
+	
+	@Override
+	public List<ReservationComments> getUserCommentsById(Integer id){
+		return reservationCommentsDao.getUserCommentsById(id);
+	}
+	
+	@Override
+	public List<ReservationComments> getLimitedUserCommentsById(Integer id, Integer limit){
+		return reservationCommentsDao.getLimitedUserCommentById(id, limit);
 	}
 }

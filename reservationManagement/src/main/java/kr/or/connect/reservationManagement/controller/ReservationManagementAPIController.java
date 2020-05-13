@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.connect.reservationManagement.dto.DetailPageItems;
 import kr.or.connect.reservationManagement.dto.Items;
+import kr.or.connect.reservationManagement.dto.ReservationComments;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
 
@@ -69,6 +70,27 @@ public class ReservationManagementAPIController {
 	public Map<String, Object> getDetailPageItems(
 			@RequestParam(required = true) int id){
 		List<DetailPageItems> items = reservationManagementService.getDetailListItems(id);
+		Map<String, Object> resBody = new HashMap<>();
+		
+		resBody.put("items", items);
+		return (resBody);
+	}
+	
+	@GetMapping(path = "/api/comments_by_id", produces = "application/json; charset=utf-8")
+	public Map<String, Object> getUserCommentsById(
+			@RequestParam(required = true) int id){
+		List<ReservationComments> items = reservationManagementService.getUserCommentsById(id);
+		Map<String, Object> resBody = new HashMap<>();
+		
+		resBody.put("items", items);
+		return (resBody);
+	}
+	
+	@GetMapping(path = "/api/limited_comments_by_id", produces = "application/json; charset=utf-8")
+	public Map<String, Object> getLimitedUserCommentsById(
+			@RequestParam(required = true) int id){
+		int limit = reservationManagementService.LIMIT_COMMENT;
+		List<ReservationComments> items = reservationManagementService.getLimitedUserCommentsById(id, limit);
 		Map<String, Object> resBody = new HashMap<>();
 		
 		resBody.put("items", items);
