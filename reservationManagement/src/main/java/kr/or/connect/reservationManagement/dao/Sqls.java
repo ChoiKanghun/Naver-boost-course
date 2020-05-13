@@ -71,7 +71,7 @@ public class Sqls {
 	public static final String GET_DETAIL_PAGE_ITEMS_BY_ID
 	= "SELECT display_info.id AS display_info_id, " + 
 			"product.id AS product_id, product.description AS product_description, " + 
-			"display_info.place_name AS place_name,   product.content AS product_content, " + 
+			"display_info.place_name AS place_name, product.content AS product_content, " + 
 			"file_info.save_file_name AS product_image_url " + 
 			"FROM product " + 
 			"JOIN display_info " + 
@@ -83,6 +83,24 @@ public class Sqls {
 			"WHERE (product_image.type='et' or product_image.type='ma') "
 			+ " and display_info.id = :id ";
 	
+	public static final String GET_USER_COMMENTS_BY_ID
+	= 
+			"SELECT reservation_user_comment.comment AS comment, " + 
+			"product.id AS product_id, " + 
+			"reservation_user_comment.score AS score, " + 
+			"reservation_user_comment.create_date AS create_date, " + 
+			"file_info.save_file_name AS product_image_url, " + 
+			"reservation_user_comment_image.file_id AS file_id " + 
+			"FROM reservation_user_comment " + 
+			"JOIN product  " + 
+			"ON product.id = reservation_user_comment.product_id   " + 
+			"LEFT JOIN reservation_user_comment_image  " + 
+			"ON reservation_user_comment.id = reservation_user_comment_image.reservation_user_comment_id  " + 
+			"LEFT JOIN file_info " + 
+			"ON file_info.id = reservation_user_comment_image.file_id " + 
+			"WHERE product.id = :id ";
 
-
+	public static final String GET_LIMITED_USER_COMMENTS_BY_ID
+	= GET_USER_COMMENTS_BY_ID + "LIMIT 0, :limit ";
+	
 }
