@@ -11,7 +11,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     <link href="css/style.css" rel="stylesheet">
-</head>
 
 <body>
 <input type="text" id="start" value=0 style="display:none"></input>
@@ -152,6 +151,6 @@
 	<p id = "test"></p>
     
 </body>
-<script src = "js/visual_image.js"></script>
-<script src = "js/categories.js"></script>
+<script src = "js/mainpage_visual_image.js"></script>
+<script src = "js/mainpage_categories.js"></script>
 </html>

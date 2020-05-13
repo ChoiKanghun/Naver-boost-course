@@ -7,12 +7,10 @@ function promotion_image_move(image_count){
 	//recursively executes setTimeout Method to make effect
 	function set_t_out(){
 		setTimeout(function(){
-		if (curr != 0)
-		{
+		if (curr != 0){
 			visual_img.style.transition = "transform 2s ease-in-out";
 		}
-		else
-		{
+		else{
 			visual_img.style.transition = "";
 		}
 		visual_img.style.transform = "translate3d(-" + (curr) * PROMOTION_WIDTH + "px, 0px, 0px)";
@@ -60,7 +58,7 @@ function addThImages(oReq){
 //get responseData and send it to parameter of function 'addThImages'
 function sendAjax(url){
 	var oReq = new XMLHttpRequest;
-	oReq.open('GET', url)
+	oReq.open('GET', url);
 	oReq.setRequestHeader("Content-type", "application/json");
 	oReq.responseType = "text";
 	oReq.addEventListener('load', function(){
