@@ -90,7 +90,8 @@ public class Sqls {
 			"reservation_user_comment.score AS score, " + 
 			"reservation_user_comment.create_date AS create_date, " + 
 			"file_info.save_file_name AS product_image_url, " + 
-			"reservation_user_comment_image.file_id AS file_id " + 
+			"reservation_user_comment_image.file_id AS file_id, " + 
+			"reservation_info.reservation_email AS reservation_email " + 
 			"FROM reservation_user_comment " + 
 			"JOIN product  " + 
 			"ON product.id = reservation_user_comment.product_id   " + 

@@ -13,7 +13,7 @@ function drawBasicCategory(json){
 	//replace all brackets in itemList template.innerHTML
 	//json.items.length would be 1~4
 	for(var i = 0; i < json.items.length; i++){
-		itemListResult += itemListHTML.replace("{id}", json.items[i].productId)
+		itemListResult += itemListHTML.replace("{display_info_id}", json.items[i].displayInfoId)
 							.replace("{src}", json.items[i].productImageUrl)
 							.replace("{description}", json.items[i].productDescription)
 							.replace("{placeName}", json.items[i].placeName)
@@ -22,9 +22,6 @@ function drawBasicCategory(json){
 		itemListResult += "</ul>";
 		document.querySelector(".more").insertAdjacentHTML("beforebegin", itemListResult);
 		itemListResult = "<ul class='lst_event_box'>";
-
-
-
 		//start count will be used to delete 'more' button from browser
 		start++;
 	}

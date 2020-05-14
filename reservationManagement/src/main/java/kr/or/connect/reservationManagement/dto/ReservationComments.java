@@ -1,12 +1,12 @@
 package kr.or.connect.reservationManagement.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class ReservationComments {
 	private int productId;
 	private String comment;
 	private String score;
-	private Date createDate = new Date();
+	private Date createDate;
 	private String ProductImageUrl;
 	private String reservationEmail;
 	

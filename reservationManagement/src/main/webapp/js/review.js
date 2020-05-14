@@ -18,12 +18,27 @@ function addTemplateUnderUlClassNameListShortReview(json){
 	  var template = document.querySelector("#commentTemplate").innerHTML;
 	  var ulClassNameListShortReview = document.querySelector(".list_short_review");
 	  var bindTemplate = Handlebars.compile(template);
-	  
+	  var liCount = json.items.length;
+	  var sumOfRating = 0;
+	  var avgRating = 0;
+
+	  Handlebars.registerHelper('emailTrim', function(input) {
+		    var resultString = input.substring(0,4);
+		    return new Handlebars.SafeString(resultString);
+	  });
 	  ulClassNameListShortReview.innerHTML += json.items.reduce(function(prev, next) {
 	    return prev + bindTemplate(next);
-	  }, "")
-
-
+	  }, "");
+	  document.querySelector(".join_count").querySelector(".green").innerText
+	  	= liCount + "건";
+	  json.items.forEach(function(v){
+		  sumOfRating += v.score * 1;
+	  }); 
+	  avgRating = (sumOfRating / liCount).toFixed(1);
+	  document.querySelector(".text_value").querySelector("span").innerText 
+	  	= avgRating;
+	  document.querySelector(".graph_mask").querySelector(".graph_value").style.width 
+	  	= avgRating * 20 + "%";
 }
 
 function getReservationCommentsAPIAjax(url) {
@@ -33,10 +48,10 @@ function getReservationCommentsAPIAjax(url) {
   oReq.setRequestHeader("Content-type", "application/json");
   oReq.responseType = "text";
   oReq.addEventListener('load', function() {
-
     addTemplateUnderUlClassNameListShortReview(JSON.parse(this.responseText));
   });
   oReq.send();
 }
 
 getReservationCommentsAPIAjax("/reservationManagement/api/comments_by_id?id=" + getParamFromUrl("id"));
+

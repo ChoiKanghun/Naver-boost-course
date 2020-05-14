@@ -81,8 +81,12 @@
        <div class="info_area">
        <div class="review_info"> 
          <span class="grade">{{score}}</span> 
-         <span class="name">익명의 등록자</span>
-         <span class="date">2017.3.5. 방문</span> 
+         <span class="name">
+			{{#emailTrim reservationEmail}}
+				{{reservationEmail}}
+			{{/emailTrim}}****
+		</span>
+         <span class="date">{{createDate}} 방문</span> 
        </div>
        </div>
    </div>

@@ -6,6 +6,10 @@ function addTemplateUnderUlClassNameImage(json) {
   var contentArea = document.querySelector(".store_details").querySelector(".dsc");
   var imageCount = 0;
 
+  Handlebars.registerHelper('emailTrim', function(input) {
+	    var resultString = input.substring(0,4);
+	    return new Handlebars.SafeString(resultString)
+  });
   ulClassNameVisualImg.innerHTML += json.items.reduce(function(prev, next) {
     return prev + bindTemplate(next);
   }, "")
@@ -129,6 +133,23 @@ getLimitedReservationCommentsAPIAjax("/reservationManagement/api/limited_comment
 
 /*-------------평점 및 총 개수 구하기 ------------*/
 
+function addRateAndCountOfComments(json){
+	  var liCount = json.items.length;
+	  var sumOfRating = 0;
+	  var avgRating;
+
+	  document.querySelector(".join_count").querySelector(".green").innerText
+	  	= liCount + "건";
+	  json.items.forEach(function(v){
+		  sumOfRating += v.score * 1;
+	  }); 
+	  avgRating = (sumOfRating / liCount).toFixed(1);
+	  document.querySelector(".text_value").querySelector("span").innerText 
+	  	= avgRating;
+	  document.querySelector(".graph_mask").querySelector(".graph_value").style.width 
+	  	= avgRating * 20 + "%";
+}
+
 function getReservationCommentsAPIAjax(url){
 	var oReq = new XMLHttpRequest;
 
@@ -136,7 +157,9 @@ function getReservationCommentsAPIAjax(url){
 	oReq.setRequestHeader("Content-type", "application/json");
 	oReq.responseType = "text";
 	oReq.addEventListener('load', function() {
-	   addTemplateUnderUlClassNameListShortReview(JSON.parse(this.responseText));
+		addRateAndCountOfComments(JSON.parse(this.responseText));
 	});
 	oReq.send();
 }
+
+getReservationCommentsAPIAjax("/reservationManagement/api/comments_by_id?id=" + getParamFromUrl("id"));
