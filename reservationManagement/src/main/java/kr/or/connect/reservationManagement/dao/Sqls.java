@@ -106,4 +106,60 @@ public class Sqls {
 	public static final String GET_LIMITED_USER_COMMENTS_BY_ID
 	= GET_USER_COMMENTS_BY_ID + "LIMIT 0, :limit ";
 	
+	
+	/*oraoaoroaroaroaroaoraroaoraroaroaroaroaoraoraorao*/
+	public static final String SELECT_COMMENT_IMAGES_BY_DISPLAY_INFO_ID
+	= "" + 
+			"SELECT " + 
+			"file_info.content_type AS content_type, " + 
+			"file_info.delete_flag AS delete_flag, " + 
+			"file_info.id AS file_id, " + 
+			"file_info.file_name AS file_name, " + 
+			"reservation_user_comment_image.id AS image_id, " + 
+			"reservation_info.id AS reservation_info_id, " + 
+			"reservation_user_comment.id AS reservation_user_comment_id, " + 
+			"file_info.save_file_name AS save_file_name, " + 
+			"SUBSTRING(DATE_FORMAT(reservation_user_comment.create_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23)  " + 
+			"AS create_date, " + 
+			"SUBSTRING(DATE_FORMAT(reservation_user_comment.modify_date, '%Y-%,-%dT%H:%i:%s.%f'), 1, 23)  " + 
+			"AS modify_date " + 
+			"FROM file_info " + 
+			"JOIN reservation_user_comment_image " + 
+			"ON file_info.id = reservation_user_comment_image.file_id " + 
+			"JOIN reservation_info " + 
+			"ON reservation_info.id = reservation_user_comment_image.reservation_info_id " + 
+			"JOIN reservation_user_comment " + 
+			"ON reservation_user_comment.id = reservation_user_comment_image.reservation_user_comment_id " + 
+			"JOIN product " + 
+			"ON product.id = reservation_user_comment.product_id " + 
+			"JOIN display_info " + 
+			"ON product.id = display_info.product_id " + 
+			"WHERE reservation_user_comment_id = ReservationUserCommentId ";
+	
+	public static final String SELECT_COMMENTS_BY_DISPLAY_INFO_ID
+	= "SELECT " + 
+			"reservation_user_comment.comment AS comment, " + 
+			"reservation_user_comment.id AS comment_id, " + 
+			"SUBSTRING(DATE_FORMAT(reservation_user_comment.create_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"AS create_date, " + 
+			"SUBSTRING(DATE_FORMAT(reservation_user_comment.modify_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"AS modify_date, " + 
+			"product.id AS product_id, " + 
+			"SUBSTRING(DATE_FORMAT(reservation_info.reservation_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"AS reservation_date, " + 
+			"reservation_info.reservation_email AS reservation_email, " + 
+			"reservation_info.id AS reservation_info_id, " + 
+			"reservation_info.reservation_name AS reservation_name, " + 
+			"reservation_info.reservation_tel AS reservation_telephone, " + 
+			"reservation_user_comment.score AS score" + 
+			"" + 
+			"FROM reservation_user_comment " + 
+			"JOIN reservation_info " + 
+			"ON reservation_info.id = reservation_user_comment.reservation_info_id " + 
+			"JOIN product " + 
+			"ON product.id = reservation_user_comment.product_id " + 
+			"JOIN display_info " + 
+			"ON display_info.product_id = product.id " + 
+			"" + 
+			"WHERE display_info.id = :displayInfoId ";
 }
