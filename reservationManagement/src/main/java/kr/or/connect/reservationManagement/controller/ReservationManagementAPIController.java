@@ -6,12 +6,17 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.connect.reservationManagement.dto.Comments;
 import kr.or.connect.reservationManagement.dto.DetailPageItems;
+import kr.or.connect.reservationManagement.dto.DisplayInfo;
+import kr.or.connect.reservationManagement.dto.DisplayInfoImage;
 import kr.or.connect.reservationManagement.dto.Items;
-import kr.or.connect.reservationManagement.dto.ReservationComments;
+import kr.or.connect.reservationManagement.dto.ProductImages;
+import kr.or.connect.reservationManagement.dto.ProductPrices;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
 
@@ -76,24 +81,38 @@ public class ReservationManagementAPIController {
 		return (resBody);
 	}
 	
-	@GetMapping(path = "/api/comments_by_id", produces = "application/json; charset=utf-8")
-	public Map<String, Object> getUserCommentsById(
-			@RequestParam(required = true) int id){
-		List<ReservationComments> items = reservationManagementService.getUserCommentsById(id);
+	@GetMapping(path = "/api/products/{displayInfoId}")
+	public Map<String, Object> getProductsByDisplayInfoId(
+			@PathVariable(name = "displayInfoId") int displayInfoId){
 		Map<String, Object> resBody = new HashMap<>();
+		List<Comments> comments = reservationManagementService.getComments(displayInfoId);
+		Float averageScore = 0F;
+		Float division = 0F;
 		
-		resBody.put("items", items);
+		for(int i = 0; i < comments.size(); i++) {
+			comments.get(i).setCommentImages(reservationManagementService.getCommentImages(comments.get(i).getCommentId()));
+			if (comments.get(i).getScore() != null) {
+				averageScore += comments.get(i).getScore();
+				division += 1;
+			}
+		}
+		if (division != 0F) {
+			averageScore = averageScore / division;
+		}
+		DisplayInfo displayInfo = reservationManagementService.getDisplayInfo(displayInfoId);
+		DisplayInfoImage displayInfoImage = reservationManagementService.getDisplayInfoImage(displayInfoId);
+		List<ProductImages> productImages = reservationManagementService.getProductImages(displayInfoId);
+		List<ProductPrices> productPrices = reservationManagementService.getProductPrices(displayInfoId);
+		
+		resBody.put("comments", comments);
+		resBody.put("averageScore", averageScore);
+		resBody.put("displayInfo", displayInfo);
+		resBody.put("displayInfoImage", displayInfoImage);
+		resBody.put("productImages", productImages);
+		resBody.put("productPrices", productPrices);
 		return (resBody);
 	}
 	
-	@GetMapping(path = "/api/limited_comments_by_id", produces = "application/json; charset=utf-8")
-	public Map<String, Object> getLimitedUserCommentsById(
-			@RequestParam(required = true) int id){
-		int limit = reservationManagementService.LIMIT_COMMENT;
-		List<ReservationComments> items = reservationManagementService.getLimitedUserCommentsById(id, limit);
-		Map<String, Object> resBody = new HashMap<>();
-		
-		resBody.put("items", items);
-		return (resBody);
-	}
+	
+
 }
