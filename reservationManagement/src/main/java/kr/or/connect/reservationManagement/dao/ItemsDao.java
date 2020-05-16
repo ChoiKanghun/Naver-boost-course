@@ -42,7 +42,7 @@ public class ItemsDao {
 		return jdbc.query(SELECT_LIMIT_PRODUCTS, params, rowMapper);
 	}
 
-	//get LIMITED result of everyting from product table and place_name from display_info
+	//get LIMITED result of everything from product table and place_name from display_info
 	//WHERE CategoryId = ?
 	public List<Items> selectLimitedProductsByCategoryId(Integer start, Integer limit, Integer categoryId){
 		Map<String, Integer> params = new HashMap<>();

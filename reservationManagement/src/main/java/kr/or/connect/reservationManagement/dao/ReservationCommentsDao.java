@@ -1,7 +1,7 @@
 package kr.or.connect.reservationManagement.dao;
 
 import static kr.or.connect.reservationManagement.dao.Sqls.GET_LIMITED_USER_COMMENTS_BY_ID;
-import static kr.or.connect.reservationManagement.dao.Sqls.GET_USER_COMMENTS_BY_ID;
+import static kr.or.connect.reservationManagement.dao.Sqls.SELECT_USER_COMMENTS_BY_ID;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +31,7 @@ public class ReservationCommentsDao {
 		Map<String, Object> params = new HashMap<String, Object>();
 		
 		params.put("id", id);
-		return jdbc.query(GET_USER_COMMENTS_BY_ID, params, rowMapper);
+		return jdbc.query(SELECT_USER_COMMENTS_BY_ID, params, rowMapper);
 	}
 	
 	public List<ReservationComments> getLimitedUserCommentById(Integer id, Integer limit){
