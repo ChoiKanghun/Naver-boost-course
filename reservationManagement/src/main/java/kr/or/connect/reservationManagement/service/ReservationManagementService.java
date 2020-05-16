@@ -2,8 +2,14 @@ package kr.or.connect.reservationManagement.service;
 
 import java.util.List;
 
+import kr.or.connect.reservationManagement.dto.CommentImages;
+import kr.or.connect.reservationManagement.dto.Comments;
 import kr.or.connect.reservationManagement.dto.DetailPageItems;
+import kr.or.connect.reservationManagement.dto.DisplayInfo;
+import kr.or.connect.reservationManagement.dto.DisplayInfoImage;
 import kr.or.connect.reservationManagement.dto.Items;
+import kr.or.connect.reservationManagement.dto.ProductImages;
+import kr.or.connect.reservationManagement.dto.ProductPrices;
 import kr.or.connect.reservationManagement.dto.ReservationComments;
 
 public interface ReservationManagementService {
@@ -20,4 +26,10 @@ public interface ReservationManagementService {
 	List<DetailPageItems> getDetailListItems(Integer id);
 	List<ReservationComments> getUserCommentsById(Integer id);
 	List<ReservationComments> getLimitedUserCommentsById(Integer id, Integer limit);
+	List<CommentImages> getCommentImages(Integer reservationUserCommentId);
+	List<Comments> getComments(Integer displayInfoId);
+	List<ProductImages> getProductImages(Integer displayInfoId);
+	List<ProductPrices> getProductPrices(Integer displayInfoId);
+	DisplayInfoImage getDisplayInfoImage(Integer displayInfoId);
+	DisplayInfo getDisplayInfo(Integer displayInfoId);
 }
