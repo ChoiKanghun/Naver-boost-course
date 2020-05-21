@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   function addIntroduction(json) {
-    var introductionArea = document.querySelector(".detail_info_lst>.in_dsc");
+    var introductionArea = document.querySelectorAll(".detail_info_lst")[0].querySelector(".in_dsc");
 
     introductionArea.innerHTML += json.displayInfo.productContent;
     //오시는 길 정보 추가
@@ -24,6 +24,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelector(".text_value").querySelector("span").innerText = avgRating;
     document.querySelector(".graph_mask").querySelector(".graph_value").style.width = avgRating * 20 + "%";
     //아래함수에서 소개 정보 추가
+    addIntroduction(json);
   }
 
   function addComments(json) {
@@ -177,6 +178,7 @@ window.addEventListener('DOMContentLoaded', () => {
   function addEventOnInfoTabList() {
     var LisUnderClassNameinfoTabList = document.querySelector(".info_tab_lst").querySelectorAll("li");
     var DivsUnderClassNameSectionInfoTab = document.querySelectorAll(".section_info_tab>div");
+
 
     LisUnderClassNameinfoTabList.forEach(function(listItem) {
       listItem.addEventListener('click', function() {
