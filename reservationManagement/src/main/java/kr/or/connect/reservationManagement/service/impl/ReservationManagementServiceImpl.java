@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.connect.reservationManagement.dao.CommentImagesDao;
 import kr.or.connect.reservationManagement.dao.CommentsDao;
+import kr.or.connect.reservationManagement.dao.DeleteResultDao;
 import kr.or.connect.reservationManagement.dao.DetailPageItemsDao;
 import kr.or.connect.reservationManagement.dao.DisplayInfoDao;
 import kr.or.connect.reservationManagement.dao.DisplayInfoImageDao;
@@ -14,15 +15,19 @@ import kr.or.connect.reservationManagement.dao.ItemsDao;
 import kr.or.connect.reservationManagement.dao.ProductImagesDao;
 import kr.or.connect.reservationManagement.dao.ProductPricesDao;
 import kr.or.connect.reservationManagement.dao.ReservationCommentsDao;
+import kr.or.connect.reservationManagement.dao.ReservationsDao;
 import kr.or.connect.reservationManagement.dto.CommentImages;
 import kr.or.connect.reservationManagement.dto.Comments;
+import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
 import kr.or.connect.reservationManagement.dto.DetailPageItems;
 import kr.or.connect.reservationManagement.dto.DisplayInfo;
 import kr.or.connect.reservationManagement.dto.DisplayInfoImage;
 import kr.or.connect.reservationManagement.dto.Items;
+import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
 import kr.or.connect.reservationManagement.dto.ProductImages;
 import kr.or.connect.reservationManagement.dto.ProductPrices;
 import kr.or.connect.reservationManagement.dto.ReservationComments;
+import kr.or.connect.reservationManagement.dto.Reservations;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
 @Service
@@ -46,6 +51,10 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	ProductImagesDao productImagesDao;
 	@Autowired
 	ProductPricesDao productPricesDao;
+	@Autowired
+	ReservationsDao reservationsDao;
+	@Autowired
+	DeleteResultDao deleteResultDao;
 	
 	@Override
 	public List<Items> getAllProducts(){
@@ -125,5 +134,20 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	@Override
 	public DisplayInfo getDisplayInfo(Integer displayInfoId) {
 		return displayInfoDao.getDisplayInfo(displayInfoId);
+	}
+
+	@Override
+	public List<Reservations> getReservations(String reservationEmail){
+		return reservationsDao.getReservations(reservationEmail);
+	}
+
+	@Override
+	public DeleteReservationResult getDeleteResult(Integer reservationId) {
+		return deleteResultDao.getDeleteResult(reservationId);
+	}
+	
+	@Override
+	public List<DeleteReservationPrices> getDeleteResultPrices(Integer reservationId) {
+		return deleteResultDao.getDeleteResultPrices(reservationId);
 	}
 }

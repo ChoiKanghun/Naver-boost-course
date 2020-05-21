@@ -4,13 +4,16 @@ import java.util.List;
 
 import kr.or.connect.reservationManagement.dto.CommentImages;
 import kr.or.connect.reservationManagement.dto.Comments;
+import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
 import kr.or.connect.reservationManagement.dto.DetailPageItems;
 import kr.or.connect.reservationManagement.dto.DisplayInfo;
 import kr.or.connect.reservationManagement.dto.DisplayInfoImage;
 import kr.or.connect.reservationManagement.dto.Items;
+import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
 import kr.or.connect.reservationManagement.dto.ProductImages;
 import kr.or.connect.reservationManagement.dto.ProductPrices;
 import kr.or.connect.reservationManagement.dto.ReservationComments;
+import kr.or.connect.reservationManagement.dto.Reservations;
 
 public interface ReservationManagementService {
 
@@ -32,4 +35,8 @@ public interface ReservationManagementService {
 	List<ProductPrices> getProductPrices(Integer displayInfoId);
 	DisplayInfoImage getDisplayInfoImage(Integer displayInfoId);
 	DisplayInfo getDisplayInfo(Integer displayInfoId);
+	List<Reservations> getReservations(String reservationEmail);
+	List<DeleteReservationPrices> getDeleteResultPrices(Integer reservationId);
+	DeleteReservationResult getDeleteResult(Integer reservationId);
+
 }

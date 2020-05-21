@@ -107,7 +107,7 @@ public class Sqls {
 	= SELECT_USER_COMMENTS_BY_ID + "LIMIT 0, :limit ";
 	
 	
-	/*oraoaoroaroaroaroaoraroaoraroaroaroaroaoraoraorao*/
+	/*project 4*/
 	public static final String SELECT_COMMENT_IMAGE_BY_RESERVATION_USER_COMMENT_ID
 	= "" + 
 			"SELECT " + 
@@ -255,4 +255,67 @@ public class Sqls {
 			"JOIN file_info " + 
 			"ON display_info_image.file_id = file_info.id " + 
 			"WHERE display_info.id = :displayInfoId" ;
+	
+	/*project 5*/
+	public static final String SELECT_RESERVATIONS_BY_RESERVATION_EMAIL
+	= "SELECT " + 
+			"reservation_info.id AS reservation_info_id, " +
+			"reservation_info.cancel_flag AS cancel_Yn, " + 
+			"reservation_info.product_id AS product_id, " + 
+			"reservation_info.display_info_id AS display_info_id, " + 
+			"reservation_info.reservation_date AS reservation_date,  " + 
+			"reservation_info.reservation_name AS reservation_name, " + 
+			"reservation_info.reservation_email AS reservation_email, " + 
+			"reservation_info.reservation_tel AS reservation_telephone, " + 
+			"SUM(product_price.price) AS total_price, " + 
+			"SUBSTRING(DATE_FORMAT(reservation_info.create_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"AS create_date, " + 
+			"SUBSTRING(DATE_FORMAT(reservation_info.modify_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"AS modify_date " + 
+			"FROM " + 
+			"reservation_info " + 
+			"JOIN display_info " + 
+			"ON display_info.id = reservation_info.display_info_id " + 
+			"JOIN product " + 
+			"ON product.id = reservation_info.product_id " + 
+			"JOIN product_price " + 
+			"ON product_price.product_id = reservation_info.product_id " + 
+			"WHERE reservation_info.reservation_email = :reservationEmail ";
+	
+	public static final String GET_DELETE_RESULT
+	= "SELECT " + 
+			"reservation_info.cancel_flag AS cancel_Yn, " + 
+			"reservation_info.id AS reservation_info_id, " + 
+			"reservation_info.product_id AS product_id, " + 
+			"reservation_info.display_info_id AS display_info_id, " + 
+			"reservation_info.reservation_date AS reservation_date,  " + 
+			"reservation_info.reservation_name AS reservation_name, " + 
+			"reservation_info.reservation_email AS reservation_email, " + 
+			"reservation_info.reservation_tel AS reservation_telephone, " + 
+			"SUM(product_price.price ) AS total_price, " + 
+			"SUBSTRING(DATE_FORMAT(reservation_info.create_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"AS create_date, " + 
+			"SUBSTRING(DATE_FORMAT(reservation_info.modify_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"AS modify_date " + 
+			"FROM " + 
+			"reservation_info " + 
+			"JOIN display_info " + 
+			"ON display_info.id = reservation_info.display_info_id " + 
+			"JOIN product " + 
+			"ON product.id = reservation_info.product_id " + 
+			"WHERE reservation_info.id = :reservationId ";
+	
+	public static final String GET_DELETE_RESULT_PRICES
+	= "SELECT " + 
+			"reservation_info.id AS reservation_info_id, " + 
+			"reservation_info_price.id AS reservation_info_price_id, " + 
+			"product_price.id AS product_price_id, " + 
+			"COUNT(reservation_info_price.reservation_info_id) AS count " + 
+			"FROM" + 
+			"reservation_info " + 
+			"JOIN reservation_info_price " + 
+			"ON reservation_info_price.reservation_info_id = reservation_info.id " + 
+			"JOIN product_price " + 
+			"ON product_price.id = reservation_info_price.product_price_id " + 
+			"WHERE reservation_info.id = :reservationId";
 }

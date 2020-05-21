@@ -7,16 +7,20 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.connect.reservationManagement.dto.Comments;
+import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
 import kr.or.connect.reservationManagement.dto.DetailPageItems;
 import kr.or.connect.reservationManagement.dto.DisplayInfo;
 import kr.or.connect.reservationManagement.dto.DisplayInfoImage;
 import kr.or.connect.reservationManagement.dto.Items;
+import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
 import kr.or.connect.reservationManagement.dto.ProductImages;
 import kr.or.connect.reservationManagement.dto.ProductPrices;
+import kr.or.connect.reservationManagement.dto.Reservations;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
 
@@ -113,6 +117,31 @@ public class ReservationManagementAPIController {
 		return (resBody);
 	}
 	
+	/*project5*/
+	@GetMapping(path = "/api/reservations")
+	public Map<String, Object> getReservationsByReservationEmail(
+			@RequestParam(name="reservationEmail", required = true)String reservationEmail){
+		Map<String, Object> resBody = new HashMap<>();
+		List<Reservations> reservations = reservationManagementService.getReservations(reservationEmail);
+		
+		for (int i = 0; i < reservations.size(); i++) {
+			reservations.get(i).setDisplayInfo(
+					reservationManagementService.getDisplayInfo(
+							reservations.get(i).getDisplayInfoId()));
+		}
+		resBody.put("reservations", reservations);
+		resBody.put("size", reservations.size());
+		return (resBody);
+	}
+
+	@PutMapping(path = "/api/reservations/{reservationId}")
+	public DeleteReservationResult getDeleteResult(
+			@PathVariable(name = "reservationId") int reservationId) {
+		DeleteReservationResult deleteResult = reservationManagementService.getDeleteResult(reservationId);
+		List<DeleteReservationPrices> listPrices = reservationManagementService.getDeleteResultPrices(reservationId);
 	
+		deleteResult.setPrices(listPrices);
+		return deleteResult;
+	}
 
 }
