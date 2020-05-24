@@ -179,7 +179,6 @@ window.addEventListener('DOMContentLoaded', () => {
     var LisUnderClassNameinfoTabList = document.querySelector(".info_tab_lst").querySelectorAll("li");
     var DivsUnderClassNameSectionInfoTab = document.querySelectorAll(".section_info_tab>div");
 
-
     LisUnderClassNameinfoTabList.forEach(function(listItem) {
       listItem.addEventListener('click', function() {
         LisUnderClassNameinfoTabList.forEach(function(iterateLiTag) {
@@ -198,11 +197,18 @@ window.addEventListener('DOMContentLoaded', () => {
         })
       });
     });
-
   }
 
   addEventOnInfoTabList();
 
   /*--------------- review 뒤에 id 부여하기. ------------ */
   document.querySelector(".btn_review_more").href = ("review?id=" + getParamValueFromUrl("id"));
+
+  /*-----예매하기에 리다이렉트 이벤트 추가 -------*/
+  
+  document.querySelector(".bk_btn").addEventListener("click", function(){
+	  location.href = "reserve?id=" + getParamValueFromUrl("id");
+  })
 });
+
+

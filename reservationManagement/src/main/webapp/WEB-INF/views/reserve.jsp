@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -6,7 +8,7 @@
     <meta name="description" content="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -30,28 +32,12 @@
                 <div class="group_visual">
                     <div class="container_visual" style="width: 414px;">
                         <ul class="visual_img">
-                            <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170217_264/1487312141947lTddT_JPEG/%B3%D7%C0%CC%B9%F6.jpg?type=ff1242_816"> <span class="img_bg"></span>
-                                <div class="preview_txt">
-                                    <h2 class="preview_txt_tit"></h2> <em class="preview_txt_dsc">₩12,000 ~ </em><em class="preview_txt_dsc">2017.2.17.(금)~2017.4.18.(화), 잔여티켓 2769매</em> </div>
-                            </li>
+
                         </ul>
                     </div>
                 </div>
                 <div class="section_store_details">
-                    <div class="store_details">
-                        <h3 class="in_tit"></h3>
-                        <p class="dsc">
-                            장소 : <br> 기간 : 2017.2.17.(금)~2017.4.18.(화)
-                        </p>
-                        <h3 class="in_tit">관람시간</h3>
-                        <p class="dsc">
-                            화, 목, 금 일요일 10:00am~06:00pm(입장마감 05:30pm)<br> ‘문화가 있는 날’ 매월 마지막 주 수요일은 오후 8시까지 연장
-                        </p>
-                        <h3 class="in_tit">요금</h3>
-                        <p class="dsc">
-                            성인(만 19~64세) 5,000원 / 청소년(만 13~18세) 4,000원<br> 어린이(만 4~12세) 3,000원 / 20인 이상 단체 20% 할인<br> 국가유공자, 장애인, 65세 이상 4,000원
-                        </p>
-                    </div>
+
                 </div>
                 <div class="section_booking_ticket">
                     <div class="ticket_body">
@@ -59,8 +45,8 @@
                             <div class="count_control">
                                 <!-- [D] 수량이 최소 값이 일때 ico_minus3, count_control_input에 disabled 각각 추가, 수량이 최대 값일 때는 ico_plus3에 disabled 추가 -->
                                 <div class="clearfix">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
+                                    <a href="" class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
+                                    <a href="" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
                                     </a>
                                 </div>
                                 <!-- [D] 금액이 0 이상이면 individual_price에 on_color 추가 -->
@@ -93,8 +79,8 @@
                         <div class="qty">
                             <div class="count_control">
                                 <div class="clearfix">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> <input type="tel" class="count_control_input" value="3" readonly title="수량">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
+                                    <a href="" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> <input type="tel" class="count_control_input" value="3" readonly title="수량">
+                                    <a href="" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
                                     </a>
                                 </div>
                                 <div class="individual_price on_color"><span class="total_price">25,500</span><span class="price_type">원</span></div>
@@ -169,5 +155,40 @@
 
 
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+<script src="js/reserve.js"></script>
+<script type="rv-template" id = "container_visual_template">
+{{#productImages}}
+  <li class="item" style="width: 414px;">
+    <img alt="" class="img_thumb" src={{saveFileName}}>
+    <span class="img_bg"> </span>
+{{/productImages}}
+{{#displayInfo}}
+    <div class="preview_txt">
+      <h2 class="preview_txt_tit">{{productDescription}}</h2> 
+      <em class="preview_txt_dsc">₩12,000 ~ </em>
+      <em class="preview_txt_dsc"> 2017.2 .17.(금) ~2017.4 .18.(화), 잔여티켓 2769 매 </em>
+    </div>
+  </li>
+{{/displayInfo}}
+</script>
+<script type="rv-template" id = "template_under_section_store_details">
+{{#displayInfo}}
+  <div class="store_details">
+    <h3 class="in_tit"></h3>
+    <p class="dsc">
+      장소 : {{placeStreet}}({{placeLot}})
+<br> 기간 : 2017.2.17.(금)~2017.4.18.(화)
+    </p>
+    <h3 class="in_tit">관람시간</h3>
+    <p class="dsc">
+      {{openingHours}}
+    </p>
+    <h3 class="in_tit">요금</h3>
+    <p class="dsc">
+      성인(만 19~64세) 5,000원 / 청소년(만 13~18세) 4,000원<br> 어린이(만 4~12세) 3,000원 / 20인 이상 단체 20% 할인<br> 국가유공자, 장애인, 65세 이상 4,000원
+    </p>
+  </div>
+{{/displayInfo}}
+</script>
 </html>

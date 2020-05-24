@@ -96,7 +96,7 @@
             </div>
           </div>
         </div>
-        <div class="section_btn"> <button type="button" class="bk_btn"> <i class="fn fn-nbooking-calender2"></i> <span>예매하기</span> </button> </div>
+        <div class="section_btn"> <button type="button" onclick = "moveToReservePage()" class="bk_btn"> <i class="fn fn-nbooking-calender2"></i> <span>예매하기</span> </button> </div>
         <div class="section_review_list">
           <div class="review_box">
             <h3 class="title_h3">예매자 한줄평</h3>
@@ -119,10 +119,10 @@
           <!-- [D] tab 선택 시 anchor에 active 추가 -->
           <ul class="info_tab_lst">
             <li class="item active _detail">
-              <a href="#" class="anchor active"> <span>상세정보</span> </a>
+              <a class="anchor active"> <span>상세정보</span> </a>
             </li>
             <li class="item _path">
-              <a href="#" class="anchor"> <span>오시는길</span> </a>
+              <a class="anchor"> <span>오시는길</span> </a>
             </li>
           </ul>
           <!-- [D] 상세정보 외 다른 탭 선택 시 detail_area_wrap에 hide 추가 -->
