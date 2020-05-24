@@ -1,5 +1,6 @@
 package kr.or.connect.reservationManagement.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +17,20 @@ import kr.or.connect.reservationManagement.dao.ProductImagesDao;
 import kr.or.connect.reservationManagement.dao.ProductPricesDao;
 import kr.or.connect.reservationManagement.dao.ReservationCommentsDao;
 import kr.or.connect.reservationManagement.dao.ReservationsDao;
+import kr.or.connect.reservationManagement.dao.ReserveItemDao;
 import kr.or.connect.reservationManagement.dto.CommentImages;
 import kr.or.connect.reservationManagement.dto.Comments;
+import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
 import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
 import kr.or.connect.reservationManagement.dto.DetailPageItems;
 import kr.or.connect.reservationManagement.dto.DisplayInfo;
 import kr.or.connect.reservationManagement.dto.DisplayInfoImage;
 import kr.or.connect.reservationManagement.dto.Items;
-import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
 import kr.or.connect.reservationManagement.dto.ProductImages;
 import kr.or.connect.reservationManagement.dto.ProductPrices;
 import kr.or.connect.reservationManagement.dto.ReservationComments;
 import kr.or.connect.reservationManagement.dto.Reservations;
+import kr.or.connect.reservationManagement.dto.ReserveItem;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
 @Service
@@ -55,6 +58,8 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	ReservationsDao reservationsDao;
 	@Autowired
 	DeleteResultDao deleteResultDao;
+	@Autowired
+	ReserveItemDao reserveItemDao;
 	
 	@Override
 	public List<Items> getAllProducts(){
@@ -149,5 +154,17 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	@Override
 	public List<DeleteReservationPrices> getDeleteResultPrices(Integer reservationId) {
 		return deleteResultDao.getDeleteResultPrices(reservationId);
+	}
+	
+	@Override
+	public ReserveItem reserveAnItem(ReserveItem reserveItem,
+			String reservationYearMonthDay) {
+		reserveItem.setCreateDate(new Date());
+		reserveItem.setModifyDate(new Date());
+		reserveItem.setReservationDate(reservationYearMonthDay);
+		int reservationInfoId = reserveItemDao.reserveAnItem(reserveItem);
+		reserveItem.setReservationInfoId(reservationInfoId);
+		
+		return reserveItem;
 	}
 }
