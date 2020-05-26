@@ -41,52 +41,7 @@
                 </div>
                 <div class="section_booking_ticket">
                     <div class="ticket_body">
-                        <div class="qty">
-                            <div class="count_control">
-                                <!-- [D] 수량이 최소 값이 일때 ico_minus3, count_control_input disabled에 disabled 각각 추가, 수량이 최대 값일 때는 ico_plus3에 disabled 추가 -->
-                                <div class="clearfix">
-                                    <a  class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
-                                    <a  class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
-                                    </a>
-                                </div>
-                                <!-- [D] 금액이 0 이상이면 individual_price에 on_color 추가 -->
-                                <div class="individual_price"><span class="total_price">0</span><span class="price_type">원</span></div>
-                            </div>
-                            <div class="qty_info_icon"> <strong class="product_amount"> <span>성인</span> </strong> <strong class="product_price"> <span class="price">10,200</span> <span class="price_type">원</span> </strong> <em class="product_dsc">10,200원 (15% 할인가)</em> </div>
-                        </div>
-                        <div class="qty">
-                            <div class="count_control">
-                                <div class="clearfix">
-                                    <a  class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
-                                    <a  class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
-                                    </a>
-                                </div>
-                                <div class="individual_price"><span class="total_price">0</span><span class="price_type">원</span></div>
-                            </div>
-                            <div class="qty_info_icon"> <strong class="product_amount"> <span>유아</span> </strong> <strong class="product_price"> <span class="price">6,800</span> <span class="price_type">원</span> </strong> <em class="product_dsc">6,800원 (15% 할인가)</em> </div>
-                        </div>
-                        <div class="qty">
-                            <div class="count_control">
-                                <div class="clearfix">
-                                    <a  class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
-                                    <a  class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
-                                    </a>
-                                </div>
-                                <div class="individual_price"><span class="total_price">0</span><span class="price_type">원</span></div>
-                            </div>
-                            <div class="qty_info_icon"> <strong class="product_amount"> <span>세트1</span> </strong> <strong class="product_price"> <span class="price">20,000</span> <span class="price_type">원</span> </strong> <em class="product_dsc">2인 관람권 (17% 할인가)</em> </div>
-                        </div>
-                        <div class="qty">
-                            <div class="count_control">
-                                <div class="clearfix">
-                                    <a  class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
-                                    <a  class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
-                                    </a>
-                                </div>
-                                <div class="individual_price"><span class="total_price">0</span><span class="price_type">원</span></div>
-                            </div>
-                            <div class="qty_info_icon"> <strong class="product_amount"> <span>청소년</span> </strong> <strong class="product_price"> <span class="price">8,500</span> <span class="price_type">원</span> </strong> <em class="product_dsc">8,500원 (15% 할인가)</em> </div>
-                        </div>
+                      
                     </div>
                 </div>
                 <div class="section_booking_form">
@@ -100,7 +55,7 @@
                                 </div>
                                 <div class="inline_form"> <label class="label" for="tel"> <span class="spr_book ico_nessasary">필수</span> <span>연락처</span> </label>
                                     <div class="inline_control tel_wrap">
-                                        <input type="tel" name="tel" id="tel" class="tel" value="" placeholder="휴대폰 입력 시 예매내역 문자발송">
+                                        <input type="tel" name="tel" id="tel" class="tel" value="" placeholder="010-0000-0000('-'필수! 내역 문자발송)">
                                         <span id="tel_warning" style="display:none;color:red">형식이 다르거나 너무 짧아요</span>
                                     </div>
                                 </div>
@@ -112,7 +67,7 @@
                                 </div>
                                 <div class="inline_form last"> <label class="label" for="message">예매내용</label>
                                     <div class="inline_control">
-                                        <p class="inline_txt selected">2017.2.17, 총 <span id="totalCount">0</span>매</p>
+                                        <p class="inline_txt selected"> 총 <span id="totalCount">0</span>매</p>
                                     </div>
                                 </div>
                             </form>
@@ -167,29 +122,78 @@
 {{#displayInfo}}
     <div class="preview_txt">
       <h2 class="preview_txt_tit">{{productDescription}}</h2> 
-      <em class="preview_txt_dsc">₩12,000 ~ </em>
-      <em class="preview_txt_dsc"> 2017.2 .17.(금) ~2017.4 .18.(화), 잔여티켓 2769 매 </em>
+{{/displayInfo}}
+      <em class="preview_txt_dsc">
+	{{#productPrices}}
+		{{#if @first}}
+			₩{{priceFormatter price}}&nbsp;~
+		{{/if}}
+	{{/productPrices}}
+	  </em>
+      <em class="preview_txt_dsc"> 
+		{{reservatablePeriod arb}}, 잔여티켓 2769 매 
+	  </em>
     </div>
   </li>
-{{/displayInfo}}
+
 </script>
 <script type="rv-template" id = "template_under_section_store_details">
 {{#displayInfo}}
   <div class="store_details">
     <h3 class="in_tit"></h3>
     <p class="dsc">
-      장소 : {{placeStreet}}({{placeLot}})
-<br> 기간 : 2017.2.17.(금)~2017.4.18.(화)
+     <b>장소</b> :<br>{{placeStreet}}<br>({{placeLot}})
+<br><br>
+	 <b>기간</b> :<br>{{reservatablePeriod arb}}
     </p>
     <h3 class="in_tit">관람시간</h3>
     <p class="dsc">
       {{openingHours}}
     </p>
+{{/displayInfo}}
     <h3 class="in_tit">요금</h3>
     <p class="dsc">
-      성인(만 19~64세) 5,000원 / 청소년(만 13~18세) 4,000원<br> 어린이(만 4~12세) 3,000원 / 20인 이상 단체 20% 할인<br> 국가유공자, 장애인, 65세 이상 4,000원
+	{{#each productPrices}}
+      	{{priceTypeName}}:&nbsp{{priceFormatter price}}원
+		{{#unless @last}}
+			/
+		{{/unless}}
+	{{/each}}
     </p>
   </div>
-{{/displayInfo}}
+</script>
+<script type="rv-template" id = "template_under_ticket_body">
+{{#each productPrices}}
+<div class="qty">
+  <div class="count_control">
+    <!-- [D] 수량이 최소 값이 일때 ico_minus3, count_control_input disabled에 disabled 각각 추가, 수량이 최대 값일 때는 ico_plus3에 disabled 추가 -->
+    <div class="clearfix">
+      <a class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a>
+      <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
+      <a class="btn_plus_minus spr_book2 ico_plus3" title="더하기"></a>
+    </div>
+    <!-- [D] 금액이 0 이상이면 individual_price에 on_color 추가 -->
+    <div class="individual_price">
+	<span class="total_price">0</span>
+	<span class="price_type">원</span>
+	</div>
+  </div>
+  <div class="qty_info_icon">
+    <strong class="product_amount">
+      <span>{{priceTypeName}}</span>
+    </strong>
+    <strong class="product_price">
+      <span class="price">
+	{{discountedPrice price discountRate}}
+	</span>
+      <span class="price_type">원</span>
+    </strong>
+    <em class="product_dsc">
+	{{discountedPrice price discountRate}}원
+	({{discountRate}}% 할인가)
+	</em>
+  </div>
+</div>
+{{/each}}
 </script>
 </html>

@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.connect.reservationManagement.dto.Comments;
+import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
 import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
 import kr.or.connect.reservationManagement.dto.DetailPageItems;
 import kr.or.connect.reservationManagement.dto.DisplayInfo;
 import kr.or.connect.reservationManagement.dto.DisplayInfoImage;
 import kr.or.connect.reservationManagement.dto.Items;
-import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
 import kr.or.connect.reservationManagement.dto.ProductImages;
 import kr.or.connect.reservationManagement.dto.ProductPrices;
 import kr.or.connect.reservationManagement.dto.Reservations;
@@ -108,6 +108,33 @@ public class ReservationManagementAPIController {
 		List<ProductImages> productImages = reservationManagementService.getProductImages(displayInfoId);
 		List<ProductPrices> productPrices = reservationManagementService.getProductPrices(displayInfoId);
 		
+		for (ProductPrices productPrice : productPrices) {
+			String priceTypeName = productPrice.getPriceTypeName();
+			if (priceTypeName.equals("A"))
+				productPrice.setPriceTypeName("성인");
+			else if (priceTypeName.equals("Y"))
+				productPrice.setPriceTypeName("청소년");
+			else if (priceTypeName.equals("B"))
+				productPrice.setPriceTypeName("유아");
+			else if (priceTypeName.equals("S"))
+				productPrice.setPriceTypeName("셋트");
+			else if (priceTypeName.equals("D"))
+				productPrice.setPriceTypeName("장애인");
+			else if (priceTypeName.equals("C"))
+				productPrice.setPriceTypeName("지역주민");
+			else if (priceTypeName.equals("E"))
+				productPrice.setPriceTypeName("어얼리버드");
+			else if (priceTypeName.equals("V"))
+				productPrice.setPriceTypeName("VIP");
+			else if (priceTypeName.equals("R"))
+				productPrice.setPriceTypeName("R석");
+			else if (priceTypeName.equals("B"))
+				productPrice.setPriceTypeName("B석");
+			else if (priceTypeName.equals("S"))
+				productPrice.setPriceTypeName("S석");
+			else if (priceTypeName.equals("D"))
+				productPrice.setPriceTypeName("평일");
+		}
 		resBody.put("comments", comments);
 		resBody.put("averageScore", averageScore);
 		resBody.put("displayInfo", displayInfo);
