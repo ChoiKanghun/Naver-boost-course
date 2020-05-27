@@ -18,10 +18,12 @@ window.addEventListener('DOMContentLoaded', () => {
   /*--------뒤로가기 버튼 링크 추가-------*/
   document.querySelector(".btn_back").href = "detail?id=" + displayInfoId;
   /*--------이미지, 설명 부분 추가 하기 -----------*/
+  
   function addReserveDate(){
 	  var reserveDate = document.querySelector(".form_horizontal .last .inline_control .inline_txt"); 
 	  let today = new Date();
 	  
+	  today.setDate(today.getDate() + Math.random() * 5);
 	  reserveDate.innerHTML = today.toLocaleDateString() + reserveDate.innerHTML;
 	  //+, - 버튼을 누르면 실행해야 될 이벤트 추가.
 	  addPlusMinusButtonEvent();
@@ -43,7 +45,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	  
 	  Handlebars.registerHelper('discountedPrice', function(price, discountRate){
 		  var discounted = (price * (100 - discountRate) / 100);
-
+		  
 		  return discounted.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
 	  })
 	  divClassNameTicketBody.innerHTML += ticketBodyBindTemplate(json);
@@ -66,7 +68,6 @@ window.addEventListener('DOMContentLoaded', () => {
     var ulClassNameVisualImg = document.querySelector(".visual_img");
     var visualBindTemplate = Handlebars.compile(visualTemplate);
 
-    
     //숫자를 금액처럼 표시해줌.
     Handlebars.registerHelper('priceFormatter', function(input){
     	return input.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");;
@@ -108,7 +109,6 @@ window.addEventListener('DOMContentLoaded', () => {
       addTemplateUnderUlClassNameVisualImg(JSON.parse(this.responseText));
     });
     oReq.send();
-
   }
   getDisplayInfoByAjax("/reservationManagement/api/products/" + displayInfoId);
 
