@@ -1,5 +1,6 @@
 package kr.or.connect.reservationManagement.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +23,8 @@ import kr.or.connect.reservationManagement.dto.Items;
 import kr.or.connect.reservationManagement.dto.ProductImages;
 import kr.or.connect.reservationManagement.dto.ProductPrices;
 import kr.or.connect.reservationManagement.dto.Reservations;
+import kr.or.connect.reservationManagement.dto.ReserveItem;
+import kr.or.connect.reservationManagement.dto.ReserveItemPrice;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
 
@@ -170,5 +174,28 @@ public class ReservationManagementAPIController {
 		deleteResult.setPrices(listPrices);
 		return deleteResult;
 	}
-
+	
+	@PostMapping(path = "/api/reservations")
+	public ReserveItem reservation(
+			@RequestParam(name="displayInfoId", required=true) int displayInfoId,
+			@RequestParam(name="productId", required=true) int productId, 
+			@RequestParam(name="reservationEmail", required=true) String reservationEmail,
+			@RequestParam(name="reservationName", required=true) String reservationName, 
+			@RequestParam(name="reservationTelephone", required=true) String reservationTelephone, 
+			@RequestParam(name="reservationYearMonthDay", required=true) String reservationYearMonthDay,
+			@RequestParam(name="prices", required=true) List<Object> prices) {
+		ReserveItem reserveItem = new ReserveItem();
+		reserveItem.setDisplayInfoId(displayInfoId);
+		reserveItem.setProductId(productId);
+		reserveItem.setReservationEmail(reservationEmail);
+		reserveItem.setReservationName(reservationName);
+		reserveItem.setReservationTelephone(reservationTelephone);
+		reserveItem.setReservationDate(reservationYearMonthDay);
+		
+		List<ReserveItemPrice> reserveItemPrices = new ArrayList<ReserveItemPrice>();
+		for(int i = 0; i < prices.size();i++) {
+			reserveItemPrices.set(i, (ReserveItemPrice)prices.get(i));
+		}
+		return reservationManagementService.reserveAnItem(reserveItem, reserveItemPrices);
+	}
 }
