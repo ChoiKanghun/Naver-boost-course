@@ -1,0 +1,53 @@
+prices 클래스를 만듦.
+제출 버튼에 이벤트 추가
+	if bookButtonWrapper의 classList에 "disable" 클래스가 없으면 then {
+		제출할 form을 만듦.
+			var form = document.createElement("form");
+         	form.setAttribute("charset", "UTF-8"); //인코딩
+         	form.setAttribute("method", "Post");  //Post 방식
+         	form.setAttribute("action", "/api/reservations"); //요청 보낼 주소
+		productId field 번들을 추가, 설정 (json 이용)
+		displayInfoId field 번들을 추가, 설정. (json 이용)
+			var hiddenFieldDisplayInfoId = document.createElement("input");
+        	hiddenFieldDisplayInfoId.setAttribute("type", "hidden");
+         	hiddenFieldDisplayInfoId.setAttribute("name", "displayInfoId");
+        	hiddenFieldDisplayInfoId.setAttribute("value", json.displayInfo.displayInfoId);
+        	form.appendChild(hiddenFieldDisplayInfoId);
+		reservationEmail, reservaionName, reservationTelephone 번들을 추가, 설정.(querySelector 이용)
+		reservationYearMonthDay를 설정.(querySelector 이용)
+    		var hiddenFieldReservationYearMonthDay = document.createElement("input");
+    		var reservationYearMonthDay = document.querySelector(".form_horizontal .last .inline_control .inline_txt").innerHTML;
+    		reservationYearMonthDay.setAttribute("type", "hidden");
+     		reservationYearMonthDay.setAttribute("name", "reservationYearMonthDay");
+    		reservationYearMonthDay.setAttribute("value", reservationYearMonthDay);
+    		form.appendChild(hiddenFieldReservationYearMonthDay);
+    	prices 배열을 생성.
+    	 	var prices = [];
+    	for 처음부터  ticket_body 클래스 내 qty의 개수만큼 do
+    		var count = qty클래스 내 .count_control_input클래스 의 value
+    		if count가 0이 아니면 then
+    			prices에 productPriceId와 count의 정보를 갖고 있는 객체를 넣음.
+    				prices.push(new pricesClass(json.productPrices[index].productPriceId, count));
+    		endif
+    	prices를 form에 추가.
+    	    var hiddenFieldPrices = document.createElement("input");
+    		hiddenFieldPrices.setAttribute("type", "hidden");
+     		hiddenFieldPrices.setAttribute("name", "prices");
+    		hiddenFieldPrices.setAttribute("value", prices);
+    		form.appendChild(hiddenFieldPrices);
+		바디에 form을 추가하고 제출.
+			document.body.appendChild(form);
+			form.submit();
+	}
+	else {
+		오류메시지 변수 만들기.
+		오류메시지 출력.
+			this.insertAdjacentHTML("beforebegin", "<div id = "unbookable" style="display:inline-
+
+block;color:red">" + warningMessage + "</div>
+		오류메시지 1초 뒤에 없애기.
+			setTimeout(function(){
+				document.querySelector("#unbookable").style.display = "none";
+			}, 1000)
+	}
+	endif
