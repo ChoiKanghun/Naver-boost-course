@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.connect.reservationManagement.dao.CommentImagesDao;
 import kr.or.connect.reservationManagement.dao.CommentsDao;
@@ -31,6 +32,7 @@ import kr.or.connect.reservationManagement.dto.ProductPrices;
 import kr.or.connect.reservationManagement.dto.ReservationComments;
 import kr.or.connect.reservationManagement.dto.Reservations;
 import kr.or.connect.reservationManagement.dto.ReserveItem;
+import kr.or.connect.reservationManagement.dto.ReserveItemPrice;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
 @Service
@@ -157,13 +159,21 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	}
 	
 	@Override
-	public ReserveItem reserveAnItem(ReserveItem reserveItem,
-			String reservationYearMonthDay) {
+	@Transactional(readOnly=false)
+	public ReserveItem reserveAnItem(ReserveItem reserveItem, List<ReserveItemPrice> prices) {
 		reserveItem.setCreateDate(new Date());
 		reserveItem.setModifyDate(new Date());
-		reserveItem.setReservationDate(reservationYearMonthDay);
 		int reservationInfoId = reserveItemDao.reserveAnItem(reserveItem);
 		reserveItem.setReservationInfoId(reservationInfoId);
+		for (int i = 0; i < prices.size(); i++) {
+			ReserveItemPrice reserveItemPrice = new ReserveItemPrice();
+			reserveItemPrice.setCount(prices.get(i).getCount());
+			reserveItemPrice.setProductPriceId(prices.get(i).getProductPriceId());
+			reserveItemPrice.setReservationInfoId(reservationInfoId);
+			int reservationInfoPriceId = reserveItemDao.reserveAnItemPrice(reserveItemPrice);
+			reserveItemPrice.setReservationInfoPriceId(reservationInfoPriceId);
+			reserveItem.getReserveItemPrices().add(reserveItemPrice);
+		}
 		
 		return reserveItem;
 	}

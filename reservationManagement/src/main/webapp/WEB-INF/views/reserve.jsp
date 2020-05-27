@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="inline_form last"> <label class="label" for="message">예매내용</label>
                                     <div class="inline_control">
-                                        <p class="inline_txt selected"> 총 <span id="totalCount">0</span>매</p>
+                                        <p class="inline_txt selected"><b></b> 총 <span id="totalCount">0</span>매</p>
                                     </div>
                                 </div>
                             </form>
