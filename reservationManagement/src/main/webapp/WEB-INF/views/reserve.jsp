@@ -113,6 +113,7 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 <script src="js/reserve.js"></script>
+<script src="js/reserveBook.js"></script>
 <script type="rv-template" id = "container_visual_template">
 {{#productImages}}
   <li class="item" style="width: 414px;">
