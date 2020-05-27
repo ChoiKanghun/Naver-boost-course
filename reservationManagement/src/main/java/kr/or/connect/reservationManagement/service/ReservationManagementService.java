@@ -15,6 +15,7 @@ import kr.or.connect.reservationManagement.dto.ProductPrices;
 import kr.or.connect.reservationManagement.dto.ReservationComments;
 import kr.or.connect.reservationManagement.dto.Reservations;
 import kr.or.connect.reservationManagement.dto.ReserveItem;
+import kr.or.connect.reservationManagement.dto.ReserveItemPrice;
 
 public interface ReservationManagementService {
 
@@ -39,5 +40,5 @@ public interface ReservationManagementService {
 	List<Reservations> getReservations(String reservationEmail);
 	List<DeleteReservationPrices> getDeleteResultPrices(Integer reservationId);
 	DeleteReservationResult getDeleteResult(Integer reservationId);
-	ReserveItem reserveAnItem(ReserveItem reserveItem, String reservationYearMonthDay);
+	ReserveItem reserveAnItem(ReserveItem reserveItem, List<ReserveItemPrice> prices);
 }
