@@ -38,12 +38,12 @@ window.addEventListener('DOMContentLoaded', () => {
         hiddenFieldReservationName.setAttribute("value", reservationName);
         form.appendChild(hiddenFieldReservationName);
 
-        var hiddenFieldReservationTelephone = document.createElement("input");
-        var reservationTelephone = document.querySelector("#tel").value
-        hiddenFieldReservationTelephone.setAttribute("type", "hidden");
-        hiddenFieldReservationTelephone.setAttribute("name", "reservationTelephone");
-        hiddenFieldReservationTelephone.setAttribute("value", reservationTelephone);
-        form.appendChild(hiddenFieldReservationTelephone);
+        var hiddenFieldReservationTel = document.createElement("input");
+        var reservationTel = document.querySelector("#tel").value
+        hiddenFieldReservationTel.setAttribute("type", "hidden");
+        hiddenFieldReservationTel.setAttribute("name", "reservationTel");
+        hiddenFieldReservationTel.setAttribute("value", reservationTel);
+        form.appendChild(hiddenFieldReservationTel);
 
         var hiddenFieldReservationYearMonthDay = document.createElement("input");
         var reservationYearMonthDay = document.querySelector(".inline_txt").querySelector("b").innerHTML;
@@ -52,22 +52,27 @@ window.addEventListener('DOMContentLoaded', () => {
         hiddenFieldReservationYearMonthDay.setAttribute("value", reservationYearMonthDay);
         form.appendChild(hiddenFieldReservationYearMonthDay);
 
-       
+
         var qtys = document.querySelectorAll(".qty");
-        
+
         qtys.forEach(function(qty, index) {
-        	var count = qty.querySelector(".count_control_input").value;
-          if (count != 0){
-          	var prices = new pricesClass(json.productPrices[index].productPriceId, Number(count));
-          	var hiddenFieldPrices = document.createElement("input");
-          	prices = JSON.stringify(prices);
-          	hiddenFieldPrices.setAttribute("type", "hidden");
-          	hiddenFieldPrices.setAttribute("name", "prices");
-          	hiddenFieldPrices.setAttribute("value", prices);
-          	form.appendChild(hiddenFieldPrices);
+          var count = qty.querySelector(".count_control_input").value;
+          if (count != 0) {
+            var productPriceId = json.productPrices[index].productPriceId;
+            var hiddenFieldCount = document.createElement("input");
+            hiddenFieldCount.setAttribute("type", "hidden");
+            hiddenFieldCount.setAttribute("name", "reserveItemPrices[" + index + "].count");
+            hiddenFieldCount.setAttribute("value", Number(count));
+            form.appendChild(hiddenFieldCount);
+
+            var hiddenFieldProductPriceId = document.createElement("input");
+            hiddenFieldProductPriceId.setAttribute("type", "hidden");
+            hiddenFieldProductPriceId.setAttribute("name", "reserveItemPrices[" + index + "].productPriceId");
+            hiddenFieldProductPriceId.setAttribute("value", productPriceId);
+            form.appendChild(hiddenFieldProductPriceId);
           }
         })
-        
+
         document.body.appendChild(form);
         form.submit();
       } else {

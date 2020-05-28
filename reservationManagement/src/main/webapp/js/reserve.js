@@ -20,11 +20,6 @@ window.addEventListener('DOMContentLoaded', () => {
   /*--------이미지, 설명 부분 추가 하기 -----------*/
   
   function addReserveDate(){
-	  var reserveDate = document.querySelector(".form_horizontal .last .inline_control .inline_txt b"); 
-	  let today = new Date();
-	  
-	  today.setDate(today.getDate() + Math.random() * 5);
-	  reserveDate.innerHTML = today.toLocaleDateString();
 	  //+, - 버튼을 누르면 실행해야 될 이벤트 추가.
 	  addPlusMinusButtonEvent();
 	  //유효성 검사 등.

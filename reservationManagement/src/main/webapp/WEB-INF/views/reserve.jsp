@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.util.*" %>
+<%@ page import = "java.text.*" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -67,7 +69,16 @@
                                 </div>
                                 <div class="inline_form last"> <label class="label" for="message">예매내용</label>
                                     <div class="inline_control">
-                                        <p class="inline_txt selected"><b></b> 총 <span id="totalCount">0</span>매</p>
+                                        <p class="inline_txt selected">
+                                        <% Date now = new Date();
+                                		Calendar cal = Calendar.getInstance();
+                                		cal.setTime(now);
+                                		cal.add(Calendar.DATE, (int)(Math.random() * 10) % 5);
+										SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+										String randomDate = format.format(cal.getTime());
+										session.setAttribute("randomDate", randomDate);%>
+										<b>${randomDate}</b>
+                                       	  총 <span id="totalCount">0</span>매</p>
                                     </div>
                                 </div>
                             </form>

@@ -19,6 +19,7 @@ import kr.or.connect.reservationManagement.dao.ProductPricesDao;
 import kr.or.connect.reservationManagement.dao.ReservationCommentsDao;
 import kr.or.connect.reservationManagement.dao.ReservationsDao;
 import kr.or.connect.reservationManagement.dao.ReserveItemDao;
+import kr.or.connect.reservationManagement.dao.ReserveItemPriceDao;
 import kr.or.connect.reservationManagement.dto.CommentImages;
 import kr.or.connect.reservationManagement.dto.Comments;
 import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
@@ -62,6 +63,8 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	DeleteResultDao deleteResultDao;
 	@Autowired
 	ReserveItemDao reserveItemDao;
+	@Autowired
+	ReserveItemPriceDao reserveItemPriceDao;
 	
 	@Override
 	public List<Items> getAllProducts(){
@@ -176,7 +179,7 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 			reserveItemPrice.setCount(prices.get(i).getCount());
 			reserveItemPrice.setProductPriceId(prices.get(i).getProductPriceId());
 			reserveItemPrice.setReservationInfoId(reservationInfoId);
-			int reservationInfoPriceId = reserveItemDao.reserveAnItemPrice(reserveItemPrice);
+			int reservationInfoPriceId = reserveItemPriceDao.reserveAnItemPrice(reserveItemPrice);
 			reserveItemPrice.setReservationInfoPriceId(reservationInfoPriceId);
 			reserveItem.getReserveItemPrices().set(i, reserveItemPrice);
 			System.out.println(i);

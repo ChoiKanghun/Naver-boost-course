@@ -8,9 +8,9 @@ public class ReserveItem {
 	private int productId;
 	private String reservationEmail;
 	private String reservationName;
-	private String reservationTelephone;
+	private String reservationTel;
 	private String reservationDate;
-	private boolean cancelYn;
+	private boolean cancelFlag;
 	private Date createDate;
 	private Date modifyDate;
 	private int reservationInfoId;
@@ -46,11 +46,11 @@ public class ReserveItem {
 	public void setReservationName(String reservationName) {
 		this.reservationName = reservationName;
 	}
-	public String getReservationTelephone() {
-		return reservationTelephone;
+	public String getReservationTel() {
+		return reservationTel;
 	}
-	public void setReservationTelephone(String reservationTelephone) {
-		this.reservationTelephone = reservationTelephone;
+	public void setReservationTel(String reservationTelephone) {
+		this.reservationTel = reservationTelephone;
 	}
 	public String getReservationDate() {
 		return reservationDate;
@@ -58,12 +58,7 @@ public class ReserveItem {
 	public void setReservationDate(String reservationDate) {
 		this.reservationDate = reservationDate;
 	}
-	public boolean isCancelYn() {
-		return cancelYn;
-	}
-	public void setCancelYn(boolean cancelYn) {
-		this.cancelYn = cancelYn;
-	}
+
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -82,14 +77,21 @@ public class ReserveItem {
 	public void setReservationInfoId(int reservationInfoId) {
 		this.reservationInfoId = reservationInfoId;
 	}
+	public boolean isCancelFlag() {
+		return cancelFlag;
+	}
+	public void setCancelFlag(boolean cancelFlag) {
+		this.cancelFlag = cancelFlag;
+	}
 	@Override
 	public String toString() {
 		return "ReserveItem [displayInfoId=" + displayInfoId + ", productId=" + productId + ", reservationEmail="
-				+ reservationEmail + ", reservationName=" + reservationName + ", reservationTelephone="
-				+ reservationTelephone + ", reservationDate=" + reservationDate + ", cancelYn=" + cancelYn
-				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", reservationInfoId="
-				+ reservationInfoId + ", reserveItemPrices=" + reserveItemPrices + "]";
+				+ reservationEmail + ", reservationName=" + reservationName + ", reservationTel=" + reservationTel
+				+ ", reservationDate=" + reservationDate + ", cancelFlag=" + cancelFlag + ", createDate=" + createDate
+				+ ", modifyDate=" + modifyDate + ", reservationInfoId=" + reservationInfoId + ", reserveItemPrices="
+				+ reserveItemPrices + "]";
 	}
+
 
 
 	

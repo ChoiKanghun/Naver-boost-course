@@ -178,10 +178,8 @@ public class ReservationManagementAPIController {
 	public ReserveItem reservation(
 			@ModelAttribute ReserveItem reserveItem,
 			@RequestParam(name="reservationYearMonthDay", required=true) String reservationYearMonthDay) {
-		System.out.println("controller in");
 		reserveItem.setReservationDate(reservationYearMonthDay);
 		reserveItem = reservationManagementService.reserveAnItem(reserveItem, reserveItem.getReserveItemPrices());
-		System.out.println("controller out");
 		return reserveItem;
 	}
 }

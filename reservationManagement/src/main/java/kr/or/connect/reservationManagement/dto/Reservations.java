@@ -2,7 +2,7 @@ package kr.or.connect.reservationManagement.dto;
 
 public class Reservations {
 	private DisplayInfo displayInfo;
-	private boolean cancelYn;
+	private boolean cancelFlag;
 	private String createDate;
 	private String modifyDate;
 	private int displayInfoId;
@@ -20,12 +20,7 @@ public class Reservations {
 	public void setDisplayInfo(DisplayInfo displayInfo) {
 		this.displayInfo = displayInfo;
 	}
-	public boolean isCancelYn() {
-		return cancelYn;
-	}
-	public void setCancelYn(boolean cancelYn) {
-		this.cancelYn = cancelYn;
-	}
+
 	public String getCreateDate() {
 		return createDate;
 	}
@@ -86,14 +81,20 @@ public class Reservations {
 	public void setTotalPrice(Long totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+	public boolean isCancelFlag() {
+		return cancelFlag;
+	}
+	public void setCancelFlag(boolean cancelFlag) {
+		this.cancelFlag = cancelFlag;
+	}
 	@Override
 	public String toString() {
-		return "Reservations [displayInfo=" + displayInfo + ", cancelYn=" + cancelYn + ", createDate=" + createDate
+		return "Reservations [displayInfo=" + displayInfo + ", cancelFlag=" + cancelFlag + ", createDate=" + createDate
 				+ ", modifyDate=" + modifyDate + ", displayInfoId=" + displayInfoId + ", productId=" + productId
 				+ ", reservationDate=" + reservationDate + ", reservationInfoId=" + reservationInfoId
 				+ ", reservationName=" + reservationName + ", reservationEmail=" + reservationEmail
 				+ ", reservationTelephone=" + reservationTelephone + ", totalPrice=" + totalPrice + "]";
 	}
-	
+
 	
 }
