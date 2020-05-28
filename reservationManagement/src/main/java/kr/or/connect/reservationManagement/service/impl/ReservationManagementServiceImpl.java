@@ -161,20 +161,29 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	@Override
 	@Transactional(readOnly=false)
 	public ReserveItem reserveAnItem(ReserveItem reserveItem, List<ReserveItemPrice> prices) {
+		System.out.println("service in");
 		reserveItem.setCreateDate(new Date());
 		reserveItem.setModifyDate(new Date());
+		reserveItem.setCancelFlag(false);
 		int reservationInfoId = reserveItemDao.reserveAnItem(reserveItem);
+		System.out.println("service middel");
 		reserveItem.setReservationInfoId(reservationInfoId);
-		for (int i = 0; i < prices.size(); i++) {
+		System.out.println(prices.size());
+		int i = 0;
+		int pricesSize = prices.size();
+		while (i < pricesSize) {
 			ReserveItemPrice reserveItemPrice = new ReserveItemPrice();
 			reserveItemPrice.setCount(prices.get(i).getCount());
 			reserveItemPrice.setProductPriceId(prices.get(i).getProductPriceId());
 			reserveItemPrice.setReservationInfoId(reservationInfoId);
 			int reservationInfoPriceId = reserveItemDao.reserveAnItemPrice(reserveItemPrice);
 			reserveItemPrice.setReservationInfoPriceId(reservationInfoPriceId);
-			reserveItem.getReserveItemPrices().add(reserveItemPrice);
+			reserveItem.getReserveItemPrices().set(i, reserveItemPrice);
+			System.out.println(i);
+			i++;
 		}
-		
+
+		System.out.println("service out");
 		return reserveItem;
 	}
 }
