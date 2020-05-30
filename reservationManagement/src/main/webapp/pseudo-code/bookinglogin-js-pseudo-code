@@ -1,0 +1,9 @@
+				bookinglogin-js
+
+제출 버튼에 클릭 이벤트 추가.
+	폼 태그에 있는 email input을 선택.(#resrv_id, 변수명 reserveInput)
+	폼 태그 자체 선택.(변수명 confirmForm)
+	폼 설정.
+		reserveInput의 name을 reservationEmail로 주기.
+		폼의 action을 컨트롤러 주소로 설정.
+		폼의 method를 POST로 설정.
