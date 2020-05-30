@@ -119,9 +119,9 @@ public class Sqls {
 			"reservation_info.id AS reservation_info_id, " + 
 			"reservation_user_comment.id AS reservation_user_comment_id, " + 
 			"file_info.save_file_name AS save_file_name, " + 
-			"SUBSTRING(DATE_FORMAT(reservation_user_comment.create_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23)  " + 
+			"reservation_user_comment.create_date  " + 
 			"AS create_date, " + 
-			"SUBSTRING(DATE_FORMAT(reservation_user_comment.modify_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23)  " + 
+			"reservation_user_comment.modify_date  " + 
 			"AS modify_date " + 
 			"FROM file_info " + 
 			"JOIN reservation_user_comment_image " + 
@@ -140,12 +140,12 @@ public class Sqls {
 	= "SELECT " + 
 			"reservation_user_comment.comment AS comment, " + 
 			"reservation_user_comment.id AS comment_id, " + 
-			"SUBSTRING(DATE_FORMAT(reservation_user_comment.create_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"reservation_user_comment.create_date " + 
 			"AS create_date, " + 
-			"SUBSTRING(DATE_FORMAT(reservation_user_comment.modify_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"reservation_user_comment.modify_date " + 
 			"AS modify_date, " + 
 			"product.id AS product_id, " + 
-			"SUBSTRING(DATE_FORMAT(reservation_info.reservation_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"reservation_info.reservation_date " + 
 			"AS reservation_date, " + 
 			"reservation_info.reservation_email AS reservation_email, " + 
 			"reservation_info.id AS reservation_info_id, " + 
@@ -169,9 +169,9 @@ public class Sqls {
 			"file_info.delete_flag AS delete_flag, " + 
 			"file_info.id AS file_info_id, " + 
 			"file_info.file_name AS file_name, " + 
-			"SUBSTRING(DATE_FORMAT(file_info.create_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"file_info.create_date " + 
 			"AS create_date, " + 
-			"SUBSTRING(DATE_FORMAT(file_info.modify_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"file_info.modify_date " + 
 			"AS modify_date, " + 
 			"file_info.save_file_name AS save_file_name, " + 
 			"product.id AS product_id, " + 
@@ -195,9 +195,9 @@ public class Sqls {
 			"product_price.price_type_name AS price_type_name, " + 
 			"product.id AS product, " + 
 			"product_price.id AS product_price_id, " + 
-			"SUBSTRING(DATE_FORMAT(product_price.create_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"product_price.create_date " + 
 			"AS create_date, " + 
-			"SUBSTRING(DATE_FORMAT(product_price.modify_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"product_price.modify_date " + 
 			"AS modify_date " + 
 			"FROM " + 
 			"product_price " + 
@@ -223,9 +223,9 @@ public class Sqls {
 			"product.content AS product_content, " + 
 			"product.description AS product_description, " + 
 			"product.event AS product_event, " + 
-			"SUBSTRING(DATE_FORMAT(display_info.create_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"display_info.create_date " + 
 			"AS create_date, " + 
-			"SUBSTRING(DATE_FORMAT(display_info.modify_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"display_info.modify_date " + 
 			"AS modify_date " + 
 			"FROM " + 
 			"display_info " + 
@@ -244,9 +244,9 @@ public class Sqls {
 			"file_info.file_name AS file_name, " + 
 			"file_info.save_file_name AS save_file_name, " + 
 			"display_info.id AS display_info_id, " + 
-			"SUBSTRING(DATE_FORMAT(display_info.create_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"display_info.create_date " + 
 			"AS create_date, " + 
-			"SUBSTRING(DATE_FORMAT(display_info.modify_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"display_info.modify_date " + 
 			"AS modify_date " + 
 			"FROM " + 
 			"display_info_image " + 
@@ -268,9 +268,9 @@ public class Sqls {
 			"reservation_info.reservation_email AS reservation_email, " + 
 			"reservation_info.reservation_tel AS reservation_telephone, " + 
 			"SUM(product_price.price) AS total_price, " + 
-			"SUBSTRING(DATE_FORMAT(reservation_info.create_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"reservation_info.create_date " + 
 			"AS create_date, " + 
-			"SUBSTRING(DATE_FORMAT(reservation_info.modify_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"reservation_info.modify_date " + 
 			"AS modify_date " + 
 			"FROM " + 
 			"reservation_info " + 
@@ -280,7 +280,8 @@ public class Sqls {
 			"ON product.id = reservation_info.product_id " + 
 			"JOIN product_price " + 
 			"ON product_price.product_id = reservation_info.product_id " + 
-			"WHERE reservation_info.reservation_email = :reservationEmail ";
+			"WHERE reservation_info.reservation_email = :reservationEmail "
+			+ "GROUP BY reservation_info.id ";
 	
 	public static final String GET_DELETE_RESULT
 	= "SELECT " + 
@@ -293,9 +294,9 @@ public class Sqls {
 			"reservation_info.reservation_email AS reservation_email, " + 
 			"reservation_info.reservation_tel AS reservation_telephone, " + 
 			"SUM(product_price.price ) AS total_price, " + 
-			"SUBSTRING(DATE_FORMAT(reservation_info.create_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"reservation_info.create_date " + 
 			"AS create_date, " + 
-			"SUBSTRING(DATE_FORMAT(reservation_info.modify_date, '%Y-%m-%dT%H:%i:%s.%f'), 1, 23) " + 
+			"reservation_info.modify_date " + 
 			"AS modify_date " + 
 			"FROM " + 
 			"reservation_info " + 
