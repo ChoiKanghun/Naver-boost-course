@@ -92,10 +92,22 @@ function getReservationInfoByAjax(url) {
     oReq.setRequestHeader("Content-type", "application/json");
     oReq.responseType = "text";
     oReq.addEventListener('load', function() {
-      //화면 상단에 이미지 추가.
       addSummaryContents(JSON.parse(this.responseText));
     });
     oReq.send();
 }
 
-getReservationInfoByAjax("/reservationManagement/api/reservations?reservationEmail=" + "rkdgns4562@daum.net");
+function checkMyBookExists(){
+	var reservationEmail = document.querySelector("#reservationEmailFromServer").innerText;
+
+	if (reservationEmail === "" || reservationEmail === "none")
+		document.querySelector(".wrap_mylist").style.display = "none";
+	else {
+		document.querySelector(".err").style.display = "none";
+		getReservationInfoByAjax("/reservationManagement/api/reservations?reservationEmail=" + reservationEmail);
+	}
+}
+
+checkMyBookExists()
+
+
