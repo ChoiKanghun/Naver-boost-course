@@ -1,10 +1,12 @@
 package kr.or.connect.reservationManagement.dto;
 
+import java.util.Date;
+
 public class Reservations {
 	private DisplayInfo displayInfo;
 	private boolean cancelFlag;
-	private String createDate;
-	private String modifyDate;
+	private Date createDate;
+	private Date modifyDate;
 	private int displayInfoId;
 	private int productId;
 	private String reservationDate;
@@ -21,16 +23,16 @@ public class Reservations {
 		this.displayInfo = displayInfo;
 	}
 
-	public String getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public String getModifyDate() {
+	public Date getModifyDate() {
 		return modifyDate;
 	}
-	public void setModifyDate(String modifyDate) {
+	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 	public int getDisplayInfoId() {

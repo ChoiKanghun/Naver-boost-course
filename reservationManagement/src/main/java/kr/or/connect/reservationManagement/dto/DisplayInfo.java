@@ -1,13 +1,15 @@
 package kr.or.connect.reservationManagement.dto;
 
+import java.util.Date;
+
 public class DisplayInfo {
 	private int categoryId;
 	private String categoryName;
-	private String createDate;
+	private Date createDate;
 	private int displayInfoId;
 	private String email;
 	private String homepage;
-	private String modifyDate;
+	private Date modifyDate;
 	private String openingHours;
 	private String placeLot;
 	private String placeName;
@@ -30,10 +32,10 @@ public class DisplayInfo {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	public String getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 	public int getDisplayInfoId() {
@@ -54,10 +56,10 @@ public class DisplayInfo {
 	public void setHomepage(String homepage) {
 		this.homepage = homepage;
 	}
-	public String getModifyDate() {
+	public Date getModifyDate() {
 		return modifyDate;
 	}
-	public void setModifyDate(String modifyDate) {
+	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 	public String getOpeningHours() {
