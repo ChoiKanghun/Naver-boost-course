@@ -9,10 +9,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
   <title>네이버 예약</title>
   <link href="css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
+  <div id="reservationEmailFromServer" style="display:none;">${reservationEmail }</div>
   <div id="container">
     <div class="header">
       <header class="header_tit">
@@ -338,7 +338,6 @@
           <div class="booking_cancel">
             <button class="btn"><span>취소</span></button>
           </div>
-
         </div>
       </div>
       <div class="right"></div>
