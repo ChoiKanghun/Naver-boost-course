@@ -106,4 +106,5 @@
 
        
    </body>
+   <script src="js/bookinglogin.js"></script>
 </html>
