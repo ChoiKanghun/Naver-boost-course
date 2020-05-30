@@ -31,4 +31,9 @@ public class ReservationManagementController {
 	public String reservePage() {
 		return "reserve";
 	}
+	
+	@GetMapping(path = "/myreservation")
+	public String myreservationPage() {
+		return "myreservation";
+	}
 }

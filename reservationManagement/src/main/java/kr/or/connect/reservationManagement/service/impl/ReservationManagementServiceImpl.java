@@ -165,8 +165,9 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	@Transactional(readOnly=false)
 	public ReserveItem reserveAnItem(ReserveItem reserveItem, List<ReserveItemPrice> prices) {
 		System.out.println("service in");
-		reserveItem.setCreateDate(new Date());
-		reserveItem.setModifyDate(new Date());
+		Date now = new Date();
+		reserveItem.setCreateDate(now);
+		reserveItem.setModifyDate(now);
 		reserveItem.setCancelFlag(false);
 		int reservationInfoId = reserveItemDao.reserveAnItem(reserveItem);
 		System.out.println("service middel");
@@ -182,11 +183,9 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 			int reservationInfoPriceId = reserveItemPriceDao.reserveAnItemPrice(reserveItemPrice);
 			reserveItemPrice.setReservationInfoPriceId(reservationInfoPriceId);
 			reserveItem.getReserveItemPrices().set(i, reserveItemPrice);
-			System.out.println(i);
+			System.out.println(i); 
 			i++;
 		}
-
-		System.out.println("service out");
 		return reserveItem;
 	}
 }
