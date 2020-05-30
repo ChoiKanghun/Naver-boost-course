@@ -1,9 +1,15 @@
 package kr.or.connect.reservationManagement.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.or.connect.reservationManagement.dto.Reservations;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
 @Controller
@@ -35,5 +41,24 @@ public class ReservationManagementController {
 	@GetMapping(path = "/myreservation")
 	public String myreservationPage() {
 		return "myreservation";
+	}
+	
+	@GetMapping(path = "/bookinglogin")
+	public String bookingloginPage() {
+		return "bookinglogin";
+	}
+	
+	@PostMapping(path = "/checkMyBook")
+	public String checkMyBook(
+			@RequestParam(name="reservationEmail", required=true) String reservationEmail,
+			RedirectAttributes redirectAttr) {
+		System.out.println("in");
+		List<Reservations> reservations = reservationManagementService.getReservations(reservationEmail);
+		System.out.println(reservations.size());
+		if (reservations.size() <= 0)
+	  		redirectAttr.addFlashAttribute("reservationEmail", "none");
+		else
+			redirectAttr.addFlashAttribute("reservationEmail", reservationEmail);
+		return "redirect:myreservation";
 	}
 }
