@@ -52,9 +52,7 @@ public class ReservationManagementController {
 	public String checkMyBook(
 			@RequestParam(name="reservationEmail", required=true) String reservationEmail,
 			RedirectAttributes redirectAttr) {
-		System.out.println("in");
 		List<Reservations> reservations = reservationManagementService.getReservations(reservationEmail);
-		System.out.println(reservations.size());
 		if (reservations.size() <= 0)
 	  		redirectAttr.addFlashAttribute("reservationEmail", "none");
 		else
