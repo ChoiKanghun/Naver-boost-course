@@ -100,8 +100,10 @@ function getReservationInfoByAjax(url) {
 function checkMyBookExists(){
 	var reservationEmail = document.querySelector("#reservationEmailFromServer").innerText;
 
-	if (reservationEmail === "" || reservationEmail === "none")
+	if (reservationEmail === "" || reservationEmail === "none"){
 		document.querySelector(".wrap_mylist").style.display = "none";
+		document.querySelector(".my_summary").style.display = "none";
+	}
 	else {
 		document.querySelector(".err").style.display = "none";
 		getReservationInfoByAjax("/reservationManagement/api/reservations?reservationEmail=" + reservationEmail);
