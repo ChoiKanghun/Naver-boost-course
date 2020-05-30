@@ -12,8 +12,9 @@
 </head>
 
 <body>
-  <div id="reservationEmailFromServer" style="display:none;">${reservationEmail }</div>
   <div id="container">
+    <div id="reservationEmailFromServer">${reservationEmail }</div>
+  
     <div class="header">
       <header class="header_tit">
         <h1 class="logo">
