@@ -260,7 +260,7 @@ public class Sqls {
 	public static final String SELECT_RESERVATIONS_BY_RESERVATION_EMAIL
 	= "SELECT " + 
 			"reservation_info.id AS reservation_info_id, " +
-			"reservation_info.cancel_flag AS cancel_Yn, " + 
+			"reservation_info.cancel_flag AS cancel_flag, " + 
 			"reservation_info.product_id AS product_id, " + 
 			"reservation_info.display_info_id AS display_info_id, " + 
 			"reservation_info.reservation_date AS reservation_date,  " + 
@@ -312,11 +312,35 @@ public class Sqls {
 			"reservation_info_price.id AS reservation_info_price_id, " + 
 			"product_price.id AS product_price_id, " + 
 			"COUNT(reservation_info_price.reservation_info_id) AS count " + 
-			"FROM" + 
+			"FROM " + 
 			"reservation_info " + 
 			"JOIN reservation_info_price " + 
 			"ON reservation_info_price.reservation_info_id = reservation_info.id " + 
 			"JOIN product_price " + 
 			"ON product_price.id = reservation_info_price.product_price_id " + 
 			"WHERE reservation_info.id = :reservationId";
+	
+	public static final String UPDATE_CANCEL_FLAG_BY_RESERVATION_INFO_ID
+	= "UPDATE reservation_info "
+			+ "SET cancel_flag = true "
+			+ "WHERE id = :reservationInfoId";
+	
+	public static final String SELECT_ALL_RESERVATION_INFO_BY_RESERVATION_INFO_ID
+	= "SELECT " + 
+			"id AS reservation_info_id, " + 
+			"product_id, " + 
+			"display_info_id, " + 
+			"reservation_name, " + 
+			"reservation_tel, " + 
+			"reservation_email, " + 
+			"reservation_date, " + 
+			"cancel_flag, " + 
+			"create_date, " + 
+			"modify_date " + 
+			"FROM " + 
+			"reservation_info " + 
+			"WHERE " + 
+			"id = :reservationInfoId";
+	
+			
 }

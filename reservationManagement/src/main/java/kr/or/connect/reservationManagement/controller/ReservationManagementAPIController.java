@@ -24,6 +24,7 @@ import kr.or.connect.reservationManagement.dto.ProductImages;
 import kr.or.connect.reservationManagement.dto.ProductPrices;
 import kr.or.connect.reservationManagement.dto.Reservations;
 import kr.or.connect.reservationManagement.dto.ReserveItem;
+import kr.or.connect.reservationManagement.dto.ReserveItemPrice;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
 
@@ -180,6 +181,15 @@ public class ReservationManagementAPIController {
 			@RequestParam(name="reservationYearMonthDay", required=true) String reservationYearMonthDay) {
 		reserveItem.setReservationDate(reservationYearMonthDay);
 		reserveItem = reservationManagementService.reserveAnItem(reserveItem, reserveItem.getReserveItemPrices());
+		return reserveItem;
+	}
+	
+	@PutMapping(path = "/api/cancelReservation")
+	public ReserveItem cancelReservation(
+			@RequestParam(name="reservationInfoId", required=true)int reservationInfoId) {
+		ReserveItem reserveItem = reservationManagementService.cancelReservation(reservationInfoId);
+		List<ReserveItemPrice> prices = reservationManagementService.getResereveItemPriceByReservationInfoId(reservationInfoId);
+		reserveItem.setReserveItemPrices(prices);
 		return reserveItem;
 	}
 }

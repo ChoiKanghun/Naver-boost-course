@@ -337,7 +337,7 @@
           </div>
           <!-- [D] 예약 신청중, 예약 확정 만 취소가능, 취소 버튼 클릭 시 취소 팝업 활성화 -->
           <div class="booking_cancel">
-            <button class="btn"><span>취소</span></button>
+            <button class="btn" data-reservation-info-id={{reservationInfoId}}><span>취소</span></button>
           </div>
         </div>
       </div>

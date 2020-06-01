@@ -188,4 +188,15 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 		}
 		return reserveItem;
 	}
+	
+	@Override
+	public ReserveItem cancelReservation(Integer reservationInfoId) {
+		return reserveItemDao.cancelReserve(reservationInfoId);
+	}
+	
+	@Override
+	public List<ReserveItemPrice> getResereveItemPriceByReservationInfoId(Integer reservationInfoId){
+		return reserveItemPriceDao.getPricesByReservationInfoId(reservationInfoId);
+	}
+	
 }

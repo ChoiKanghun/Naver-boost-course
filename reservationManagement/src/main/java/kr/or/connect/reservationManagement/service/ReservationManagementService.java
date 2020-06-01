@@ -41,4 +41,6 @@ public interface ReservationManagementService {
 	List<DeleteReservationPrices> getDeleteResultPrices(Integer reservationId);
 	DeleteReservationResult getDeleteResult(Integer reservationId);
 	ReserveItem reserveAnItem(ReserveItem reserveItem, List<ReserveItemPrice> prices);
+	ReserveItem cancelReservation(Integer reservationInfoId);
+	List<ReserveItemPrice> getResereveItemPriceByReservationInfoId(Integer reservationInfoId);
 }

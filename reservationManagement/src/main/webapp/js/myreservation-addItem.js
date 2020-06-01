@@ -1,3 +1,28 @@
+function sendCancelAjax(reservationInfoId){
+    var oReqCancel = new XMLHttpRequest;
+    
+    oReqCancel.open('PUT', 
+    		"/reservationManagement/api/cancelReservation?reservationInfoId=" + reservationInfoId);
+    oReqCancel.setRequestHeader("Content-type", "application/json");
+    oReqCancel.send();
+    
+	var reservationEmail = document.querySelector("#reservationEmailFromServer").innerText;
+	
+    var form = document.createElement("form");
+    form.setAttribute("charset", "UTF-8");
+    form.setAttribute("method", "POST");
+    form.setAttribute("action", "/reservationManagement/checkMyBook");
+    
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "reservationEmail");
+    hiddenField.setAttribute("value", reservationEmail);
+    form.appendChild(hiddenField);
+    
+    document.body.appendChild(form);
+    form.submit();
+}
+
 function deleteCancellationButton(){
 	var unDeletableItems = document.querySelectorAll(".used");
 	
@@ -8,6 +33,18 @@ function deleteCancellationButton(){
 	});
 }
 
+function cancelMyReservation(json){
+	var btnWrapper = document.querySelectorAll(".booking_cancel");
+	
+	btnWrapper.forEach(function(b){
+		b.querySelector(".btn").addEventListener('click', function(){
+			var reservationInfoId = this.dataset.reservationInfoId;
+
+			sendCancelAjax(reservationInfoId);	
+		})
+	})
+	deleteCancellationButton();
+}
 function addReserveInfo(json, arrayToSaveWhereToAddArticle){
 	var articleTemplateHTML = document.querySelector("#article_template").innerHTML;
 	var articleBindTemplate = Handlebars.compile(articleTemplateHTML);
@@ -42,7 +79,7 @@ function addReserveInfo(json, arrayToSaveWhereToAddArticle){
 			targetToAddArticle = document.querySelector(".card.confirmed");
 		targetToAddArticle.innerHTML += articleBindTemplate(oneReservation);
 	});
-	deleteCancellationButton();
+	cancelMyReservation(json);
 }
 
 function addSummaryContents(json){
@@ -60,8 +97,10 @@ function addSummaryContents(json){
 		var month = oneReservation.reservationDate.substr(5, 2);
 		var day = oneReservation.reservationDate.substr(8, 2);
 		var performDate = new Date(year, month - 1, day).getTime();
+		
+		var test = oneReservation.cancelFlag;
 
-		if (json.cancelFlag){
+		if (oneReservation.cancelFlag){
 			cancelledPerformCount++;
 			arrayToSaveWhereToAddArticle[index] = "cancel";
 		}
@@ -110,6 +149,6 @@ function checkMyBookExists(){
 	}
 }
 
-checkMyBookExists()
+checkMyBookExists();
 
 
