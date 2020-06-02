@@ -21,3 +21,11 @@
 		PRICES SERVICE로부터 PRICES 리스트를 받아 변수에 저장.
 		PRICES LIST 변수를 UPDATE SERVICE로부터 받은 객체 내 list에 저장.
 		객체를 리턴.
+
+js
+	article들을 추가할 때 cancel쪽에 reservation_info_id정보를 붙여주기
+	취소 버튼에 이벤트 등록
+		취소 버튼을 기준으로 dataset.reservationInfoId를 가져옴.
+		reservationInfoId로 PUT API AJAX 신청.
+		현재 reservationEmail로 재요청하여 리다이렉트 될 수 있게.
+
