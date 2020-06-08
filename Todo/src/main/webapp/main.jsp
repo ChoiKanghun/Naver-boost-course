@@ -7,12 +7,8 @@
 
  <%
       String todo = (String) request.getAttribute("listTodo");
-      //String doing = (String) request.getAttribute("listDoing");
-      //String done = (String) request.getAttribute("listDone");
       ObjectMapper mapper = new ObjectMapper();
       TodoDto[] todoList = mapper.readValue(todo, TodoDto[].class);
-      //TodoDto[] doingList = mapper.readValue(doing, TodoDto[].class);
-      //TodoDto[] doneList = mapper.readValue(done, TodoDto[].class);
  %>
 <!DOCTYPE html>
 <html>
