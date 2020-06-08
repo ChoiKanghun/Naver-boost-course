@@ -1278,9 +1278,22 @@ button {
 .group_visual .visual_img {
     position: relative;
     min-height: 210px;
+    max-height: 414px;
     font: 0/0 a;
     color: #fff;
-    white-space: nowrap
+    white-space: nowrap;
+    
+
+}
+
+.group_visual .visual_img li {
+	position: relative;
+	display: inline;
+}
+
+.group_visual .visual_img img {
+	width: 414px;
+    height: 414px;
 }
 
 .group_visual .visual_img .item {
@@ -1335,6 +1348,8 @@ button {
     moz-box-sizing: border-box;
     box-sizing: border-box
 }
+
+
 
 .bottom_common_path {
     -webkit-box-sizing: border-box;
@@ -3149,8 +3164,8 @@ button {
     overflow-y: hidden;
     overflow-x: auto;
     position: relative;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
     padding-bottom: 5px;
     white-space: nowrap;
     word-wrap: normal;
@@ -3167,7 +3182,7 @@ button {
 
 .event .section_event_tab .event_tab_lst>.item .anchor {
     display: inline-block;
-    margin-right: 13px;
+    margin-right: 6px;
     padding: 10px 4.5px 10px 4px;
     color: #000;
     box-sizing: border-box;
@@ -3215,11 +3230,12 @@ button {
 
 .event .wrap_event_box .lst_event_box {
     width: 50%;
-    float: left;
     padding-top: 10px;
+    display: inline-block;
     padding-left: 2.5px;
     padding-right: 3.5px;
-    box-sizing: border-box
+    box-sizing: border-box;
+    
 }
 
 .event .wrap_event_box .lst_event_box .item {
@@ -3228,11 +3244,13 @@ button {
     display: inline-block;
     float: left;
     margin-bottom: 6px;
-    box-sizing: border-box
+    box-sizing: border-box;
+    
 }
 
 .event .wrap_event_box .lst_event_box .item .item_book {
-    display: block
+    display: block;
+
 }
 
 .event .wrap_event_box .lst_event_box .item .item_book .item_preview {
@@ -3303,6 +3321,7 @@ button {
 }
 
 .more {
+	clear:both;
 	padding: 3px;
 }
 .more .btn {
