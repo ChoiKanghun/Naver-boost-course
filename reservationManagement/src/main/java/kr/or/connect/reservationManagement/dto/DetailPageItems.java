@@ -1,4 +1,4 @@
-package kr.or.connect.reservationManagement.dto;
+/*package kr.or.connect.reservationManagement.dto;
 
 public class DetailPageItems {
 
@@ -53,3 +53,4 @@ public class DetailPageItems {
 	}
 	
 }
+*/

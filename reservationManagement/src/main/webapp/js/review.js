@@ -44,7 +44,13 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     //표시해야 할 DATE FORMAT에 맞춰 출력
     Handlebars.registerHelper('customDateFormat', function(input) {
-      return new Handlebars.SafeString(input.substring(0, 10).replace("-", ".").replace("-", "."));
+  	  var today = new Date(input);
+  	  var year = today.getFullYear();
+  	  var month = today.getMonth() + 1;
+  	  var date = today.getDate();
+  	  var resultDate = "" + year + ". " +  month + ". " + date + ".";
+  	  
+  	  return resultDate;
     })
     //SCORE가 소수점을 가지지 않을 때(n.0) 소수점을 표시.
     Handlebars.registerHelper('scoreToFloat', function(input) {

@@ -5,6 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // location.search는 url에서 ?를 찾아내줌.
     var paramString = location.search.substr(1);
     var splitedString = paramString.split("&");
+    
     for (var i = 0; i < splitedString.length; i++) {
       var tempArray = splitedString[i].split("=");
       if (tempArray[0] == paramName)

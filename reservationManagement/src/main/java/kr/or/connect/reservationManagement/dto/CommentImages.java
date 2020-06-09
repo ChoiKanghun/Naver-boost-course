@@ -1,9 +1,11 @@
 package kr.or.connect.reservationManagement.dto;
 
+import java.util.Date;
+
 public class CommentImages {
 	private String contentType;
-	private String createDate;
-	private String modifyDate;
+	private Date createDate;
+	private Date modifyDate;
 	private boolean deleteFlag; 
 	private int fileId;
 	private String fileName;
@@ -17,16 +19,16 @@ public class CommentImages {
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
-	public String getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public String getModifyDate() {
+	public Date getModifyDate() {
 		return modifyDate;
 	}
-	public void setModifyDate(String modifyDate) {
+	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 	public boolean isDeleteFlag() {

@@ -10,13 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.connect.reservationManagement.dao.CommentImagesDao;
 import kr.or.connect.reservationManagement.dao.CommentsDao;
 import kr.or.connect.reservationManagement.dao.DeleteResultDao;
-import kr.or.connect.reservationManagement.dao.DetailPageItemsDao;
 import kr.or.connect.reservationManagement.dao.DisplayInfoDao;
 import kr.or.connect.reservationManagement.dao.DisplayInfoImageDao;
 import kr.or.connect.reservationManagement.dao.ItemsDao;
 import kr.or.connect.reservationManagement.dao.ProductImagesDao;
 import kr.or.connect.reservationManagement.dao.ProductPricesDao;
-import kr.or.connect.reservationManagement.dao.ReservationCommentsDao;
 import kr.or.connect.reservationManagement.dao.ReservationsDao;
 import kr.or.connect.reservationManagement.dao.ReserveItemDao;
 import kr.or.connect.reservationManagement.dao.ReserveItemPriceDao;
@@ -24,13 +22,11 @@ import kr.or.connect.reservationManagement.dto.CommentImages;
 import kr.or.connect.reservationManagement.dto.Comments;
 import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
 import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
-import kr.or.connect.reservationManagement.dto.DetailPageItems;
 import kr.or.connect.reservationManagement.dto.DisplayInfo;
 import kr.or.connect.reservationManagement.dto.DisplayInfoImage;
 import kr.or.connect.reservationManagement.dto.Items;
 import kr.or.connect.reservationManagement.dto.ProductImages;
 import kr.or.connect.reservationManagement.dto.ProductPrices;
-import kr.or.connect.reservationManagement.dto.ReservationComments;
 import kr.or.connect.reservationManagement.dto.Reservations;
 import kr.or.connect.reservationManagement.dto.ReserveItem;
 import kr.or.connect.reservationManagement.dto.ReserveItemPrice;
@@ -41,10 +37,11 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 
 	@Autowired
 	ItemsDao productsDao;
+	/*
 	@Autowired
 	DetailPageItemsDao detailPageItemsDao;
 	@Autowired
-	ReservationCommentsDao reservationCommentsDao;
+	ReservationCommentsDao reservationCommentsDao;*/
 	@Autowired
 	CommentImagesDao commentImagesDao;
 	@Autowired
@@ -66,11 +63,11 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	@Autowired
 	ReserveItemPriceDao reserveItemPriceDao;
 	
-	@Override
+/*	@Override
 	public List<Items> getAllProducts(){
 		return productsDao.selectAllProducts();
 	}
-	
+	*/
 	@Override
 	public List<Items> getLimitedProducts(Integer start){
 		return productsDao.selectLimitedProducts(start, ReservationManagementService.LIMIT);
@@ -101,11 +98,11 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 		return (productsDao.getPromotionInfo());
 	}
 
-	@Override
+/*	@Override
 	public List<DetailPageItems> getDetailListItems(Integer id){
 		return (detailPageItemsDao.getDetailPageItemsById(id));
 	}
-	
+
 	@Override
 	public List<ReservationComments> getUserCommentsById(Integer id){
 		return reservationCommentsDao.getUserCommentsById(id);
@@ -115,7 +112,7 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	public List<ReservationComments> getLimitedUserCommentsById(Integer id, Integer limit){
 		return reservationCommentsDao.getLimitedUserCommentById(id, limit);
 	}
-	
+	*/
 	@Override
 	public List<CommentImages> getCommentImages(Integer reservationUserCommentId){
 		return commentImagesDao.getCommentImages(reservationUserCommentId);

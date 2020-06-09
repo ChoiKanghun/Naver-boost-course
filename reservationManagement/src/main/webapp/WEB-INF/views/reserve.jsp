@@ -128,7 +128,7 @@
 <script type="rv-template" id = "container_visual_template">
 {{#productImages}}
   <li class="item" style="width: 414px;">
-    <img alt="" class="img_thumb" src={{saveFileName}}>
+    <img alt="" class="img_thumb" src={{saveFileName}} style="height:100%">
     <span class="img_bg"> </span>
 {{/productImages}}
 {{#displayInfo}}

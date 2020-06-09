@@ -103,8 +103,8 @@
             <div class="short_review_area">
               <div class="grade_area">
                 <!-- [D] 별점 graph_value는 퍼센트 환산하여 width 값을 넣어줌 -->
-                <span class="graph_mask"> <em class="graph_value" style="width: 84%;"></em> </span>
-                <strong class="text_value"> <span>4.2</span> <em class="total">5.0</em> </strong>
+                <span class="graph_mask"> <em class="graph_value" style="width: 0%;"></em> </span>
+                <strong class="text_value"> <span>0.0</span> <em class="total">5.0</em> </strong>
                 <span class="join_count"><em class="green">52건</em> 등록</span>
               </div>
               <ul class="list_short_review">
@@ -176,7 +176,7 @@
 <script src="js/detail.js"></script>
 <script type="container_visual_template" id="container_visual_template">
   <li class="item" style="width: 414px;"> 
-      <img alt="" class="img_thumb" src={{saveFileName}}> 
+      <img alt="" class="img_thumb" src={{saveFileName}} style="height:100%"> 
       <span class="img_bg"></span>
       <div class="visual_txt">
         <div class="visual_txt_inn">

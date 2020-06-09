@@ -3,7 +3,6 @@ package kr.or.connect.reservationManagement.dao;
 import static kr.or.connect.reservationManagement.dao.Sqls.COUNT_ALL_PRODUCT;
 import static kr.or.connect.reservationManagement.dao.Sqls.COUNT_PRODUCT_BY_CATEGORY_ID;
 import static kr.or.connect.reservationManagement.dao.Sqls.PROMOTION_INFO;
-import static kr.or.connect.reservationManagement.dao.Sqls.SELECT_ALL_PRODUCTS;
 import static kr.or.connect.reservationManagement.dao.Sqls.SELECT_CATEGORIES_INFO_GROUP_BY_CATEGORY_ID;
 import static kr.or.connect.reservationManagement.dao.Sqls.SELECT_LIMIT_PRODUCTS;
 import static kr.or.connect.reservationManagement.dao.Sqls.SELECT_LIMIT_PRODUCTS_BY_CATEGORY_ID;
@@ -54,11 +53,11 @@ public class ItemsDao {
 	}
 	
 	
-	// get everything from product table and place_name from display_info
+/*	// get everything from product table and place_name from display_info
 	public List<Items> selectAllProducts(){
 		return jdbc.query(SELECT_ALL_PRODUCTS, Collections.emptyMap(), rowMapper);
 	}
-	
+	*/
 
 	//get category info group by id
 	public List<Items> selectCategoriesInfoGroupByCategoryId(){

@@ -67,7 +67,7 @@ public class Sqls {
 			+ "JOIN file_info "
 			+ "ON file_info.id = product_image.file_id "
 			+ "WHERE type='th' ";
-
+	/*
 	public static final String GET_DETAIL_PAGE_ITEMS_BY_ID
 	= "SELECT display_info.id AS display_info_id, " + 
 			"product.id AS product_id, product.description AS product_description, " + 
@@ -82,7 +82,7 @@ public class Sqls {
 			"ON file_info.id = product_image.file_id " + 
 			"WHERE (product_image.type='et' or product_image.type='ma') "
 			+ " and display_info.id = :id ";
-	
+
 	public static final String SELECT_USER_COMMENTS_BY_ID
 	= 
 			"SELECT reservation_user_comment.comment AS comment, " + 
@@ -105,7 +105,7 @@ public class Sqls {
 
 	public static final String GET_LIMITED_USER_COMMENTS_BY_ID
 	= SELECT_USER_COMMENTS_BY_ID + "LIMIT 0, :limit ";
-	
+*/
 	
 	/*project 4*/
 	public static final String SELECT_COMMENT_IMAGE_BY_RESERVATION_USER_COMMENT_ID

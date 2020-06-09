@@ -1,4 +1,4 @@
-package kr.or.connect.reservationManagement.dao;
+/*package kr.or.connect.reservationManagement.dao;
 
 import static kr.or.connect.reservationManagement.dao.Sqls.GET_LIMITED_USER_COMMENTS_BY_ID;
 import static kr.or.connect.reservationManagement.dao.Sqls.SELECT_USER_COMMENTS_BY_ID;
@@ -41,4 +41,4 @@ public class ReservationCommentsDao {
 		params.put("limit", limit);
 		return jdbc.query(GET_LIMITED_USER_COMMENTS_BY_ID, params, rowMapper);
 	}
-}
+}*/

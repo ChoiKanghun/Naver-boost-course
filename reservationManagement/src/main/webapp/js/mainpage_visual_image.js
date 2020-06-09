@@ -1,20 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const PROMOTION_WIDTH = 414;
+  const PROMOTION_WIDTH = document.querySelector(".visual_img").offsetWidth;
+
   
-  function promotion_image_move(image_count) {
+  function promotionImageMove(imageCount) {
     var curr = 0;
-    var visual_img = document.querySelector(".visual_img");
+    var visualImg = document.querySelector(".visual_img");
 
     function set_t_out() {
       setTimeout(function() {
         if (curr != 0)
-          visual_img.style.transition = "transform 2s ease-in-out";
+        	visualImg.style.transition = "transform 2s ease-in-out";
         else
-          visual_img.style.transition = "";
-        visual_img.style.transform = "translate3d(-" + (curr) * PROMOTION_WIDTH + "px, 0px, 0px)";
+        	visualImg.style.transition = "";
+        visualImg.style.transform = "translate3d(-" + (curr) * PROMOTION_WIDTH + "px, 0px, 0px)";
 
         curr++;
-        if (curr === image_count) {
+        if (curr === imageCount) {
           curr = 0;
         }
         set_t_out();
@@ -27,19 +28,18 @@ document.addEventListener("DOMContentLoaded", () => {
     var json = JSON.parse(oReq.responseText);
     var promotionItemHTML = document.querySelector("#promotionImages").innerHTML;
     var promotionItemResult = "";
-    var visual_img = document.querySelector(".visual_img");
-    var image_count = 0;
+    var visualImg = document.querySelector(".visual_img");
+    var imageCount = 0;
 
     for (var i = 0; i < json.items.length; i++) {
       promotionItemResult += promotionItemHTML.replace("{src}", json.items[i].productImageUrl);
     };
-    visual_img.innerHTML = promotionItemResult;
-
-    visual_img.querySelectorAll("li").forEach(function() {
-      image_count++;
+    visualImg.innerHTML = promotionItemResult;
+    visualImg.querySelectorAll("li").forEach(function() {
+    	imageCount++;
     });
-    visual_img.style.width = (visual_img.offsetWidth * image_count) + "px";
-    promotion_image_move(image_count);
+    visualImg.style.width = (PROMOTION_WIDTH * imageCount) + "px";
+    promotionImageMove(imageCount);
 
   };
 

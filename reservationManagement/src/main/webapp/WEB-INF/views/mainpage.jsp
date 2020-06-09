@@ -67,15 +67,20 @@
 					<li class="item" data-category="0"><a class="anchor active">
 							<span>전체리스트</span>
 					</a></li>
-					<li class="item" data-category="1"><a class="anchor"> <span>전시</span>
+					<li class="item" data-category="1"><a class="anchor"> 
+					<span>전시</span>
 					</a></li>
-					<li class="item" data-category="2"><a class="anchor"> <span>뮤지컬</span>
+					<li class="item" data-category="2"><a class="anchor"> 
+					<span>뮤지컬</span>
 					</a></li>
-					<li class="item" data-category="3"><a class="anchor"> <span>콘서트</span>
+					<li class="item" data-category="3"><a class="anchor"> 
+					<span>콘서트</span>
 					</a></li>
-					<li class="item" data-category="4"><a class="anchor"> <span>클래식</span>
+					<li class="item" data-category="4"><a class="anchor"> 
+					<span>클래식</span>
 					</a></li>
-					<li class="item" data-category="5"><a class="anchor"> <span>연극</span>
+					<li class="item" data-category="5"><a class="anchor"> 
+					<span>연극</span>
 					</a></li>
 					<!-- li class="item" data-category="7">
                         <a class="anchor"> <span>클래스</span> </a>
@@ -128,7 +133,7 @@
 <script type="rv-template" id="promotionImages">
 	<li class="item" style="display:inline";>
 		<a href="#">
-			<img src={src} style="width:414px"/>
+			<img src={src} style="width:414px;height:207px"/>
 		</a>
 	</li>
 	</script>

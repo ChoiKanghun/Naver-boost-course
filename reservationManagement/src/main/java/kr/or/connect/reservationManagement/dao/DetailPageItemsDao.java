@@ -1,4 +1,4 @@
-package kr.or.connect.reservationManagement.dao;
+/*package kr.or.connect.reservationManagement.dao;
 
 import static kr.or.connect.reservationManagement.dao.Sqls.GET_DETAIL_PAGE_ITEMS_BY_ID;
 
@@ -35,3 +35,4 @@ public class DetailPageItemsDao {
 	}
 	
 }
+*/

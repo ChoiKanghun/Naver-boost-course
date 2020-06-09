@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.or.connect.reservationManagement.dto.Comments;
 import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
 import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
-import kr.or.connect.reservationManagement.dto.DetailPageItems;
 import kr.or.connect.reservationManagement.dto.DisplayInfo;
 import kr.or.connect.reservationManagement.dto.DisplayInfoImage;
 import kr.or.connect.reservationManagement.dto.Items;
@@ -55,8 +54,6 @@ public class ReservationManagementAPIController {
 			
 			resBody.put("items", items);
 			resBody.put("totalCount", totalCountByCategoryId);
-			
-
 		}
 		return resBody;
 	}
@@ -79,7 +76,7 @@ public class ReservationManagementAPIController {
 		return (resBody);
 	}
 	
-	@GetMapping(path = "/api/detail_page_items", produces = "application/json; charset=utf-8")
+/*	@GetMapping(path = "/api/detail_page_items", produces = "application/json; charset=utf-8")
 	public Map<String, Object> getDetailPageItems(
 			@RequestParam(required = true) int id){
 		List<DetailPageItems> items = reservationManagementService.getDetailListItems(id);
@@ -87,7 +84,7 @@ public class ReservationManagementAPIController {
 		
 		resBody.put("items", items);
 		return (resBody);
-	}
+	}*/
 	
 	@GetMapping(path = "/api/products/{displayInfoId}")
 	public Map<String, Object> getProductsByDisplayInfoId(
@@ -104,9 +101,9 @@ public class ReservationManagementAPIController {
 				division += 1;
 			}
 		}
-		if (division != 0F) {
+		if (division != 0F)
 			averageScore = averageScore / division;
-		}
+		
 		DisplayInfo displayInfo = reservationManagementService.getDisplayInfo(displayInfoId);
 		DisplayInfoImage displayInfoImage = reservationManagementService.getDisplayInfoImage(displayInfoId);
 		List<ProductImages> productImages = reservationManagementService.getProductImages(displayInfoId);

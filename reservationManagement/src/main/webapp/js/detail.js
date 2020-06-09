@@ -14,11 +14,10 @@ window.addEventListener('DOMContentLoaded', () => {
             iterateDivTag.classList.add("hide");
           });
           this.classList.forEach(function(c) {
-            if (c == "_detail") {
+            if (c == "_detail")
               document.querySelector(".detail_area_wrap").classList.remove("hide");
-            } else if (c == "_path") {
+            else if (c == "_path")
               document.querySelector(".detail_location").classList.remove("hide");
-            }
           })
         });
       });
@@ -38,6 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
       var introductionArea = document.querySelectorAll(".detail_info_lst")[0].querySelector(".in_dsc");
 
       introductionArea.innerHTML += json.displayInfo.productContent;
+      
       //오시는 길 정보 추가
       this.addPathContent(json);
     },
@@ -62,7 +62,13 @@ window.addEventListener('DOMContentLoaded', () => {
       });
       //표시해야 할 DATE FORMAT에 맞춰 출력
       Handlebars.registerHelper('customDateFormat', function(input) {
-        return new Handlebars.SafeString(input.substring(0, 10).replace("-", ".").replace("-", "."));
+    	  var today = new Date(input);
+    	  var year = today.getFullYear();
+    	  var month = today.getMonth() + 1;
+    	  var date = today.getDate();
+    	  var resultDate = "" + year + ". " +  month + ". " + date + ".";
+    	  
+    	  return resultDate;
       })
       //SCORE가 소수점을 가지지 않을 때(n.0) 소수점을 표시.
       Handlebars.registerHelper('scoreToFloat', function(input) {
@@ -74,7 +80,7 @@ window.addEventListener('DOMContentLoaded', () => {
         commentsLengthLimit = 3;
       else
         commentsLengthLimit = json.comments.length;
-      for (var i = 0; i < commentsLengthLimit; i++) {
+      for (var i = 0; i < commentsLengthLimit; i++){
         bindResultHTML += bindCommentsTemplate(json.comments[i]);
       }
       ulClassNameListShortReview.innerHTML = bindResultHTML;
@@ -100,19 +106,20 @@ window.addEventListener('DOMContentLoaded', () => {
       var visualBindTemplate = Handlebars.compile(visualTemplate);
       var offSpan = document.querySelector(".off").querySelector("span");
       var contentArea = document.querySelector(".store_details").querySelector(".dsc");
+      var i;
 
       //이미지 채움.
-      ulClassNameVisualImg.innerHTML += json.productImages.reduce(function(prev, next) {
-        return prev + visualBindTemplate(next);
-      }, "");
+      for (i = 0; i < 2 && i < json.productImages.length; i++)
+    	  ulClassNameVisualImg.innerHTML += visualBindTemplate(json.productImages[i]);
+      var countImages = (i == 1 ? 1 : 2);
       //이미지에 글자 채움.
       document.querySelectorAll(".visual_txt_tit").forEach((v) => {
         v.firstElementChild.innerText = json.displayInfo.productDescription;
       })
       //전체 이미지 개수 표시
-      offSpan.innerText = json.productImages.length;
+      offSpan.innerText = " " + countImages;
       //.figure_pagination 영역 초기화
-      ulClassNameVisualImg.style.width = (ulClassNameVisualImg.offsetWidth * json.productImages.length) + "px";
+      ulClassNameVisualImg.style.width = (ulClassNameVisualImg.offsetWidth * countImages) + "px";
       ulClassNameVisualImg.style.transition = "transform 2s ease-in-out";
       document.querySelector(".figure_pagination").firstElementChild.innerText = "1";
       //설명칸에 설명 넣기
@@ -153,7 +160,7 @@ window.addEventListener('DOMContentLoaded', () => {
       var limitCurr = document.querySelector(".off").querySelector("span").innerText * 1;
       var ulClassNameVisualImg = document.querySelector(".visual_img");
       const VISUAL_IMG_WIDTH = 414;
-
+      
       if (flag === "toTheRight")
         if (++curr > limitCurr)
           curr = 1;
@@ -166,10 +173,10 @@ window.addEventListener('DOMContentLoaded', () => {
     addEventToPrevNextBtn: function() {
       document.querySelector(".btn_prev").addEventListener('click', function() {
         this.getNextUlClassNameVisualImg("toTheLeft");
-      });
+      }.bind(this));
       document.querySelector(".btn_nxt").addEventListener('click', function() {
         this.getNextUlClassNameVisualImg("toTheRight");
-      });
+      }.bind(this));
     }
   }
 
@@ -201,6 +208,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
+  
   addImageAddTemplateObj.getDisplayInfoByAjax(
     "/reservationManagement/api/products/" + addImageAddTemplateObj.getParamValueFromUrl("id"));
   addEventToPrevNextBtnObj.addEventToPrevNextBtn();

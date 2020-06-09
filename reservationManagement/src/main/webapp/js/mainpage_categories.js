@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   var test = document.querySelector("#test");
-  var category_tab = document.querySelector(".event_tab_lst");
+  var categoryTab = document.querySelector(".event_tab_lst");
   var start = 0;
   var moreBtn = document.querySelector(".more");
-  var current_category = document.querySelector("#current_category").value;
+  var currentCategory = document.querySelector("#current_category").value;
 
   function drawBasicCategory(json) {
 	var columns = document.querySelectorAll(".lst_event_box");
@@ -19,8 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .replace("{placeName}", json.items[i].placeName)
         .replace("{description}", json.items[i].productDescription)
         .replace("{content}", json.items[i].productContent);
-      
-      if (i % 2 == 0)
+      if (i % 2 != 0)
     	  rightColumn.innerHTML += itemListResult;
       else
     	  leftColumn.innerHTML += itemListResult;
@@ -31,10 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  function makeHtmlContent(url, oReq, category_id) {
+  function makeHtmlContent(url, oReq, categoryId) {
     var json = JSON.parse(oReq.responseText);
     var columns = document.querySelectorAll(".lst_event_box");
-    var event_tab_lst_li = document.querySelector(".event_tab_lst").querySelectorAll("li");
+    var eventTabLstLi = document.querySelector(".event_tab_lst").querySelectorAll("li");
     var pink = document.querySelector(".event_lst_txt").querySelector(".pink");
 
     columns.forEach(function(content) {
@@ -42,15 +41,15 @@ document.addEventListener("DOMContentLoaded", () => {
     	  li.remove();
       })
     });
-    event_tab_lst_li.forEach(function(list) {
+    eventTabLstLi.forEach(function(list) {
       list.firstElementChild.className =
-        (list.dataset.category == category_id) ? 'anchor active' : 'anchor';
+        (list.dataset.category == categoryId) ? 'anchor active' : 'anchor';
     });
     pink.innerText = json.totalCount + "개";
     drawBasicCategory(json);
   }
 
-  function sendProductsAjax(url, flag, category_id) {
+  function sendProductsAjax(url, flag, categoryId) {
     var oReq = new XMLHttpRequest;
 
     oReq.open('GET', url);
@@ -58,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     oReq.responseType = "text";
     oReq.addEventListener("load", function() {
       if (flag === "tab")
-        makeHtmlContent(url, this, category_id);
+        makeHtmlContent(url, this, categoryId);
       if (flag === "more")
         drawBasicCategory(JSON.parse(oReq.responseText));
     });
@@ -66,33 +65,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  category_tab.addEventListener("click", function(evt) {
-    var category_id = "";
+  categoryTab.addEventListener("click", function(evt) {
+    var categoryId = "";
 
-    if (evt.target.tagName === "UL") {
-      category_id = evt.target.firstChild.dataset.category;
-    } else if (evt.target.tagName === "LI") {
-      category_id = evt.target.dataset.category;
-    } else if (evt.target.tagName === "A") {
-      category_id = evt.target.parentElement.dataset.category;
-    } else if (evt.target.tagName === "SPAN") {
-      category_id = evt.target.parentElement.parentElement.dataset.category;
-    }
-    current_category = category_id;
+    if (evt.target.tagName === "LI")
+    	categoryId = evt.target.dataset.category;
+    else if (evt.target.tagName === "A")
+    	categoryId = evt.target.parentElement.dataset.category;
+    else if (evt.target.tagName === "SPAN")
+    	categoryId = evt.target.parentElement.parentElement.dataset.category;
+    currentCategory = categoryId;
     start = 0;
-    sendProductsAjax("/reservationManagement/api/products?categoryId=" + category_id, "tab", category_id);
+    sendProductsAjax("/reservationManagement/api/products?categoryId=" + categoryId, "tab", categoryId);
     document.querySelector(".more").style.display = "block";
   });
-
-
 
   sendProductsAjax("/reservationManagement/api/products?categoryId=0", "tab", 0);
 
 /*-----------------more button-----------*/
   moreBtn.addEventListener("click", function(evt) {
-    var category_id = current_category;
+    var categoryId = currentCategory;
 
-    sendProductsAjax("/reservationManagement/api/products?start=" + start + "&categoryId=" + category_id, "more", category_id);
+    sendProductsAjax("/reservationManagement/api/products?start=" + start + "&categoryId=" + categoryId, "more", categoryId);
   })
 
 

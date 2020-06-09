@@ -1,4 +1,4 @@
-package kr.or.connect.reservationManagement.dto;
+/*package kr.or.connect.reservationManagement.dto;
 
 import java.sql.Date;
 
@@ -51,3 +51,4 @@ public class ReservationComments {
 
 	
 }
+*/

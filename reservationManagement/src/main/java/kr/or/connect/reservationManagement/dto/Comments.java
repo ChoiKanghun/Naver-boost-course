@@ -1,13 +1,14 @@
 package kr.or.connect.reservationManagement.dto;
 
+import java.util.Date;
 import java.util.List;
 
 public class Comments {
 	private List<CommentImages> commentImages;
 	private String comment;
 	private int commentId;
-	private String createDate;
-	private String modifyDate;
+	private Date createDate;
+	private Date modifyDate;
 	private int productId;
 	private String reservationDate;
 	private String reservationEmail;
@@ -33,16 +34,16 @@ public class Comments {
 	public void setCommentId(int commentId) {
 		this.commentId = commentId;
 	}
-	public String getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public String getModifyDate() {
+	public Date getModifyDate() {
 		return modifyDate;
 	}
-	public void setModifyDate(String modifyDate) {
+	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 	public int getProductId() {
