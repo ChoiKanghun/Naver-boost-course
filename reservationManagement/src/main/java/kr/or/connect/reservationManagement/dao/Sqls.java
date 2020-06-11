@@ -67,45 +67,7 @@ public class Sqls {
 			+ "JOIN file_info "
 			+ "ON file_info.id = product_image.file_id "
 			+ "WHERE type='th' ";
-	/*
-	public static final String GET_DETAIL_PAGE_ITEMS_BY_ID
-	= "SELECT display_info.id AS display_info_id, " + 
-			"product.id AS product_id, product.description AS product_description, " + 
-			"display_info.place_name AS place_name, product.content AS product_content, " + 
-			"file_info.save_file_name AS product_image_url " + 
-			"FROM product " + 
-			"JOIN display_info " + 
-			"ON product.id = display_info.product_id " + 
-			"JOIN product_image " + 
-			"ON display_info.product_id = product_image.product_id " + 
-			"JOIN file_info " + 
-			"ON file_info.id = product_image.file_id " + 
-			"WHERE (product_image.type='et' or product_image.type='ma') "
-			+ " and display_info.id = :id ";
-
-	public static final String SELECT_USER_COMMENTS_BY_ID
-	= 
-			"SELECT reservation_user_comment.comment AS comment, " + 
-			"product.id AS product_id, " + 
-			"reservation_user_comment.score AS score, " + 
-			"reservation_user_comment.create_date AS create_date, " + 
-			"file_info.save_file_name AS product_image_url, " + 
-			"reservation_user_comment_image.file_id AS file_id, " + 
-			"reservation_info.reservation_email AS reservation_email " + 
-			"FROM reservation_user_comment " + 
-			"JOIN product  " + 
-			"ON product.id = reservation_user_comment.product_id   " + 
-			"LEFT JOIN reservation_user_comment_image  " + 
-			"ON reservation_user_comment.id = reservation_user_comment_image.reservation_user_comment_id  " + 
-			"LEFT JOIN file_info " + 
-			"ON file_info.id = reservation_user_comment_image.file_id " +
-			"LEFT JOIN reservation_info " +
-			"ON reservation_info.id = reservation_user_comment.reservation_info_id " +
-			"WHERE product.id = :id ";
-
-	public static final String GET_LIMITED_USER_COMMENTS_BY_ID
-	= SELECT_USER_COMMENTS_BY_ID + "LIMIT 0, :limit ";
-*/
+	
 	
 	/*project 4*/
 	public static final String SELECT_COMMENT_IMAGE_BY_RESERVATION_USER_COMMENT_ID

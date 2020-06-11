@@ -37,11 +37,6 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 
 	@Autowired
 	ItemsDao productsDao;
-	/*
-	@Autowired
-	DetailPageItemsDao detailPageItemsDao;
-	@Autowired
-	ReservationCommentsDao reservationCommentsDao;*/
 	@Autowired
 	CommentImagesDao commentImagesDao;
 	@Autowired
@@ -62,12 +57,7 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	ReserveItemDao reserveItemDao;
 	@Autowired
 	ReserveItemPriceDao reserveItemPriceDao;
-	
-/*	@Override
-	public List<Items> getAllProducts(){
-		return productsDao.selectAllProducts();
-	}
-	*/
+
 	@Override
 	public List<Items> getLimitedProducts(Integer start){
 		return productsDao.selectLimitedProducts(start, ReservationManagementService.LIMIT);
@@ -98,21 +88,6 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 		return (productsDao.getPromotionInfo());
 	}
 
-/*	@Override
-	public List<DetailPageItems> getDetailListItems(Integer id){
-		return (detailPageItemsDao.getDetailPageItemsById(id));
-	}
-
-	@Override
-	public List<ReservationComments> getUserCommentsById(Integer id){
-		return reservationCommentsDao.getUserCommentsById(id);
-	}
-	
-	@Override
-	public List<ReservationComments> getLimitedUserCommentsById(Integer id, Integer limit){
-		return reservationCommentsDao.getLimitedUserCommentById(id, limit);
-	}
-	*/
 	@Override
 	public List<CommentImages> getCommentImages(Integer reservationUserCommentId){
 		return commentImagesDao.getCommentImages(reservationUserCommentId);

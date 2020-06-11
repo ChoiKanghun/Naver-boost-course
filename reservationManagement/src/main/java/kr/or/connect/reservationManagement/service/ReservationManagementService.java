@@ -21,18 +21,10 @@ public interface ReservationManagementService {
 	int LIMIT_COMMENT = 3;
 	int getAllCountOfProduct();	
 	int getAllCountProductByCategoryId(Integer categoryId);
-	
-/*	List<Items> getAllProducts();
-	*/
 	List<Items> getLimitedProducts(Integer start);
 	List<Items> getLimitedProductsByCategoryId(Integer start, Integer categoryId);
 	List<Items> getPromotionInfo();
 	List<Items> getCategoriesInfoGroupByCategoryId();
-/*	
-	List<DetailPageItems> getDetailListItems(Integer id);
-	List<ReservationComments> getUserCommentsById(Integer id);
-	List<ReservationComments> getLimitedUserCommentsById(Integer id, Integer limit);
-*/	
 	List<CommentImages> getCommentImages(Integer reservationUserCommentId);
 	List<Comments> getComments(Integer displayInfoId);
 	List<ProductImages> getProductImages(Integer displayInfoId);

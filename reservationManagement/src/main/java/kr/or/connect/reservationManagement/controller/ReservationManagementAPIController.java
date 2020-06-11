@@ -76,16 +76,6 @@ public class ReservationManagementAPIController {
 		return (resBody);
 	}
 	
-/*	@GetMapping(path = "/api/detail_page_items", produces = "application/json; charset=utf-8")
-	public Map<String, Object> getDetailPageItems(
-			@RequestParam(required = true) int id){
-		List<DetailPageItems> items = reservationManagementService.getDetailListItems(id);
-		Map<String, Object> resBody = new HashMap<>();
-		
-		resBody.put("items", items);
-		return (resBody);
-	}*/
-	
 	@GetMapping(path = "/api/products/{displayInfoId}")
 	public Map<String, Object> getProductsByDisplayInfoId(
 			@PathVariable(name = "displayInfoId") int displayInfoId){
