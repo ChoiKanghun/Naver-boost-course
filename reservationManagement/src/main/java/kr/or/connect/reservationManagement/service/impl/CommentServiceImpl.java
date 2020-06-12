@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.connect.reservationManagement.dao.CommentImagesDao;
+import kr.or.connect.reservationManagement.dao.CommentsDao;
 import kr.or.connect.reservationManagement.dto.Comments;
 import kr.or.connect.reservationManagement.service.CommentService;
 
@@ -14,7 +15,10 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	CommentImagesDao commentImagesDao;
+	@Autowired
+	CommentsDao commentsDao;
 	
+	@Override
 	public float setCommentImages(List<Comments> comments) {
 		float averageScore = 0;
 		float division = 0;
@@ -30,4 +34,10 @@ public class CommentServiceImpl implements CommentService {
 			averageScore = averageScore / division;
 		return averageScore;
 	}
+	
+	@Override
+	public List<Comments> getComments(Integer displayInfoId){
+		return commentsDao.getComments(displayInfoId);
+	}
+	
 }
