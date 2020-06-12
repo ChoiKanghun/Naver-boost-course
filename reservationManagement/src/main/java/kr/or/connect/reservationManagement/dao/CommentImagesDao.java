@@ -17,7 +17,6 @@ import kr.or.connect.reservationManagement.dto.CommentImages;
 
 @Repository
 public class CommentImagesDao {
-	
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<CommentImages> rowMapper
 		= BeanPropertyRowMapper.newInstance(CommentImages.class);
