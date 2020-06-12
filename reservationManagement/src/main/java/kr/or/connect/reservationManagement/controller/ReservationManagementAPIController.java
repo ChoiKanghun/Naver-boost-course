@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,19 +25,21 @@ import kr.or.connect.reservationManagement.dto.ProductPrices;
 import kr.or.connect.reservationManagement.dto.Reservations;
 import kr.or.connect.reservationManagement.dto.ReserveItem;
 import kr.or.connect.reservationManagement.dto.ReserveItemPrice;
+import kr.or.connect.reservationManagement.service.CommentService;
 import kr.or.connect.reservationManagement.service.ReservationManagementService;
 
 
 @RestController
+@RequestMapping("/api")
 public class ReservationManagementAPIController {
 	
 	@Autowired
 	private ReservationManagementService reservationManagementService;
-
-	@GetMapping(path = "/api/products", produces = "application/json; charset=utf-8")
-	public Map<String, Object> getItemsTotalCount(
-			@RequestParam(defaultValue="0") int start,
-			@RequestParam(defaultValue = "0") int categoryId)
+	@Autowired
+	private CommentService commentService;
+	
+	@GetMapping(path = "/products", produces = "application/json; charset=utf-8")
+	public Map<String, Object> getItemsTotalCount(@RequestParam(defaultValue="0") int start, @RequestParam(defaultValue = "0") int categoryId)
 	{
 		Map <String, Object> resBody = new HashMap<>();
 		if (categoryId == 0)
@@ -58,8 +61,8 @@ public class ReservationManagementAPIController {
 		return resBody;
 	}
 
-	@GetMapping(path = "/api/promotions", produces = "application/json; charset=utf-8")
-	public Map<String, Object> getPromotionInformation(){
+	@GetMapping(path = "/promotions", produces = "application/json; charset=utf-8")
+	public Map<String, Object> getPromotionInformation() {
 		List<Items> items = reservationManagementService.getPromotionInfo();
 		Map<String, Object> resBody = new HashMap<>();
 		
@@ -67,32 +70,21 @@ public class ReservationManagementAPIController {
 		return (resBody);
 	}
 	
-	@GetMapping(path = "/api/categories", produces = "application/json; charset=utf-8")
+	@GetMapping(path = "/categories", produces = "application/json; charset=utf-8")
 	public Map<String, Object> getCategories(){
 		List<Items> items = reservationManagementService.getCategoriesInfoGroupByCategoryId();
 		Map<String, Object> resBody = new HashMap<>();
 		
 		resBody.put("items", items);
-		return (resBody);
+		return resBody;
 	}
 	
-	@GetMapping(path = "/api/products/{displayInfoId}")
+	@GetMapping(path = "/products/{displayInfoId}")
 	public Map<String, Object> getProductsByDisplayInfoId(
 			@PathVariable(name = "displayInfoId") int displayInfoId){
 		Map<String, Object> resBody = new HashMap<>();
 		List<Comments> comments = reservationManagementService.getComments(displayInfoId);
-		Float averageScore = 0F;
-		Float division = 0F;
-		
-		for(int i = 0; i < comments.size(); i++) {
-			comments.get(i).setCommentImages(reservationManagementService.getCommentImages(comments.get(i).getCommentId()));
-			if (comments.get(i).getScore() != null) {
-				averageScore += comments.get(i).getScore();
-				division += 1;
-			}
-		}
-		if (division != 0F)
-			averageScore = averageScore / division;
+		float averageScore = commentService.setCommentImages(comments);
 		
 		DisplayInfo displayInfo = reservationManagementService.getDisplayInfo(displayInfoId);
 		DisplayInfoImage displayInfoImage = reservationManagementService.getDisplayInfoImage(displayInfoId);
@@ -136,9 +128,9 @@ public class ReservationManagementAPIController {
 	}
 	
 	/*project5*/
-	@GetMapping(path = "/api/reservations")
+	@GetMapping(path = "/reservations")
 	public Map<String, Object> getReservationsByReservationEmail(
-			@RequestParam(name="reservationEmail", required = true)String reservationEmail){
+			@RequestParam(name="reservationEmail")String reservationEmail){
 		Map<String, Object> resBody = new HashMap<>();
 		List<Reservations> reservations = reservationManagementService.getReservations(reservationEmail);
 		
@@ -152,7 +144,7 @@ public class ReservationManagementAPIController {
 		return (resBody);
 	}
 
-	@PutMapping(path = "/api/reservations/{reservationId}")
+	@PutMapping(path = "/reservations/{reservationId}")
 	public DeleteReservationResult getDeleteResult(
 			@PathVariable(name = "reservationId") int reservationId) {
 		DeleteReservationResult deleteResult = reservationManagementService.getDeleteResult(reservationId);
@@ -162,7 +154,7 @@ public class ReservationManagementAPIController {
 		return deleteResult;
 	}
 	
-	@PostMapping(path = "/api/reservations")
+	@PostMapping(path = "/reservations")
 	public ReserveItem reservation(
 			@ModelAttribute ReserveItem reserveItem,
 			@RequestParam(name="reservationYearMonthDay", required=true) String reservationYearMonthDay) {
@@ -171,7 +163,7 @@ public class ReservationManagementAPIController {
 		return reserveItem;
 	}
 	
-	@PutMapping(path = "/api/cancelReservation")
+	@PutMapping(path = "/cancelReservation")
 	public ReserveItem cancelReservation(
 			@RequestParam(name="reservationInfoId", required=true)int reservationInfoId) {
 		ReserveItem reserveItem = reservationManagementService.cancelReservation(reservationInfoId);

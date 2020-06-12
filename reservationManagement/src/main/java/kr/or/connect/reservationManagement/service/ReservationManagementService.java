@@ -2,7 +2,6 @@ package kr.or.connect.reservationManagement.service;
 
 import java.util.List;
 
-import kr.or.connect.reservationManagement.dto.CommentImages;
 import kr.or.connect.reservationManagement.dto.Comments;
 import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
 import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
@@ -25,7 +24,7 @@ public interface ReservationManagementService {
 	List<Items> getLimitedProductsByCategoryId(Integer start, Integer categoryId);
 	List<Items> getPromotionInfo();
 	List<Items> getCategoriesInfoGroupByCategoryId();
-	List<CommentImages> getCommentImages(Integer reservationUserCommentId);
+//	List<CommentImages> getCommentImages(Integer reservationUserCommentId);
 	List<Comments> getComments(Integer displayInfoId);
 	List<ProductImages> getProductImages(Integer displayInfoId);
 	List<ProductPrices> getProductPrices(Integer displayInfoId);

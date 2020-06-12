@@ -18,7 +18,6 @@ import kr.or.connect.reservationManagement.dao.ProductPricesDao;
 import kr.or.connect.reservationManagement.dao.ReservationsDao;
 import kr.or.connect.reservationManagement.dao.ReserveItemDao;
 import kr.or.connect.reservationManagement.dao.ReserveItemPriceDao;
-import kr.or.connect.reservationManagement.dto.CommentImages;
 import kr.or.connect.reservationManagement.dto.Comments;
 import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
 import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
@@ -88,10 +87,10 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 		return (productsDao.getPromotionInfo());
 	}
 
-	@Override
+/*	@Override
 	public List<CommentImages> getCommentImages(Integer reservationUserCommentId){
 		return commentImagesDao.getCommentImages(reservationUserCommentId);
-	}
+	}*/
 	
 	@Override
 	public List<Comments> getComments(Integer displayInfoId){
