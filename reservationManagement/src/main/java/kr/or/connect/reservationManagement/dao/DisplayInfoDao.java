@@ -22,7 +22,7 @@ public class DisplayInfoDao {
 		= BeanPropertyRowMapper.newInstance(DisplayInfo.class);
 	
 	public DisplayInfoDao(DataSource dataSource) {
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
 	public DisplayInfo getDisplayInfo(Integer displayInfoId) {

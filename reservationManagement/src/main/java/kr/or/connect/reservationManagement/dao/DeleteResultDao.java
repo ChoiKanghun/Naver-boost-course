@@ -14,8 +14,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
 import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
+import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
 @Repository
 public class DeleteResultDao {
 	private NamedParameterJdbcTemplate jdbc;
@@ -25,7 +25,7 @@ public class DeleteResultDao {
 		= BeanPropertyRowMapper.newInstance(DeleteReservationPrices.class);
 	
 	public DeleteResultDao(DataSource dataSource) {
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
 	public DeleteReservationResult getDeleteResult(Integer reservationId) {

@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // location.search는 url에서 ?를 찾아내줌.
     var paramString = location.search.substr(1);
     var splitedString = paramString.split("&");
-    
+
     for (var i = 0; i < splitedString.length; i++) {
       var tempArray = splitedString[i].split("=");
       if (tempArray[0] == paramName)
@@ -19,14 +19,14 @@ window.addEventListener('DOMContentLoaded', () => {
   /*--------뒤로가기 버튼 링크 추가-------*/
   document.querySelector(".btn_back").href = "detail?id=" + displayInfoId;
   /*--------이미지, 설명 부분 추가 하기 -----------*/
-  
+
   function addReserveDate(){
 	  //+, - 버튼을 누르면 실행해야 될 이벤트 추가.
 	  addPlusMinusButtonEvent();
 	  //유효성 검사 등.
 	  toggleReserveButton();
   }
-  
+
   function addTitle(json) {
     document.querySelector(".top_title .title").innerHTML +=
       json.displayInfo.productDescription;
@@ -38,17 +38,17 @@ window.addEventListener('DOMContentLoaded', () => {
 	  var ticketBodyTemplate = document.querySelector("#template_under_ticket_body").innerHTML;
 	  var divClassNameTicketBody = document.querySelector(".ticket_body");
 	  var ticketBodyBindTemplate = Handlebars.compile(ticketBodyTemplate);
-	  
+
 	  Handlebars.registerHelper('discountedPrice', function(price, discountRate){
 		  var discounted = (price * (100 - discountRate) / 100);
-		  
+
 		  return discounted.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
 	  })
 	  divClassNameTicketBody.innerHTML += ticketBodyBindTemplate(json);
 	  //최상단 제목 추가
 	  addTitle(json);
   }
-  
+
   function addTemplateUnderSectionStoreDetails(json) {
     var storeDetailTemplate = document.querySelector("#template_under_section_store_details").innerHTML;
     var divClassNameSectionStoreDetails = document.querySelector(".section_store_details");
@@ -74,7 +74,7 @@ window.addEventListener('DOMContentLoaded', () => {
     	let endDate = new Date();
     	var weekday = new Array(7);
     	var resultPeriod = "";
-    	
+
     	endDate.setMonth(endDate.getMonth() + 2);
     	weekday[0] = "일";
     	weekday[1] = "월";
@@ -83,7 +83,7 @@ window.addEventListener('DOMContentLoaded', () => {
     	weekday[4] = "목";
     	weekday[5] = "금";
     	weekday[6] = "토";
-    	
+
     	resultPeriod = startDate.toLocaleDateString() + "(" + weekday[startDate.getDay()]
     		+ ") ~" + endDate.toLocaleDateString() + "(" + weekday[endDate.getDay()] + ")";
     	return resultPeriod;
@@ -121,21 +121,21 @@ window.addEventListener('DOMContentLoaded', () => {
     plusMinusButtonWrappers.forEach(function(val) {
       var PlusMinusButtons = val.querySelectorAll("a");
   	  var totalItemCount = document.querySelector("#totalCount");
-  	  
+
       PlusMinusButtons.forEach(function(btn) {
     	var itemPrice = btn.parentElement.parentElement.parentElement
     		.querySelector(".qty_info_icon .product_price .price");
-    	var parseNumberItemPrice 
+    	var parseNumberItemPrice
     		= Number(itemPrice.innerText.replace(/,/g, ""));
     	var totalItemPrice
     		= btn.parentElement.parentElement.querySelector(".total_price");
-  
+
     	//버튼이 '+'인 경우
         if (btn.title === "더하기") {
           btn.addEventListener("click", function(b) {
             var count = this.parentElement.querySelector(".count_control_input");
             var countValue = count.value * 1;
-            
+
             //더하기 전 개수가 0개 일 때
             if (countValue == 0) {
               this.parentElement.querySelector(".ico_minus3")
@@ -148,7 +148,7 @@ window.addEventListener('DOMContentLoaded', () => {
             count.value = ++countValue;
             //더하기를 누르면 더하기 버튼 밑의 총 금액도 증가.
             var parseNumberTotalItemPrice = Number(totalItemPrice.innerText.replace(/,/g,""));
-            totalItemPrice.innerText 
+            totalItemPrice.innerText
             	= addCommas(parseNumberTotalItemPrice + parseNumberItemPrice);
             //총 개수 증가.
             totalItemCount.innerText = Number(totalItemCount.innerText) + 1;
@@ -157,7 +157,7 @@ window.addEventListener('DOMContentLoaded', () => {
           btn.addEventListener("click", function(btn) {
             var count = this.parentElement.querySelector(".count_control_input");
             var countValue = count.value * 1;
-            
+
             //1을 감소시킨 값이 0보다 클 때만 이벤트 발생.
             if (--countValue >= 0) {
             	//1을 감소시킨 값이 0일 때 -와 count 부분에 disabled 클래스 추가.
@@ -171,7 +171,7 @@ window.addEventListener('DOMContentLoaded', () => {
               }
               count.value = countValue;
               var parseNumberTotalItemPrice = Number(totalItemPrice.innerText.replace(/,/g,""));
-              totalItemPrice.innerText 
+              totalItemPrice.innerText
           		= addCommas(parseNumberTotalItemPrice - parseNumberItemPrice);
               //총 개수 감소.
               totalItemCount.innerText = Number(totalItemCount.innerText) - 1;
@@ -181,13 +181,13 @@ window.addEventListener('DOMContentLoaded', () => {
       })
     })
   }
-  
+
 
   /*--------유효성 검사--------*/
   //전화번호
   function inspectTel(){
 	  var tel = document.querySelector("#tel");
-	  
+
 	  tel.addEventListener("mouseleave", function(){
 		  var regExpTel = /^\d{3}-\d{3,4}-\d{4}$/;
 		  var warningMessage = this.parentElement.querySelector("#tel_warning");
@@ -205,11 +205,11 @@ window.addEventListener('DOMContentLoaded', () => {
   //이메일
   function inspectEmail(){
 	  var email = document.querySelector("#email");
-	
+
 	  email.addEventListener("mouseleave", function(){
  		 var regExpEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
  		 var warningMessage = this.parentElement.querySelector("#email_warning");
- 		 
+
  		 if (this.value != "" && !regExpEmail.test(this.value)){
  			 warningMessage.style.display = "inline-block";
  			 setTimeout(function(){
@@ -222,11 +222,11 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   inspectTel();
   inspectEmail();
-  
+
   /*---------약관 더 보기---------*/
   function showMoreAgreement(){
 	  var btnAgreements = document.querySelectorAll(".btn_agreement");
-	  
+
 	  btnAgreements.forEach(function(btn){
 		  btn.addEventListener("click", function(){
 			  this.parentElement.classList.toggle("open");
@@ -234,7 +234,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	  })
   }
   showMoreAgreement();
-  
+
   /*----------예약하기 클래스 토글----------*/
   function toggleReserveButton(){
 	  var agreeButton = document.querySelector(".chk_txt_label");
@@ -257,15 +257,15 @@ window.addEventListener('DOMContentLoaded', () => {
 			  bookButtonWrapper.classList.remove("disable");
 		  }
 	  }
-	  
+
 	  //이용약관에 동의할 때 필수정보들이 다 입력됐는지 확인.
-	  agreeButton.addEventListener("click", function(){		
+	  agreeButton.addEventListener("click", function(){
 		  this.classList.toggle("checked");
 		  checkReservable(inputName.value, inputTel.value, inputEmail.value);
 	  });
 	  //inputTag에 이름, 전화번호, 이메일을 입력할 때마다 예약가능한지 확인
 	  inputTags.forEach(function(inputTag){
-		  inputTag.addEventListener("mouseleave", function(){ 
+		  inputTag.addEventListener("mouseleave", function(){
 			  checkReservable(inputName.value, inputTel.value, inputEmail.value);
 		  })
 	  });

@@ -23,7 +23,7 @@ public class CommentImagesDao {
 		= BeanPropertyRowMapper.newInstance(CommentImages.class);
 	
 	public CommentImagesDao(DataSource dataSource) {
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
 	public List<CommentImages> getCommentImages(Integer reservationUserCommentId) {

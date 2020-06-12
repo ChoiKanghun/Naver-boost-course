@@ -22,7 +22,7 @@ public class ProductPricesDao {
 		= BeanPropertyRowMapper.newInstance(ProductPrices.class);
 
 	public ProductPricesDao(DataSource dataSource) {
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
 	public List<ProductPrices> getProductPrices(Integer displayInfoId) {

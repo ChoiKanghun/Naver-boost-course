@@ -29,7 +29,7 @@ public class ItemsDao {
 		= BeanPropertyRowMapper.newInstance(Items.class);
 	
 	public ItemsDao(DataSource dataSource) {
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 
 	//get LIMITED result of everything from product table and place_name from display_info
@@ -51,13 +51,6 @@ public class ItemsDao {
 		
 		return jdbc.query(SELECT_LIMIT_PRODUCTS_BY_CATEGORY_ID, params, rowMapper);
 	}
-	
-	
-/*	// get everything from product table and place_name from display_info
-	public List<Items> selectAllProducts(){
-		return jdbc.query(SELECT_ALL_PRODUCTS, Collections.emptyMap(), rowMapper);
-	}
-	*/
 
 	//get category info group by id
 	public List<Items> selectCategoriesInfoGroupByCategoryId(){

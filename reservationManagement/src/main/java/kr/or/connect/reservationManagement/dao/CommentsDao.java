@@ -21,7 +21,7 @@ public class CommentsDao {
 		= BeanPropertyRowMapper.newInstance(Comments.class);
 	
 	public CommentsDao(DataSource dataSource) {
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 
 	public List<Comments> getComments(Integer displayInfoId){

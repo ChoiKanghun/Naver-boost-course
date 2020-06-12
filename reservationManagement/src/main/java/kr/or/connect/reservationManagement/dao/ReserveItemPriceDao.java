@@ -25,10 +25,10 @@ public class ReserveItemPriceDao {
 		= BeanPropertyRowMapper.newInstance(ReserveItemPrice.class);
 	
 	public ReserveItemPriceDao(DataSource dataSource) {
-		this.insertPrices = new SimpleJdbcInsert(dataSource)
+		insertPrices = new SimpleJdbcInsert(dataSource)
 				.withTableName("reservation_info_price")
 				.usingGeneratedKeyColumns("id");
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	public int reserveAnItemPrice(ReserveItemPrice reserveItemPrice) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(reserveItemPrice);

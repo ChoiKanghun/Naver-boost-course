@@ -1,5 +1,7 @@
 package kr.or.connect.reservationManagement.dao;
 
+import static kr.or.connect.reservationManagement.dao.Sqls.SELECT_PRODUCT_IMAGES_BY_DISPLAY_INFO_ID;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +12,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import static kr.or.connect.reservationManagement.dao.Sqls.*;
 
 import kr.or.connect.reservationManagement.dto.ProductImages;
 
@@ -21,7 +22,7 @@ public class ProductImagesDao {
 		= BeanPropertyRowMapper.newInstance(ProductImages.class);
 
 	public ProductImagesDao(DataSource dataSource) {
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
 	public List<ProductImages> getProductImages(Integer displayInfoId) {

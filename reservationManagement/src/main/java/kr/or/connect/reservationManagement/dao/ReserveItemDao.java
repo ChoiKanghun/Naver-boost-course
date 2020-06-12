@@ -26,10 +26,10 @@ public class ReserveItemDao {
 		= BeanPropertyRowMapper.newInstance(ReserveItem.class);
 
 	public ReserveItemDao(DataSource dataSource) {
-		this.insertReservationInfo = new SimpleJdbcInsert(dataSource)
+		insertReservationInfo = new SimpleJdbcInsert(dataSource)
 				.withTableName("reservation_info")
 				.usingGeneratedKeyColumns("id");
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		jdbc = new NamedParameterJdbcTemplate(dataSource);
 
 	}
 	

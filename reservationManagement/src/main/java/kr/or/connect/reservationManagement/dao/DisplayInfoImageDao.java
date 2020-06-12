@@ -21,7 +21,7 @@ public class DisplayInfoImageDao {
 		= BeanPropertyRowMapper.newInstance(DisplayInfoImage.class);
 	
 	public DisplayInfoImageDao(DataSource dataSource) {
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
 	public DisplayInfoImage getDisplayInfoImage(Integer displayInfoId) {
