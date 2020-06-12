@@ -89,6 +89,7 @@ public class Reservations {
 	public void setCancelFlag(boolean cancelFlag) {
 		this.cancelFlag = cancelFlag;
 	}
+	
 	@Override
 	public String toString() {
 		return "Reservations [displayInfo=" + displayInfo + ", cancelFlag=" + cancelFlag + ", createDate=" + createDate
@@ -97,6 +98,4 @@ public class Reservations {
 				+ ", reservationName=" + reservationName + ", reservationEmail=" + reservationEmail
 				+ ", reservationTelephone=" + reservationTelephone + ", totalPrice=" + totalPrice + "]";
 	}
-
-	
 }

@@ -67,6 +67,7 @@ public class DisplayInfoImage {
 	public void setSaveFileName(String saveFileName) {
 		this.saveFileName = saveFileName;
 	}
+	
 	@Override
 	public String toString() {
 		return "DisplayInfoImage [contentType=" + contentType + ", createDate=" + createDate + ", modifyDate="
@@ -74,7 +75,4 @@ public class DisplayInfoImage {
 				+ ", displayInfoId=" + displayInfoId + ", displayInfoImageId=" + displayInfoImageId + ", saveFileName="
 				+ saveFileName + "]";
 	}
-	
-	
-	
 }

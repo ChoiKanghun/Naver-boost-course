@@ -68,6 +68,7 @@ public class CommentImages {
 	public void setSaveFileName(String saveFileName) {
 		SaveFileName = saveFileName;
 	}
+	
 	@Override
 	public String toString() {
 		return "CommentImages [contentType=" + contentType + ", createDate=" + createDate + ", modifyDate=" + modifyDate
@@ -75,6 +76,4 @@ public class CommentImages {
 				+ ImageId + ", reservationInfoId=" + reservationInfoId + 
 				", SaveFileName=" + SaveFileName + "]";
 	}
-	
-	
 }

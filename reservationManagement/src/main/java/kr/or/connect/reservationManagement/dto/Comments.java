@@ -16,6 +16,7 @@ public class Comments {
 	private String reservationName;
 	private String reservationTelephone;
 	private Float score;
+	
 	public List<CommentImages> getCommentImages() {
 		return commentImages;
 	}
@@ -88,6 +89,7 @@ public class Comments {
 	public void setScore(Float score) {
 		this.score = score;
 	}
+	
 	@Override
 	public String toString() {
 		return "Comments [commentImages=" + commentImages + ", comment=" + comment + ", commentId=" + commentId
@@ -96,6 +98,4 @@ public class Comments {
 				+ ", reservationInfoId=" + reservationInfoId + ", reservationName=" + reservationName
 				+ ", reservationTelephone=" + reservationTelephone + ", score=" + score + "]";
 	}
-	
-	
 }

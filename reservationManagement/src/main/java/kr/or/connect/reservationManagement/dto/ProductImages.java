@@ -74,14 +74,12 @@ public class ProductImages {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
 	@Override
 	public String toString() {
 		return "ProductImages [contentType=" + contentType + ", fileName=" + fileName + ", createDate=" + createDate
 				+ ", modifyDate=" + modifyDate + ", deleteFlag=" + deleteFlag + ", fileInfoId=" + fileInfoId
 				+ ", productId=" + productId + ", productImageId=" + productImageId + ", saveFileName=" + saveFileName
 				+ ", type=" + type + "]";
-	}
-	
-	
-	
+	}	
 }

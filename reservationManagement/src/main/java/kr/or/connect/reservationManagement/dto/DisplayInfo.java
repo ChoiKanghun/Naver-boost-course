@@ -116,6 +116,7 @@ public class DisplayInfo {
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
+	
 	@Override
 	public String toString() {
 		return "DisplayInfo [categoryId=" + categoryId + ", categoryName=" + categoryName + ", createDate=" + createDate
@@ -125,7 +126,4 @@ public class DisplayInfo {
 				+ productDescription + ", productEvent=" + productEvent + ", telephone=" + telephone + ", productId="
 				+ productId + "]";
 	}
-	
-	
-	
 }

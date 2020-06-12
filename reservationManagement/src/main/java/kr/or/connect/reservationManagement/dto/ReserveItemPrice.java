@@ -29,11 +29,10 @@ public class ReserveItemPrice {
 	public void setReservationInfoPriceId(int reservationInfoPriceId) {
 		this.reservationInfoPriceId = reservationInfoPriceId;
 	}
+	
 	@Override
 	public String toString() {
 		return "ReserveItemPrice [count=" + count + ", reservationInfoId=" + reservationInfoId + ", productPriceId="
 				+ productPriceId + ", reservationInfoPriceId=" + reservationInfoPriceId + "]";
 	}
-	
-	
 }

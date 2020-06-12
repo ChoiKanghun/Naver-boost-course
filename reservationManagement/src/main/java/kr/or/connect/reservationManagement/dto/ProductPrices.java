@@ -53,12 +53,11 @@ public class ProductPrices {
 	public void setProductPriceId(int productPriceId) {
 		this.productPriceId = productPriceId;
 	}
+	
 	@Override
 	public String toString() {
 		return "ProductPrices [createDate=" + createDate + ", modifyDate=" + modifyDate + ", discountRate="
 				+ discountRate + ", price=" + price + ", priceTypeName=" + priceTypeName + ", productId=" + productId
 				+ ", productPriceId=" + productPriceId + "]";
 	}
-	
-	
 }

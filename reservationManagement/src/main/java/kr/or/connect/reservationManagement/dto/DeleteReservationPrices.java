@@ -30,11 +30,10 @@ public class DeleteReservationPrices {
 	public void setCount(int count) {
 		this.count = count;
 	}
+	
 	@Override
 	public String toString() {
 		return "DeleteResultPrices [reservationInfoId=" + reservationInfoId + ", reservationInfoPriceId="
 				+ reservationInfoPriceId + ", productPriceId=" + productPriceId + ", count=" + count + "]";
 	}
-	
-	
 }

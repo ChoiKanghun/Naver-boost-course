@@ -66,11 +66,11 @@ public class Items {
 	public void setProductImageUrl(String productImageUrl) {
 		this.productImageUrl = productImageUrl;
 	}
+	
 	@Override
 	public String toString() {
 		return "Items [id=" + id + ", displayInfoId=" + displayInfoId + ", productContent=" + productContent
 				+ ", productId=" + productId + ", placeName=" + placeName + ", productDescription=" + productDescription
 				+ ", productImageUrl=" + productImageUrl + ", name=" + name + ", count=" + count + "]";
 	}
-
 }

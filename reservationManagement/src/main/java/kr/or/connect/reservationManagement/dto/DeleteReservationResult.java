@@ -81,6 +81,7 @@ public class DeleteReservationResult {
 	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
 	}
+	
 	@Override
 	public String toString() {
 		return "DeleteResult [prices=" + prices + ", reservationInfoId=" + reservationInfoId + ", productId="
@@ -89,8 +90,4 @@ public class DeleteReservationResult {
 				+ ", reservationDate=" + reservationDate + ", cancelYn=" + cancelYn + ", createDate=" + createDate
 				+ ", modifyDate=" + modifyDate + "]";
 	}
-
-	
-	
-	
 }

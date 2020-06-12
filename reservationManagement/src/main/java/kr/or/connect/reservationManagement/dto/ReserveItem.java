@@ -58,7 +58,6 @@ public class ReserveItem {
 	public void setReservationDate(String reservationDate) {
 		this.reservationDate = reservationDate;
 	}
-
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -83,6 +82,7 @@ public class ReserveItem {
 	public void setCancelFlag(boolean cancelFlag) {
 		this.cancelFlag = cancelFlag;
 	}
+	
 	@Override
 	public String toString() {
 		return "ReserveItem [displayInfoId=" + displayInfoId + ", productId=" + productId + ", reservationEmail="
@@ -91,8 +91,4 @@ public class ReserveItem {
 				+ ", modifyDate=" + modifyDate + ", reservationInfoId=" + reservationInfoId + ", reserveItemPrices="
 				+ reserveItemPrices + "]";
 	}
-
-
-
-	
 }
