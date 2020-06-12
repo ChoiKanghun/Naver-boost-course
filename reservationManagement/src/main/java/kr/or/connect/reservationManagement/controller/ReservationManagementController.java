@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.connect.reservationManagement.dto.Reservations;
-import kr.or.connect.reservationManagement.service.ReservationManagementService;
+import kr.or.connect.reservationManagement.service.ProductPromotionService;
 
 @Controller
 public class ReservationManagementController {
 
 	@Autowired
-	ReservationManagementService reservationManagementService;
+	ProductPromotionService reservationManagementService;
 	
 	@GetMapping(path = "/mainpage")
 	public String mainpage() {

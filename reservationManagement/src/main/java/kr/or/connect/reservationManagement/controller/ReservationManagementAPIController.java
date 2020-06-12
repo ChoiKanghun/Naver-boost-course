@@ -26,7 +26,8 @@ import kr.or.connect.reservationManagement.dto.Reservations;
 import kr.or.connect.reservationManagement.dto.ReserveItem;
 import kr.or.connect.reservationManagement.dto.ReserveItemPrice;
 import kr.or.connect.reservationManagement.service.CommentService;
-import kr.or.connect.reservationManagement.service.ReservationManagementService;
+import kr.or.connect.reservationManagement.service.ProductPromotionService;
+import kr.or.connect.reservationManagement.service.ReservationService;
 
 
 @RestController
@@ -34,9 +35,11 @@ import kr.or.connect.reservationManagement.service.ReservationManagementService;
 public class ReservationManagementAPIController {
 	
 	@Autowired
-	private ReservationManagementService reservationManagementService;
+	private ProductPromotionService productPromotionService;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private ReservationService reservationService;
 	
 	@GetMapping(path = "/products", produces = "application/json; charset=utf-8")
 	public Map<String, Object> getItemsTotalCount(@RequestParam(defaultValue="0") int start, @RequestParam(defaultValue = "0") int categoryId)
@@ -44,16 +47,16 @@ public class ReservationManagementAPIController {
 		Map <String, Object> resBody = new HashMap<>();
 		if (categoryId == 0)
 		{
-			List<Items> items = reservationManagementService.getLimitedProducts(start);
-			int totalCount = reservationManagementService.getAllCountOfProduct();
+			List<Items> items = productPromotionService.getLimitedProducts(start);
+			int totalCount = productPromotionService.getAllCountOfProduct();
 
 			resBody.put("items", items);
 			resBody.put("totalCount", totalCount);
 		}
 		else
 		{
-			List<Items> items = reservationManagementService.getLimitedProductsByCategoryId(start, categoryId);
-			int totalCountByCategoryId = reservationManagementService.getAllCountProductByCategoryId(categoryId);
+			List<Items> items = productPromotionService.getLimitedProductsByCategoryId(start, categoryId);
+			int totalCountByCategoryId = productPromotionService.getAllCountProductByCategoryId(categoryId);
 			
 			resBody.put("items", items);
 			resBody.put("totalCount", totalCountByCategoryId);
@@ -63,7 +66,7 @@ public class ReservationManagementAPIController {
 
 	@GetMapping(path = "/promotions", produces = "application/json; charset=utf-8")
 	public Map<String, Object> getPromotionInformation() {
-		List<Items> items = reservationManagementService.getPromotionInfo();
+		List<Items> items = productPromotionService.getPromotionInfo();
 		Map<String, Object> resBody = new HashMap<>();
 		
 		resBody.put("items", items);
@@ -72,7 +75,7 @@ public class ReservationManagementAPIController {
 	
 	@GetMapping(path = "/categories", produces = "application/json; charset=utf-8")
 	public Map<String, Object> getCategories(){
-		List<Items> items = reservationManagementService.getCategoriesInfoGroupByCategoryId();
+		List<Items> items = productPromotionService.getCategoriesInfoGroupByCategoryId();
 		Map<String, Object> resBody = new HashMap<>();
 		
 		resBody.put("items", items);
@@ -83,13 +86,13 @@ public class ReservationManagementAPIController {
 	public Map<String, Object> getProductsByDisplayInfoId(
 			@PathVariable(name = "displayInfoId") int displayInfoId){
 		Map<String, Object> resBody = new HashMap<>();
-		List<Comments> comments = reservationManagementService.getComments(displayInfoId);
+		List<Comments> comments = commentService.getComments(displayInfoId);
 		float averageScore = commentService.setCommentImages(comments);
 		
-		DisplayInfo displayInfo = reservationManagementService.getDisplayInfo(displayInfoId);
-		DisplayInfoImage displayInfoImage = reservationManagementService.getDisplayInfoImage(displayInfoId);
-		List<ProductImages> productImages = reservationManagementService.getProductImages(displayInfoId);
-		List<ProductPrices> productPrices = reservationManagementService.getProductPrices(displayInfoId);
+		DisplayInfo displayInfo = productPromotionService.getDisplayInfo(displayInfoId);
+		DisplayInfoImage displayInfoImage = productPromotionService.getDisplayInfoImage(displayInfoId);
+		List<ProductImages> productImages = productPromotionService.getProductImages(displayInfoId);
+		List<ProductPrices> productPrices = productPromotionService.getProductPrices(displayInfoId);
 		
 		for (ProductPrices productPrice : productPrices) {
 			String priceTypeName = productPrice.getPriceTypeName();
@@ -132,11 +135,11 @@ public class ReservationManagementAPIController {
 	public Map<String, Object> getReservationsByReservationEmail(
 			@RequestParam(name="reservationEmail")String reservationEmail){
 		Map<String, Object> resBody = new HashMap<>();
-		List<Reservations> reservations = reservationManagementService.getReservations(reservationEmail);
+		List<Reservations> reservations = reservationService.getReservations(reservationEmail);
 		
 		for (int i = 0; i < reservations.size(); i++) {
 			reservations.get(i).setDisplayInfo(
-					reservationManagementService.getDisplayInfo(
+					productPromotionService.getDisplayInfo(
 							reservations.get(i).getDisplayInfoId()));
 		}
 		resBody.put("reservations", reservations);
@@ -147,8 +150,8 @@ public class ReservationManagementAPIController {
 	@PutMapping(path = "/reservations/{reservationId}")
 	public DeleteReservationResult getDeleteResult(
 			@PathVariable(name = "reservationId") int reservationId) {
-		DeleteReservationResult deleteResult = reservationManagementService.getDeleteResult(reservationId);
-		List<DeleteReservationPrices> listPrices = reservationManagementService.getDeleteResultPrices(reservationId);
+		DeleteReservationResult deleteResult = reservationService.getDeleteResult(reservationId);
+		List<DeleteReservationPrices> listPrices = reservationService.getDeleteResultPrices(reservationId);
 	
 		deleteResult.setPrices(listPrices);
 		return deleteResult;
@@ -159,15 +162,15 @@ public class ReservationManagementAPIController {
 			@ModelAttribute ReserveItem reserveItem,
 			@RequestParam(name="reservationYearMonthDay", required=true) String reservationYearMonthDay) {
 		reserveItem.setReservationDate(reservationYearMonthDay);
-		reserveItem = reservationManagementService.reserveAnItem(reserveItem, reserveItem.getReserveItemPrices());
+		reserveItem = reservationService.reserveAnItem(reserveItem, reserveItem.getReserveItemPrices());
 		return reserveItem;
 	}
 	
 	@PutMapping(path = "/cancelReservation")
 	public ReserveItem cancelReservation(
 			@RequestParam(name="reservationInfoId", required=true)int reservationInfoId) {
-		ReserveItem reserveItem = reservationManagementService.cancelReservation(reservationInfoId);
-		List<ReserveItemPrice> prices = reservationManagementService.getResereveItemPriceByReservationInfoId(reservationInfoId);
+		ReserveItem reserveItem = reservationService.cancelReservation(reservationInfoId);
+		List<ReserveItemPrice> prices = reservationService.getResereveItemPriceByReservationInfoId(reservationInfoId);
 		reserveItem.setReserveItemPrices(prices);
 		return reserveItem;
 	}
