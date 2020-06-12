@@ -1,45 +1,27 @@
 package kr.or.connect.reservationManagement.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import kr.or.connect.reservationManagement.dao.CommentImagesDao;
-import kr.or.connect.reservationManagement.dao.CommentsDao;
-import kr.or.connect.reservationManagement.dao.DeleteResultDao;
 import kr.or.connect.reservationManagement.dao.DisplayInfoDao;
 import kr.or.connect.reservationManagement.dao.DisplayInfoImageDao;
 import kr.or.connect.reservationManagement.dao.ItemsDao;
 import kr.or.connect.reservationManagement.dao.ProductImagesDao;
 import kr.or.connect.reservationManagement.dao.ProductPricesDao;
-import kr.or.connect.reservationManagement.dao.ReservationsDao;
-import kr.or.connect.reservationManagement.dao.ReserveItemDao;
-import kr.or.connect.reservationManagement.dao.ReserveItemPriceDao;
-import kr.or.connect.reservationManagement.dto.Comments;
-import kr.or.connect.reservationManagement.dto.DeleteReservationPrices;
-import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
 import kr.or.connect.reservationManagement.dto.DisplayInfo;
 import kr.or.connect.reservationManagement.dto.DisplayInfoImage;
 import kr.or.connect.reservationManagement.dto.Items;
 import kr.or.connect.reservationManagement.dto.ProductImages;
 import kr.or.connect.reservationManagement.dto.ProductPrices;
-import kr.or.connect.reservationManagement.dto.Reservations;
-import kr.or.connect.reservationManagement.dto.ReserveItem;
-import kr.or.connect.reservationManagement.dto.ReserveItemPrice;
-import kr.or.connect.reservationManagement.service.ReservationManagementService;
+import kr.or.connect.reservationManagement.service.ProductPromotionService;
 
 @Service
-public class ReservationManagementServiceImpl implements ReservationManagementService {
+public class ProductPromotionServiceImpl implements ProductPromotionService {
 
 	@Autowired
 	ItemsDao productsDao;
-	@Autowired
-	CommentImagesDao commentImagesDao;
-	@Autowired
-	CommentsDao commentsDao;	
 	@Autowired
 	DisplayInfoDao displayInfoDao;
 	@Autowired
@@ -48,23 +30,15 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 	ProductImagesDao productImagesDao;
 	@Autowired
 	ProductPricesDao productPricesDao;
-	@Autowired
-	ReservationsDao reservationsDao;
-	@Autowired
-	DeleteResultDao deleteResultDao;
-	@Autowired
-	ReserveItemDao reserveItemDao;
-	@Autowired
-	ReserveItemPriceDao reserveItemPriceDao;
 
 	@Override
 	public List<Items> getLimitedProducts(Integer start){
-		return productsDao.selectLimitedProducts(start, ReservationManagementService.LIMIT);
+		return productsDao.selectLimitedProducts(start, ProductPromotionService.LIMIT);
 	}
 
 	@Override
 	public List<Items> getLimitedProductsByCategoryId(Integer start, Integer categoryId){
-		return productsDao.selectLimitedProductsByCategoryId(start, ReservationManagementService.LIMIT, categoryId);
+		return productsDao.selectLimitedProductsByCategoryId(start, ProductPromotionService.LIMIT, categoryId);
 	}
 	
 	@Override
@@ -87,16 +61,6 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 		return (productsDao.getPromotionInfo());
 	}
 
-/*	@Override
-	public List<CommentImages> getCommentImages(Integer reservationUserCommentId){
-		return commentImagesDao.getCommentImages(reservationUserCommentId);
-	}*/
-	
-	@Override
-	public List<Comments> getComments(Integer displayInfoId){
-		return commentsDao.getComments(displayInfoId);
-	}
-	
 	@Override
 	public List<ProductImages> getProductImages(Integer displayInfoId){
 		return productImagesDao.getProductImages(displayInfoId);
@@ -117,57 +81,4 @@ public class ReservationManagementServiceImpl implements ReservationManagementSe
 		return displayInfoDao.getDisplayInfo(displayInfoId);
 	}
 
-	@Override
-	public List<Reservations> getReservations(String reservationEmail){
-		return reservationsDao.getReservations(reservationEmail);
-	}
-
-	@Override
-	public DeleteReservationResult getDeleteResult(Integer reservationId) {
-		return deleteResultDao.getDeleteResult(reservationId);
-	}
-	
-	@Override
-	public List<DeleteReservationPrices> getDeleteResultPrices(Integer reservationId) {
-		return deleteResultDao.getDeleteResultPrices(reservationId);
-	}
-	
-	@Override
-	@Transactional(readOnly=false)
-	public ReserveItem reserveAnItem(ReserveItem reserveItem, List<ReserveItemPrice> prices) {
-		System.out.println("service in");
-		Date now = new Date();
-		reserveItem.setCreateDate(now);
-		reserveItem.setModifyDate(now);
-		reserveItem.setCancelFlag(false);
-		int reservationInfoId = reserveItemDao.reserveAnItem(reserveItem);
-		System.out.println("service middel");
-		reserveItem.setReservationInfoId(reservationInfoId);
-		System.out.println(prices.size());
-		int i = 0;
-		int pricesSize = prices.size();
-		while (i < pricesSize) {
-			ReserveItemPrice reserveItemPrice = new ReserveItemPrice();
-			reserveItemPrice.setCount(prices.get(i).getCount());
-			reserveItemPrice.setProductPriceId(prices.get(i).getProductPriceId());
-			reserveItemPrice.setReservationInfoId(reservationInfoId);
-			int reservationInfoPriceId = reserveItemPriceDao.reserveAnItemPrice(reserveItemPrice);
-			reserveItemPrice.setReservationInfoPriceId(reservationInfoPriceId);
-			reserveItem.getReserveItemPrices().set(i, reserveItemPrice);
-			System.out.println(i); 
-			i++;
-		}
-		return reserveItem;
-	}
-	
-	@Override
-	public ReserveItem cancelReservation(Integer reservationInfoId) {
-		return reserveItemDao.cancelReserve(reservationInfoId);
-	}
-	
-	@Override
-	public List<ReserveItemPrice> getResereveItemPriceByReservationInfoId(Integer reservationInfoId){
-		return reserveItemPriceDao.getPricesByReservationInfoId(reservationInfoId);
-	}
-	
 }
