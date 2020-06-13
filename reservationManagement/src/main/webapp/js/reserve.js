@@ -1,4 +1,4 @@
-/*----------예약하기 클래스 토글----------*/
+/*----------예약하기 클래스 ----------*/
 function CheckReservableClass() {}
 CheckReservableClass.prototype.checkReservable = function(name, tel, email) {
   var regExpTel = /^\d{3}-\d{3,4}-\d{4}$/;
@@ -36,6 +36,91 @@ ReserveButtonClass.prototype.toggleReserveButton = function() {
     clearfix.addEventListener("click", function() {
       checkReservableObj.checkReservable(inputName.value, inputTel.value, inputEmail.value);
     });
+  })
+}
+ReserveButtonClass.prototype.addReserveEvent = function(json){
+  document.querySelector(".bk_btn_wrap").addEventListener("click", function() {
+    if (!this.classList.contains("disable")) {
+      var form = document.createElement("form");
+      form.setAttribute("charset", "UTF-8");
+      form.setAttribute("method", "POST");
+      form.setAttribute("action", "/reservationManagement/api/reservations");
+
+      var hiddenFieldProductId = document.createElement("input");
+      hiddenFieldProductId.setAttribute("type", "hidden");
+      hiddenFieldProductId.setAttribute("name", "productId");
+      hiddenFieldProductId.setAttribute("value", json.displayInfo.productId);
+      form.appendChild(hiddenFieldProductId);
+
+      var hiddenFieldDisplayInfoId = document.createElement("input");
+      hiddenFieldDisplayInfoId.setAttribute("type", "hidden");
+      hiddenFieldDisplayInfoId.setAttribute("name", "displayInfoId");
+      hiddenFieldDisplayInfoId.setAttribute("value", json.displayInfo.displayInfoId);
+      form.appendChild(hiddenFieldDisplayInfoId);
+
+      var hiddenFieldReservationEmail = document.createElement("input");
+      var reservationEmail = document.querySelector("#email").value
+      hiddenFieldReservationEmail.setAttribute("type", "hidden");
+      hiddenFieldReservationEmail.setAttribute("name", "reservationEmail");
+      hiddenFieldReservationEmail.setAttribute("value", reservationEmail);
+      form.appendChild(hiddenFieldReservationEmail);
+
+      var hiddenFieldReservationName = document.createElement("input");
+      var reservationName = document.querySelector("#name").value
+      hiddenFieldReservationName.setAttribute("type", "hidden");
+      hiddenFieldReservationName.setAttribute("name", "reservationName");
+      hiddenFieldReservationName.setAttribute("value", reservationName);
+      form.appendChild(hiddenFieldReservationName);
+
+      var hiddenFieldReservationTel = document.createElement("input");
+      var reservationTel = document.querySelector("#tel").value
+      hiddenFieldReservationTel.setAttribute("type", "hidden");
+      hiddenFieldReservationTel.setAttribute("name", "reservationTel");
+      hiddenFieldReservationTel.setAttribute("value", reservationTel);
+      form.appendChild(hiddenFieldReservationTel);
+
+      var hiddenFieldReservationYearMonthDay = document.createElement("input");
+      var reservationYearMonthDay = document.querySelector(".inline_txt").querySelector("b").innerHTML;
+      hiddenFieldReservationYearMonthDay.setAttribute("type", "hidden");
+      hiddenFieldReservationYearMonthDay.setAttribute("name", "reservationYearMonthDay");
+      hiddenFieldReservationYearMonthDay.setAttribute("value", reservationYearMonthDay);
+      form.appendChild(hiddenFieldReservationYearMonthDay);
+
+
+      var qtys = document.querySelectorAll(".qty");
+
+      qtys.forEach(function(qty, index) {
+        var count = qty.querySelector(".count_control_input").value;
+        if (count != 0) {
+          var productPriceId = json.productPrices[index].productPriceId;
+          var hiddenFieldCount = document.createElement("input");
+          hiddenFieldCount.setAttribute("type", "hidden");
+          hiddenFieldCount.setAttribute("name", "reserveItemPrices[" + index + "].count");
+          hiddenFieldCount.setAttribute("value", Number(count));
+          form.appendChild(hiddenFieldCount);
+
+          var hiddenFieldProductPriceId = document.createElement("input");
+          hiddenFieldProductPriceId.setAttribute("type", "hidden");
+          hiddenFieldProductPriceId.setAttribute("name", "reserveItemPrices[" + index + "].productPriceId");
+          hiddenFieldProductPriceId.setAttribute("value", productPriceId);
+          form.appendChild(hiddenFieldProductPriceId);
+        }
+      })
+
+      document.body.appendChild(form);
+      form.submit();
+    } else {
+      var warningMessage = "형식에 맞지 않는 필수정보가 입력됐거나 약관에 동의하지 않으셨습니다.";
+      if (!document.querySelector(".unbookable")) {
+        this.insertAdjacentHTML("beforebegin",
+          '<div class = "unbookable" style="color:red">' +
+          warningMessage + "</div>");
+      }
+      document.querySelector(".unbookable").style.display = "inline-block";
+      setTimeout(function() {
+        document.querySelector(".unbookable").style.display = "none";
+      }, 1000)
+    }
   })
 }
 
@@ -273,7 +358,6 @@ ImageClass.prototype.addImages = function(json) {
 }
 
 function AjaxClass() {
-
 }
 AjaxClass.prototype.getDisplayInfoByAjax = function(url) {
   var oReq = new XMLHttpRequest;
@@ -282,9 +366,10 @@ AjaxClass.prototype.getDisplayInfoByAjax = function(url) {
   oReq.setRequestHeader("Content-type", "application/json");
   oReq.responseType = "text";
   oReq.addEventListener('load', function() {
+    var json = JSON.parse(this.responseText);
     //화면 상단에 이미지 추가.
     var imageObj = new ImageClass();
-    imageObj.addImages(JSON.parse(this.responseText));
+    imageObj.addImages(json);
 
     var checkValidityObj = new CheckValidityClass();
     checkValidityObj.inspectTel();
@@ -296,6 +381,7 @@ AjaxClass.prototype.getDisplayInfoByAjax = function(url) {
 
     var reserveButtonObj = new ReserveButtonClass();
     reserveButtonObj.toggleReserveButton();
+    reserveButtonObj.addReserveEvent(json);
   });
   oReq.send();
 }
