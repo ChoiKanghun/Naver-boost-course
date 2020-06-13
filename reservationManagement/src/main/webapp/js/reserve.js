@@ -1,279 +1,319 @@
-window.addEventListener('DOMContentLoaded', () => {
-  /*------url로부터 (display_info_)id 파싱------*/
-  function getParamValueFromUrl(paramName) {
-    var resultParamValue = "";
-    // location.search는 url에서 ?를 찾아내줌.
-    var paramString = location.search.substr(1);
-    var splitedString = paramString.split("&");
+/*----------예약하기 클래스 토글----------*/
+function CheckReservableClass() {}
+CheckReservableClass.prototype.checkReservable = function(name, tel, email) {
+  var regExpTel = /^\d{3}-\d{3,4}-\d{4}$/;
+  var regExpEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+  var bookButtonWrapper = document.querySelector(".bk_btn_wrap");
+  var agreeButton = document.querySelector(".chk_txt_label");
+  var totalCount = document.getElementById("totalCount");
 
-    for (var i = 0; i < splitedString.length; i++) {
-      var tempArray = splitedString[i].split("=");
-      if (tempArray[0] == paramName)
-        resultParamValue = tempArray[1];
-    }
-    return resultParamValue;
+  if (name == "" || !regExpTel.test(tel) || !regExpEmail.test(email) ||
+    !agreeButton.classList.contains("checked") || totalCount.innerHTML == 0) {
+    bookButtonWrapper.classList.add("disable");
+    return;
+  } else {
+    bookButtonWrapper.classList.remove("disable");
   }
-  //displayInfoId를 전역변수처럼 사용.
-  var displayInfoId = getParamValueFromUrl("id");
+}
 
-  /*--------뒤로가기 버튼 링크 추가-------*/
-  document.querySelector(".btn_back").href = "detail?id=" + displayInfoId;
-  /*--------이미지, 설명 부분 추가 하기 -----------*/
+function ReserveButtonClass() {}
+ReserveButtonClass.prototype.toggleReserveButton = function() {
+  var inputTags = document.querySelectorAll(".inline_form");
+  var clearfixes = document.querySelectorAll(".clearfix");
+  var inputTel = document.getElementById("tel");
+  var inputName = document.getElementById("name");
+  var inputEmail = document.getElementById("email");
+  var checkReservableObj = new CheckReservableClass();
 
-  function addReserveDate(){
-	  //+, - 버튼을 누르면 실행해야 될 이벤트 추가.
-	  addPlusMinusButtonEvent();
-	  //유효성 검사 등.
-	  toggleReserveButton();
-  }
-
-  function addTitle(json) {
-    document.querySelector(".top_title .title").innerHTML +=
-      json.displayInfo.productDescription;
-    //예매내용에 오늘을 기준으로 +5일 만큼 랜덤 일자 추가.
-    addReserveDate();
-  }
-
-  function addTicketBody(json){
-	  var ticketBodyTemplate = document.querySelector("#template_under_ticket_body").innerHTML;
-	  var divClassNameTicketBody = document.querySelector(".ticket_body");
-	  var ticketBodyBindTemplate = Handlebars.compile(ticketBodyTemplate);
-
-	  Handlebars.registerHelper('discountedPrice', function(price, discountRate){
-		  var discounted = (price * (100 - discountRate) / 100);
-
-		  return discounted.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
-	  })
-	  divClassNameTicketBody.innerHTML += ticketBodyBindTemplate(json);
-	  //최상단 제목 추가
-	  addTitle(json);
-  }
-
-  function addTemplateUnderSectionStoreDetails(json) {
-    var storeDetailTemplate = document.querySelector("#template_under_section_store_details").innerHTML;
-    var divClassNameSectionStoreDetails = document.querySelector(".section_store_details");
-    var storeDetailBindTemplate = Handlebars.compile(storeDetailTemplate);
-
-    divClassNameSectionStoreDetails.innerHTML += storeDetailBindTemplate(json);
-    //+, - 버튼이 있는 ticket body부분 구현.
-    addTicketBody(json);
-  }
-
-  function addTemplateUnderUlClassNameVisualImg(json) {
-    var visualTemplate = document.querySelector("#container_visual_template").innerHTML;
-    var ulClassNameVisualImg = document.querySelector(".visual_img");
-    var visualBindTemplate = Handlebars.compile(visualTemplate);
-
-    //숫자를 금액처럼 표시해줌.
-    Handlebars.registerHelper('priceFormatter', function(input){
-    	return input.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");;
+  //inputTag에 이름, 전화번호, 이메일을 입력할 때마다 예약가능한지 확인
+  inputTags.forEach(function(inputTag) {
+    inputTag.addEventListener("mouseleave", function() {
+      checkReservableObj.checkReservable(inputName.value, inputTel.value, inputEmail.value);
     })
-    //현재날짜부터 현재날짜 + 2개월까지 표시
-    Handlebars.registerHelper('reservatablePeriod', function(input){
-    	let startDate = new Date();
-    	let endDate = new Date();
-    	var weekday = new Array(7);
-    	var resultPeriod = "";
-
-    	endDate.setMonth(endDate.getMonth() + 2);
-    	weekday[0] = "일";
-    	weekday[1] = "월";
-    	weekday[2] = "화";
-    	weekday[3] = "수";
-    	weekday[4] = "목";
-    	weekday[5] = "금";
-    	weekday[6] = "토";
-
-    	resultPeriod = startDate.toLocaleDateString() + "(" + weekday[startDate.getDay()]
-    		+ ") ~" + endDate.toLocaleDateString() + "(" + weekday[endDate.getDay()] + ")";
-    	return resultPeriod;
+  });
+  //+, - 버튼이 클릭될 때에도 확인.
+  clearfixes.forEach(function(clearfix) {
+    clearfix.addEventListener("click", function() {
+      checkReservableObj.checkReservable(inputName.value, inputTel.value, inputEmail.value);
     });
-    //이미지 및 이미지 내에 있어야 할 글자 추가.
-    ulClassNameVisualImg.innerHTML += visualBindTemplate(json);
-    //이미지 밑에 있어야 할 내용 추가.
-    addTemplateUnderSectionStoreDetails(json);
+  })
+}
+
+/*---------약관 더 보기---------*/
+function TermsAgreementClass() {
+  this.btnAgreements = document.querySelectorAll(".btn_agreement");
+  this.agreeButton = document.querySelector(".chk_txt_label");
+}
+TermsAgreementClass.prototype.showMoreAgreement = function() {
+  this.btnAgreements.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      this.parentElement.classList.toggle("open");
+    })
+  })
+}
+//이용약관에 동의할 때 필수정보들이 다 입력됐는지 확인.
+TermsAgreementClass.prototype.OnClickCheckReservable = function() {
+  var checkReservableObj = new CheckReservableClass();
+  var inputTel = document.getElementById("tel");
+  var inputName = document.getElementById("name");
+  var inputEmail = document.getElementById("email");
+
+  this.agreeButton.addEventListener("click", function() {
+    this.classList.toggle("checked");
+    checkReservableObj.checkReservable(inputName.value, inputTel.value, inputEmail.value);
+  });
+}
+
+/*--------유효성 검사--------*/
+function CheckValidityClass() {}
+//전화번호
+CheckValidityClass.prototype.inspectTel = function() {
+  var tel = document.querySelector("#tel");
+
+  tel.addEventListener("mouseleave", function() {
+    var regExpTel = /^\d{3}-\d{3,4}-\d{4}$/;
+    var warningMessage = this.parentElement.querySelector("#tel_warning");
+
+    if (this.value != "" && !regExpTel.test(this.value)) {
+      warningMessage.style.display = "inline-block";
+      setTimeout(function() {
+        warningMessage.style.display = "none";
+      }, 1000);
+    } else {
+      warningMessage.style.display = "none";
+    }
+  })
+}
+CheckValidityClass.prototype.inspectEmail = function() {
+  var email = document.querySelector("#email");
+
+  email.addEventListener("mouseleave", function() {
+    var regExpEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    var warningMessage = this.parentElement.querySelector("#email_warning");
+
+    if (this.value != "" && !regExpEmail.test(this.value)) {
+      warningMessage.style.display = "inline-block";
+      setTimeout(function() {
+        warningMessage.style.display = "none";
+      }, 1000);
+    } else {
+      warningMessage.style.display = "none";
+    }
+  });
+}
+/*핸들바 이벤트들을 추가할 클래스*/
+function HandlebarsClass() {}
+HandlebarsClass.prototype.addHandlebarHelpers = function() {
+  //숫자를 금액처럼 표시해줌.
+  Handlebars.registerHelper('priceFormatter', function(input) {
+    return input.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  });
+  //현재날짜부터 현재날짜 + 2개월까지 표시
+  Handlebars.registerHelper('reservatablePeriod', function(input) {
+    let startDate = new Date();
+    let endDate = new Date();
+    var weekday = new Array(7);
+    var resultPeriod = "";
+
+    endDate.setMonth(endDate.getMonth() + 2);
+    weekday[0] = "일";
+    weekday[1] = "월";
+    weekday[2] = "화";
+    weekday[3] = "수";
+    weekday[4] = "목";
+    weekday[5] = "금";
+    weekday[6] = "토";
+
+    resultPeriod = startDate.toLocaleDateString() + "(" + weekday[startDate.getDay()] +
+      ") ~" + endDate.toLocaleDateString() + "(" + weekday[endDate.getDay()] + ")";
+    return resultPeriod;
+  });
+  Handlebars.registerHelper('discountedPrice', function(price, discountRate) {
+    var discounted = (price * (100 - discountRate) / 100);
+
+    return discounted.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  })
+}
+
+/*--------뒤로가기 버튼 링크 추가-------*/
+function BackButtonClass() {
+  this.btn_back = document.querySelector(".btn_back");
+}
+BackButtonClass.prototype.getParamValueFromUrl = function(paramName) {
+  var resultParamValue = "";
+  // location.search는 url에서 ?를 찾아내줌.
+  var paramString = location.search.substr(1);
+  var splitedString = paramString.split("&");
+
+  for (var i = 0; i < splitedString.length; i++) {
+    var tempArray = splitedString[i].split("=");
+    if (tempArray[0] == paramName)
+      resultParamValue = tempArray[1];
   }
+  return resultParamValue;
+}
 
-  function getDisplayInfoByAjax(url) {
-    var oReq = new XMLHttpRequest;
+var backButtonObj = new BackButtonClass();
+backButtonObj.btn_back.href = "detail?id=" + backButtonObj.getParamValueFromUrl("id");
 
-    oReq.open('GET', url);
-    oReq.setRequestHeader("Content-type", "application/json");
-    oReq.responseType = "text";
-    oReq.addEventListener('load', function() {
-      //화면 상단에 이미지 추가.
-      addTemplateUnderUlClassNameVisualImg(JSON.parse(this.responseText));
-    });
-    oReq.send();
+/*--------이미지, 설명 부분 추가 하기 -----------*/
+function TitleClass() {}
+TitleClass.prototype.addTitle = function(json) {
+  document.querySelector(".top_title .title").innerHTML +=
+    json.displayInfo.productDescription;
+  //예매내용에 오늘을 기준으로 +5일 만큼 랜덤 일자 추가.
+}
+
+function TicketBodyClass() {}
+TicketBodyClass.prototype.addTicketBody = function(json) {
+  var ticketBodyTemplate = document.querySelector("#template_under_ticket_body").innerHTML;
+  var divClassNameTicketBody = document.querySelector(".ticket_body");
+  var ticketBodyBindTemplate = Handlebars.compile(ticketBodyTemplate);
+
+  divClassNameTicketBody.innerHTML += ticketBodyBindTemplate(json);
+  //최상단 제목 추가
+  var titleObj = new TitleClass();
+  titleObj.addTitle(json);
+}
+TicketBodyClass.prototype.addPlusMinusButtonEvent = function() {
+  //값에 콤마(,)를 더해줌. ex) 10000->10,000
+  function addCommas(val) {
+    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-  getDisplayInfoByAjax("/reservationManagement/api/products/" + displayInfoId);
+  var plusMinusButtonWrappers = document.querySelectorAll(".clearfix");
 
-  /*------- +, - 버튼 이벤트 추가 --------*/
+  //plus, minus 버튼이 있는 칸 하나하나에 이벤트를 추가.
+  plusMinusButtonWrappers.forEach(function(val) {
+    var PlusMinusButtons = val.querySelectorAll("a");
+    var totalItemCount = document.querySelector("#totalCount");
 
-  function addPlusMinusButtonEvent() {
-	//값에 콤마(,)를 더해줌. ex) 10000->10,000
-	function addCommas(val){
-		  return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
-	}
-    var plusMinusButtonWrappers = document.querySelectorAll(".clearfix");
+    PlusMinusButtons.forEach(function(btn) {
+      var itemPrice = btn.parentElement.parentElement.parentElement
+        .querySelector(".qty_info_icon .product_price .price");
+      var parseNumberItemPrice = Number(itemPrice.innerText.replace(/,/g, ""));
+      var totalItemPrice = btn.parentElement.parentElement.querySelector(".total_price");
 
-    //plus, minus 버튼이 있는 칸 하나하나에 이벤트를 추가.
-    plusMinusButtonWrappers.forEach(function(val) {
-      var PlusMinusButtons = val.querySelectorAll("a");
-  	  var totalItemCount = document.querySelector("#totalCount");
+      //버튼이 '+'인 경우
+      if (btn.title === "더하기") {
+        btn.addEventListener("click", function(b) {
+          var count = this.parentElement.querySelector(".count_control_input");
+          var countValue = count.value * 1;
 
-      PlusMinusButtons.forEach(function(btn) {
-    	var itemPrice = btn.parentElement.parentElement.parentElement
-    		.querySelector(".qty_info_icon .product_price .price");
-    	var parseNumberItemPrice
-    		= Number(itemPrice.innerText.replace(/,/g, ""));
-    	var totalItemPrice
-    		= btn.parentElement.parentElement.querySelector(".total_price");
+          //더하기 전 개수가 0개 일 때
+          if (countValue == 0) {
+            this.parentElement.querySelector(".ico_minus3")
+              .classList.remove("disabled");
+            this.parentElement.querySelector(".count_control_input")
+              .classList.remove("disabled");
+            this.parentElement.parentElement.querySelector(".individual_price")
+              .classList.add("on_color");
+          }
+          count.value = ++countValue;
+          //더하기를 누르면 더하기 버튼 밑의 총 금액도 증가.
+          var parseNumberTotalItemPrice = Number(totalItemPrice.innerText.replace(/,/g, ""));
+          totalItemPrice.innerText = addCommas(parseNumberTotalItemPrice + parseNumberItemPrice);
+          //총 개수 증가.
+          totalItemCount.innerText = Number(totalItemCount.innerText) + 1;
+        })
+      } else { //버튼이 '-'인 경우
+        btn.addEventListener("click", function(btn) {
+          var count = this.parentElement.querySelector(".count_control_input");
+          var countValue = count.value * 1;
 
-    	//버튼이 '+'인 경우
-        if (btn.title === "더하기") {
-          btn.addEventListener("click", function(b) {
-            var count = this.parentElement.querySelector(".count_control_input");
-            var countValue = count.value * 1;
-
-            //더하기 전 개수가 0개 일 때
+          //1을 감소시킨 값이 0보다 클 때만 이벤트 발생.
+          if (--countValue >= 0) {
+            //1을 감소시킨 값이 0일 때 -와 count 부분에 disabled 클래스 추가.
             if (countValue == 0) {
               this.parentElement.querySelector(".ico_minus3")
-                .classList.remove("disabled");
+                .classList.add("disabled");
               this.parentElement.querySelector(".count_control_input")
-                .classList.remove("disabled");
+                .classList.add("disabled");
               this.parentElement.parentElement.querySelector(".individual_price")
-              	.classList.add("on_color");
+                .classList.remove("on_color");
             }
-            count.value = ++countValue;
-            //더하기를 누르면 더하기 버튼 밑의 총 금액도 증가.
-            var parseNumberTotalItemPrice = Number(totalItemPrice.innerText.replace(/,/g,""));
-            totalItemPrice.innerText
-            	= addCommas(parseNumberTotalItemPrice + parseNumberItemPrice);
-            //총 개수 증가.
-            totalItemCount.innerText = Number(totalItemCount.innerText) + 1;
-          })
-        } else { //버튼이 '-'인 경우
-          btn.addEventListener("click", function(btn) {
-            var count = this.parentElement.querySelector(".count_control_input");
-            var countValue = count.value * 1;
-
-            //1을 감소시킨 값이 0보다 클 때만 이벤트 발생.
-            if (--countValue >= 0) {
-            	//1을 감소시킨 값이 0일 때 -와 count 부분에 disabled 클래스 추가.
-              if (countValue == 0) {
-                this.parentElement.querySelector(".ico_minus3")
-                  .classList.add("disabled");
-                this.parentElement.querySelector(".count_control_input")
-                  .classList.add("disabled");
-                this.parentElement.parentElement.querySelector(".individual_price")
-              		.classList.remove("on_color");
-              }
-              count.value = countValue;
-              var parseNumberTotalItemPrice = Number(totalItemPrice.innerText.replace(/,/g,""));
-              totalItemPrice.innerText
-          		= addCommas(parseNumberTotalItemPrice - parseNumberItemPrice);
-              //총 개수 감소.
-              totalItemCount.innerText = Number(totalItemCount.innerText) - 1;
-            }
-          })
-        }
-      })
+            count.value = countValue;
+            var parseNumberTotalItemPrice = Number(totalItemPrice.innerText.replace(/,/g, ""));
+            totalItemPrice.innerText = addCommas(parseNumberTotalItemPrice - parseNumberItemPrice);
+            //총 개수 감소.
+            totalItemCount.innerText = Number(totalItemCount.innerText) - 1;
+          }
+        })
+      }
     })
+  })
+}
+
+function ProductDescriptionClass() {}
+ProductDescriptionClass.prototype.addProductDescription = function(json) {
+  var storeDetailTemplate = document.querySelector("#template_under_section_store_details").innerHTML;
+  var divClassNameSectionStoreDetails = document.querySelector(".section_store_details");
+  var storeDetailBindTemplate = Handlebars.compile(storeDetailTemplate);
+
+  divClassNameSectionStoreDetails.innerHTML += storeDetailBindTemplate(json);
+  //+, - 버튼이 있는 ticket body부분 구현.
+  var ticketBodyObj = new TicketBodyClass();
+  ticketBodyObj.addTicketBody(json);
+  ticketBodyObj.addPlusMinusButtonEvent();
+}
+
+function ImageClass() {}
+ImageClass.prototype.addImages = function(json) {
+  var visualTemplate = document.querySelector("#container_visual_template").innerHTML;
+  var ulClassNameVisualImg = document.querySelector(".visual_img");
+  var visualBindTemplate = Handlebars.compile(visualTemplate);
+
+  var handlebarsObj = new HandlebarsClass();
+  handlebarsObj.addHandlebarHelpers();
+
+  //이미지 및 이미지 내에 있어야 할 글자 추가.
+  ulClassNameVisualImg.innerHTML += visualBindTemplate(json);
+  //이미지 밑에 있어야 할 내용 추가.
+  var productDescriptionObj = new ProductDescriptionClass();
+  productDescriptionObj.addProductDescription(json);
+}
+
+function AjaxClass() {
+
+}
+AjaxClass.prototype.getDisplayInfoByAjax = function(url) {
+  var oReq = new XMLHttpRequest;
+
+  oReq.open('GET', url);
+  oReq.setRequestHeader("Content-type", "application/json");
+  oReq.responseType = "text";
+  oReq.addEventListener('load', function() {
+    //화면 상단에 이미지 추가.
+    var imageObj = new ImageClass();
+    imageObj.addImages(JSON.parse(this.responseText));
+
+    var checkValidityObj = new CheckValidityClass();
+    checkValidityObj.inspectTel();
+    checkValidityObj.inspectEmail();
+
+    var termsAgreementObj = new TermsAgreementClass();
+    termsAgreementObj.showMoreAgreement();
+    termsAgreementObj.OnClickCheckReservable();
+
+    var reserveButtonObj = new ReserveButtonClass();
+    reserveButtonObj.toggleReserveButton();
+  });
+  oReq.send();
+}
+AjaxClass.prototype.getParamValueFromUrl = function(paramName) {
+  var resultParamValue = "";
+  // location.search는 url에서 ?를 찾아내줌.
+  var paramString = location.search.substr(1);
+  var splitedString = paramString.split("&");
+
+  for (var i = 0; i < splitedString.length; i++) {
+    var tempArray = splitedString[i].split("=");
+    if (tempArray[0] == paramName)
+      resultParamValue = tempArray[1];
   }
+  return resultParamValue;
+}
 
-
-  /*--------유효성 검사--------*/
-  //전화번호
-  function inspectTel(){
-	  var tel = document.querySelector("#tel");
-
-	  tel.addEventListener("mouseleave", function(){
-		  var regExpTel = /^\d{3}-\d{3,4}-\d{4}$/;
-		  var warningMessage = this.parentElement.querySelector("#tel_warning");
-
-		  if (this.value != "" && !regExpTel.test(this.value)){
-			  warningMessage.style.display = "inline-block";
-			  setTimeout(function(){
-				  warningMessage.style.display = "none";
-			  }, 1000);
-		  } else {
-			  warningMessage.style.display = "none";
-		  }
-	  })
-  }
-  //이메일
-  function inspectEmail(){
-	  var email = document.querySelector("#email");
-
-	  email.addEventListener("mouseleave", function(){
- 		 var regExpEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
- 		 var warningMessage = this.parentElement.querySelector("#email_warning");
-
- 		 if (this.value != "" && !regExpEmail.test(this.value)){
- 			 warningMessage.style.display = "inline-block";
- 			 setTimeout(function(){
- 				 warningMessage.style.display = "none";
- 			 }, 1000);
- 		 } else {
- 			 warningMessage.style.display = "none";
- 		 }
-	  });
-  }
-  inspectTel();
-  inspectEmail();
-
-  /*---------약관 더 보기---------*/
-  function showMoreAgreement(){
-	  var btnAgreements = document.querySelectorAll(".btn_agreement");
-
-	  btnAgreements.forEach(function(btn){
-		  btn.addEventListener("click", function(){
-			  this.parentElement.classList.toggle("open");
-		  })
-	  })
-  }
-  showMoreAgreement();
-
-  /*----------예약하기 클래스 토글----------*/
-  function toggleReserveButton(){
-	  var agreeButton = document.querySelector(".chk_txt_label");
-	  var bookButtonWrapper = document.querySelector(".bk_btn_wrap");
-	  var inputTel = document.getElementById("tel");
-	  var inputName = document.getElementById("name");
-	  var inputEmail = document.getElementById("email");
-	  var inputTags = document.querySelectorAll(".inline_form");
-	  var totalCount = document.getElementById("totalCount");
-	  var clearfixes = document.querySelectorAll(".clearfix");
-	  function checkReservable(name, tel, email){
-		  var regExpTel = /^\d{3}-\d{3,4}-\d{4}$/;
-		  var regExpEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-
-		  if (name == "" || !regExpTel.test(tel) || !regExpEmail.test(email)
-				  || !agreeButton.classList.contains("checked") || totalCount.innerHTML == 0 ){
-			  bookButtonWrapper.classList.add("disable");
-			  return;
-		  } else {
-			  bookButtonWrapper.classList.remove("disable");
-		  }
-	  }
-
-	  //이용약관에 동의할 때 필수정보들이 다 입력됐는지 확인.
-	  agreeButton.addEventListener("click", function(){
-		  this.classList.toggle("checked");
-		  checkReservable(inputName.value, inputTel.value, inputEmail.value);
-	  });
-	  //inputTag에 이름, 전화번호, 이메일을 입력할 때마다 예약가능한지 확인
-	  inputTags.forEach(function(inputTag){
-		  inputTag.addEventListener("mouseleave", function(){
-			  checkReservable(inputName.value, inputTel.value, inputEmail.value);
-		  })
-	  });
-	  //+, - 버튼이 클릭될 때에도 확인.
-	  clearfixes.forEach(function(clearfix){
-		  clearfix.addEventListener("click", function(){
-			  checkReservable(inputName.value, inputTel.value, inputEmail.value);
-		  });
-	  })
-  }
+window.addEventListener('DOMContentLoaded', () => {
+  var getDisplayInfoObj = new AjaxClass();
+  getDisplayInfoObj.getDisplayInfoByAjax("/reservationManagement/api/products/" + getDisplayInfoObj.getParamValueFromUrl("id"));
 });
