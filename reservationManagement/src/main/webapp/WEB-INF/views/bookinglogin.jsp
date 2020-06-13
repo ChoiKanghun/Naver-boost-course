@@ -56,7 +56,7 @@
          <footer  aria-hidden="false">
             <!---->
             <go-to-top >
-               <div class="gototop"  aria-hidden="false"> <a href="https://m.booking.naver.com/#" class="lnk_top" > <span class="lnk_top_text" translate="CM-TOP">TOP</span> </a> </div>
+               <div class="gototop"  aria-hidden="false"> <a href="#" class="lnk_top" > <span class="lnk_top_text" translate="CM-TOP">TOP</span> </a> </div>
             </go-to-top>
             <!----> <!---->
             <div id="footer" class="footer"  >
