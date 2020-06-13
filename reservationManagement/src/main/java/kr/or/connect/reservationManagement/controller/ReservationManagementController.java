@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.connect.reservationManagement.dto.Reservations;
-import kr.or.connect.reservationManagement.service.ProductPromotionService;
+import kr.or.connect.reservationManagement.service.ReservationService;
 
 @Controller
 public class ReservationManagementController {
 
 	@Autowired
-	ProductPromotionService reservationManagementService;
+	ReservationService reservationService;
 	
 	@GetMapping(path = "/mainpage")
 	public String mainpage() {
@@ -52,7 +52,7 @@ public class ReservationManagementController {
 	public String checkMyBook(
 			@RequestParam(name="reservationEmail", required=true) String reservationEmail,
 			RedirectAttributes redirectAttr) {
-		List<Reservations> reservations = reservationManagementService.getReservations(reservationEmail);
+		List<Reservations> reservations = reservationService.getReservations(reservationEmail);
 		if (reservations.size() <= 0)
 	  		redirectAttr.addFlashAttribute("reservationEmail", "none");
 		else
