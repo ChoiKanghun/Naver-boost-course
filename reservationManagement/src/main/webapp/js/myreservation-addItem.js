@@ -1,154 +1,193 @@
-function sendCancelAjax(reservationInfoId){
-    var oReqCancel = new XMLHttpRequest;
-    
-    oReqCancel.open('PUT', 
-    		"/reservationManagement/api/cancelReservation?reservationInfoId=" + reservationInfoId);
-    oReqCancel.setRequestHeader("Content-type", "application/json");
-    oReqCancel.send();
-    
-	var reservationEmail = document.querySelector("#reservationEmailFromServer").innerText;
-	
-    var form = document.createElement("form");
-    form.setAttribute("charset", "UTF-8");
-    form.setAttribute("method", "POST");
-    form.setAttribute("action", "/reservationManagement/checkMyBook");
-    
-    var hiddenField = document.createElement("input");
-    hiddenField.setAttribute("type", "hidden");
-    hiddenField.setAttribute("name", "reservationEmail");
-    hiddenField.setAttribute("value", reservationEmail);
-    form.appendChild(hiddenField);
-    
-    document.body.appendChild(form);
-    form.submit();
+function HandlebarsClass() {};
+HandlebarsClass.prototype.addHandlebarHelpers = function() {
+  Handlebars.registerHelper('parseDateAndDay', function(stringDate) {
+    var year = stringDate.substr(0, 4);
+    var month = stringDate.substr(5, 2);
+    var day = stringDate.substr(8, 2);
+    var parsedDate = new Date(year, month - 1, day);
+    var indexOfToday = parsedDate.getDay();
+    var weekday = new Array(7);
+    weekday[0] = "일";
+    weekday[1] = "월";
+    weekday[2] = "화";
+    weekday[3] = "수";
+    weekday[4] = "목";
+    weekday[5] = "금";
+    weekday[6] = "토";
+    var resultDate = weekday[indexOfToday];
+
+    return parsedDate.toLocaleDateString() + "(" + resultDate + ")";
+  });
 }
 
-function deleteCancellationButton(){
-	var unDeletableItems = document.querySelectorAll(".used");
-	
-	unDeletableItems.forEach(function(item){
-		item.querySelectorAll(".card_item").forEach(function(article){
-			article.querySelector(".booking_cancel").style.display = "none";
-		})
-	});
+var CancellationButtonClass = function() {}
+CancellationButtonClass.prototype.deleteCancellationButtonFromUndeletableItems = function() {
+  var undeletableItems = document.querySelectorAll(".used");
+
+  undeletableItems.forEach(function(item) {
+    item.querySelectorAll(".card_item").forEach(function(article) {
+      article.querySelector(".booking_cancel").style.display = "none";
+    })
+  });
 }
 
-function cancelMyReservation(json){
-	var btnWrapper = document.querySelectorAll(".booking_cancel");
-	
-	btnWrapper.forEach(function(b){
-		b.querySelector(".btn").addEventListener('click', function(){
-			var reservationInfoId = this.dataset.reservationInfoId;
+function ReloadPageClass() {}
+ReloadPageClass.prototype.reloadPageAfterSubmitCancellation = function(reservationInfoId) {
+  var reservationEmail = document.querySelector("#reservationEmailFromServer").innerText;
+  var form = document.createElement("form");
 
-			sendCancelAjax(reservationInfoId);	
-		})
-	})
-	deleteCancellationButton();
-}
-function addReserveInfo(json, arrayToSaveWhereToAddArticle){
-	var articleTemplateHTML = document.querySelector("#article_template").innerHTML;
-	var articleBindTemplate = Handlebars.compile(articleTemplateHTML);
-	
-	Handlebars.registerHelper('parseDateAndDay', function(stringDate){
-			var year = stringDate.substr(0, 4);
-			var month = stringDate.substr(5, 2);
-			var day = stringDate.substr(8, 2);
-			var parsedDate = new Date(year, month - 1, day);
-			var indexOfToday = parsedDate.getDay();
-			var weekday = new Array(7);
-			weekday[0] = "일";
-			weekday[1] = "월";
-			weekday[2] = "화";
-			weekday[3] = "수";
-			weekday[4] = "목";
-			weekday[5] = "금";
-			weekday[6] = "토";
-			var resultDate = weekday[indexOfToday];
-			
-			return parsedDate.toLocaleDateString() + "(" + resultDate + ")";
-	});
-	json.reservations.forEach(function(oneReservation, index){
-		var targetToAddArticle;
-		var flagString = arrayToSaveWhereToAddArticle[index];
+  form.setAttribute("charset", "UTF-8");
+  form.setAttribute("method", "POST");
+  form.setAttribute("action", "/reservationManagement/checkMyBook");
 
-		if (flagString === "cancel")
-			targetToAddArticle = document.querySelector(".card.used.cancel");
-		else if (flagString === "alreadyPerformed")
-			targetToAddArticle = document.querySelectorAll(".card.used")[0];
-		else
-			targetToAddArticle = document.querySelector(".card.confirmed");
-		targetToAddArticle.innerHTML += articleBindTemplate(oneReservation);
-	});
-	cancelMyReservation(json);
+  var hiddenField = document.createElement("input");
+  hiddenField.setAttribute("type", "hidden");
+  hiddenField.setAttribute("name", "reservationEmail");
+  hiddenField.setAttribute("value", reservationEmail);
+  form.appendChild(hiddenField);
+  document.body.appendChild(form);
+  form.submit();
 }
 
-function addSummaryContents(json){
-	var total = document.querySelector(".ico_book2").parentElement.querySelector(".figure");
-	total.innerHTML = json.size;
-	var cancelledPerformCount = 0;
-	var toBePerformedCount = 0;
-	var alreadyPerformedCount = 0;
-	var reservationsArray = json.reservations;
-	var now = new Date().setMonth(new Date().getMonth());
-	var arrayToSaveWhereToAddArticle = [];
-	
-	reservationsArray.forEach(function(oneReservation, index){
-		var year = oneReservation.reservationDate.substr(0, 4);
-		var month = oneReservation.reservationDate.substr(5, 2);
-		var day = oneReservation.reservationDate.substr(8, 2);
-		var performDate = new Date(year, month - 1, day).getTime();
-		
-		var test = oneReservation.cancelFlag;
+function AjaxClass() {}
+AjaxClass.prototype.getParamValueFromUrl = function(paramName) {
+  var resultParamValue = "";
+  // location.search는 url에서 ?를 찾아내줌.
+  var paramString = location.search.substr(1);
+  var splitedString = paramString.split("&");
 
-		if (oneReservation.cancelFlag){
-			cancelledPerformCount++;
-			arrayToSaveWhereToAddArticle[index] = "cancel";
-		}
-		else if (now > performDate){
-			alreadyPerformedCount++;
-			arrayToSaveWhereToAddArticle[index] = "alreadyPerformed";
-		}
-		else{
-			toBePerformedCount++;
-			arrayToSaveWhereToAddArticle[index] = "toBePerformed";
-		}
-	});
-	var toBePerformedTarget = document.querySelector(".ico_book_ss").parentElement.querySelector(".figure");
-	var alreadyPerformedTarget = document.querySelector(".ico_check").parentElement.querySelector(".figure");
-	var cancelledPerformTarget = document.querySelector(".ico_back").parentElement.querySelector(".figure");
-	
-	toBePerformedTarget.innerHTML = toBePerformedCount;
-	alreadyPerformedTarget.innerHTML = alreadyPerformedCount;
-	cancelledPerformTarget.innerHTML = cancelledPerformCount;
-	
-	addReserveInfo(json, arrayToSaveWhereToAddArticle);
+  for (var i = 0; i < splitedString.length; i++) {
+    var tempArray = splitedString[i].split("=");
+    if (tempArray[0] == paramName)
+      resultParamValue = tempArray[1];
+  }
+  return resultParamValue;
+}
+AjaxClass.prototype.sendCancelAjax = function(reservationInfoId) {
+  var oReqCancel = new XMLHttpRequest;
+
+  oReqCancel.open('PUT',
+    "/reservationManagement/api/cancelReservation?reservationInfoId=" + reservationInfoId);
+  oReqCancel.setRequestHeader("Content-type", "application/json");
+  oReqCancel.addEventListener("load", function() {
+    var reloadPageObj = new ReloadPageClass();
+    reloadPageObj.reloadPageAfterSubmitCancellation(reservationInfoId);
+  })
+  oReqCancel.send();
+}
+AjaxClass.prototype.getReservationInfoByAjax = function(url) {
+  var oReq = new XMLHttpRequest;
+
+  oReq.open('GET', url);
+  oReq.setRequestHeader("Content-type", "application/json");
+  oReq.responseType = "text";
+  oReq.addEventListener('load', function() {
+    var json = JSON.parse(this.responseText);
+    var articleObj = new ArticleClass();
+    var cancellationButtonObj = new CancellationButtonClass();
+    var handlebarsObj = new HandlebarsClass();
+
+    handlebarsObj.addHandlebarHelpers();
+    articleObj.addSummaryContents(json);
+    articleObj.addReserveInfo(json);
+    cancellationButtonObj.deleteCancellationButtonFromUndeletableItems();
+  });
+  oReq.send();
 }
 
-function getReservationInfoByAjax(url) {
-    var oReq = new XMLHttpRequest;
+function CancelReservationClass() {
 
-    oReq.open('GET', url);
-    oReq.setRequestHeader("Content-type", "application/json");
-    oReq.responseType = "text";
-    oReq.addEventListener('load', function() {
-      addSummaryContents(JSON.parse(this.responseText));
-    });
-    oReq.send();
+}
+CancelReservationClass.prototype.cancelMyReservation = function(json) {
+  var btnWrapper = document.querySelectorAll(".booking_cancel");
+
+  btnWrapper.forEach(function(b) {
+    b.querySelector(".btn").addEventListener('click', function() {
+      var reservationInfoId = this.dataset.reservationInfoId;
+      var sendCancelAjaxObj = new AjaxClass();
+
+      sendCancelAjaxObj.sendCancelAjax(reservationInfoId);
+    })
+  })
 }
 
-function checkMyBookExists(){
-	var reservationEmail = document.querySelector("#reservationEmailFromServer").innerText;
+function ArticleClass() {
+  this.arrayToSaveWhereToAddArticle = [];
+}
+ArticleClass.prototype.addSummaryContents = function(json) {
+  var total = document.querySelector(".ico_book2").parentElement.querySelector(".figure");
+  total.innerHTML = json.size;
+  var cancelledPerformCount = 0;
+  var toBePerformedCount = 0;
+  var alreadyPerformedCount = 0;
+  var reservationsArray = json.reservations;
+  var now = new Date().setMonth(new Date().getMonth());
 
-	if (reservationEmail === "" || reservationEmail === "none"){
-		document.querySelector(".wrap_mylist").style.display = "none";
-		document.querySelector(".my_summary").style.display = "none";
-	}
-	else {
-		document.querySelector(".err").style.display = "none";
-		getReservationInfoByAjax("/reservationManagement/api/reservations?reservationEmail=" + reservationEmail);
-	}
+  reservationsArray.forEach(function(oneReservation, index) {
+    var year = oneReservation.reservationDate.substr(0, 4);
+    var month = oneReservation.reservationDate.substr(5, 2);
+    var day = oneReservation.reservationDate.substr(8, 2);
+    var performDate = new Date(year, month - 1, day).getTime();
+
+    var test = oneReservation.cancelFlag;
+
+    if (oneReservation.cancelFlag) {
+      cancelledPerformCount++;
+      this.arrayToSaveWhereToAddArticle[index] = "cancel";
+    } else if (now > performDate) {
+      alreadyPerformedCount++;
+      this.arrayToSaveWhereToAddArticle[index] = "alreadyPerformed";
+    } else {
+      toBePerformedCount++;
+      this.arrayToSaveWhereToAddArticle[index] = "toBePerformed";
+    }
+  }.bind(this));
+  var toBePerformedTarget = document.querySelector(".ico_book_ss").parentElement.querySelector(".figure");
+  var alreadyPerformedTarget = document.querySelector(".ico_check").parentElement.querySelector(".figure");
+  var cancelledPerformTarget = document.querySelector(".ico_back").parentElement.querySelector(".figure");
+
+  toBePerformedTarget.innerHTML = toBePerformedCount;
+  alreadyPerformedTarget.innerHTML = alreadyPerformedCount;
+  cancelledPerformTarget.innerHTML = cancelledPerformCount;
+}
+ArticleClass.prototype.addReserveInfo = function(json) {
+  var articleTemplateHTML = document.querySelector("#article_template").innerHTML;
+  var articleBindTemplate = Handlebars.compile(articleTemplateHTML);
+
+  json.reservations.forEach(function(oneReservation, index) {
+    var targetToAddArticle;
+    var flagString = this.arrayToSaveWhereToAddArticle[index];
+
+    if (flagString === "cancel")
+      targetToAddArticle = document.querySelector(".card.used.cancel");
+    else if (flagString === "alreadyPerformed")
+      targetToAddArticle = document.querySelectorAll(".card.used")[0];
+    else
+      targetToAddArticle = document.querySelector(".card.confirmed");
+    targetToAddArticle.innerHTML += articleBindTemplate(oneReservation);
+  }.bind(this));
+  var cancelReservationObj = new CancelReservationClass();
+
+  cancelReservationObj.cancelMyReservation(json);
 }
 
-checkMyBookExists();
+function CheckMyBookExistsClass() {}
+CheckMyBookExistsClass.prototype.checkMyBookExists = function() {
+  var reservationEmail = document.querySelector("#reservationEmailFromServer").innerText;
 
+  if (reservationEmail === "" || reservationEmail === "none") {
+    document.querySelector(".wrap_mylist").style.display = "none";
+    document.querySelector(".my_summary").style.display = "none";
+  } else {
+    var reservationAjaxObj = new AjaxClass();
+    var url = "/reservationManagement/api/reservations?reservationEmail=" + reservationEmail;
 
+    document.querySelector(".err").style.display = "none";
+    reservationAjaxObj.getReservationInfoByAjax(url);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  var checkMyBookExistsObj = new CheckMyBookExistsClass();
+  checkMyBookExistsObj.checkMyBookExists();
+});
