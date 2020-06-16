@@ -25,9 +25,27 @@ CancellationButtonClass.prototype.deleteCancellationButtonFromUndeletableItems =
   var undeletableItems = document.querySelectorAll(".used");
 
   undeletableItems.forEach(function(item) {
-    item.querySelectorAll(".card_item").forEach(function(article) {
-      article.querySelector(".booking_cancel").style.display = "none";
-    })
+    var reservationEmail = document.querySelector("#reservationEmailFromServer").innerText;
+
+    if (item.classList.contains("cancel")) {
+      item.querySelectorAll(".card_item").forEach(function(article) {
+        article.querySelector(".booking_cancel").style.display = "none";
+      })
+    } else {
+      item.querySelectorAll(".card_item").forEach(function(article) {
+        var productId = article.querySelector(".booking_number").dataset.reservationInfoId;
+        var reservationInfoId = article.querySelector(".product_id").dataset.productId;
+        var productDescription = article.querySelectorAll(".item_dsc")[1].innerText;
+        
+        article.querySelector(".booking_cancel").firstElementChild.innerText = "예매자 리뷰 남기기";
+        article.querySelector(".booking_cancel").firstElementChild.addEventListener("click", function() {
+          location.href = "reviewWrite?reservationEmail=" + reservationEmail
+            + "&productId=" + productId
+            + "&reservationInfoId=" + reservationInfoId
+          	+ "&productDescription=" + productDescription;
+        })
+      })
+    }
   });
 }
 
@@ -102,12 +120,15 @@ CancelReservationClass.prototype.cancelMyReservation = function(json) {
   var btnWrapper = document.querySelectorAll(".booking_cancel");
 
   btnWrapper.forEach(function(b) {
-    b.querySelector(".btn").addEventListener('click', function() {
-      var reservationInfoId = this.dataset.reservationInfoId;
-      var sendCancelAjaxObj = new AjaxClass();
+    var article = b.parentElement.parentElement.parentElement.parentElement.parentElement;
+    if (!(article.classList.contains("used"))) {
+      b.querySelector(".btn").addEventListener('click', function() {
+        var reservationInfoId = this.dataset.reservationInfoId;
+        var sendCancelAjaxObj = new AjaxClass();
 
-      sendCancelAjaxObj.sendCancelAjax(reservationInfoId);
-    })
+        sendCancelAjaxObj.sendCancelAjax(reservationInfoId);
+      })
+    }
   })
 }
 
