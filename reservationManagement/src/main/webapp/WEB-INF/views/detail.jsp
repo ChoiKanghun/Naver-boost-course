@@ -176,7 +176,7 @@
 <script src="js/detail.js"></script>
 <script type="container_visual_template" id="container_visual_template">
   <li class="item" style="width: 414px;"> 
-      <img alt="" class="img_thumb" src={{saveFileName}} style="height:100%"> 
+      <img alt="" class="img_thumb" src={{saveFileName}} style="height:auto"> 
       <span class="img_bg"></span>
       <div class="visual_txt">
         <div class="visual_txt_inn">
