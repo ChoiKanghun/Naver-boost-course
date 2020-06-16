@@ -80,5 +80,24 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
 	public DisplayInfo getDisplayInfo(Integer displayInfoId) {
 		return displayInfoDao.getDisplayInfo(displayInfoId);
 	}
+	
+	@Override
+	public void setPriceType(List<ProductPrices> productPrices) {
+		for (ProductPrices productPrice : productPrices) {
+			String priceTypeName = productPrice.getPriceTypeName();
+			switch (priceTypeName) {
+				case "A" : productPrice.setPriceTypeName("성인"); break;
+				case "B" : productPrice.setPriceTypeName("유아"); break;
+				case "Y" : productPrice.setPriceTypeName("청소년"); break;
+				case "S" : productPrice.setPriceTypeName("셋트"); break;
+				case "D" : productPrice.setPriceTypeName("장애인"); break;
+				case "C" : productPrice.setPriceTypeName("지역주민"); break;
+				case "E" : productPrice.setPriceTypeName("어얼리버드"); break;
+				case "V" : productPrice.setPriceTypeName("VIP"); break;
+				case "R" : productPrice.setPriceTypeName("R석"); break;
+				default : productPrice.setPriceTypeName("invalid"); break;
+			}
+		}
+	}
 
 }
