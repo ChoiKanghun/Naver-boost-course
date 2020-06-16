@@ -20,4 +20,5 @@ public interface ProductPromotionService {
 	List<ProductPrices> getProductPrices(Integer displayInfoId);
 	DisplayInfoImage getDisplayInfoImage(Integer displayInfoId);
 	DisplayInfo getDisplayInfo(Integer displayInfoId);
+	void setPriceType(List<ProductPrices> productPrices);
 }
