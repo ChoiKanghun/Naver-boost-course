@@ -33,8 +33,8 @@ CancellationButtonClass.prototype.deleteCancellationButtonFromUndeletableItems =
       })
     } else {
       item.querySelectorAll(".card_item").forEach(function(article) {
-        var productId = article.querySelector(".booking_number").dataset.reservationInfoId;
-        var reservationInfoId = article.querySelector(".product_id").dataset.productId;
+        var reservationInfoId = article.querySelector(".booking_number").dataset.reservationInfoId;
+        var productId = article.querySelector(".product_id").dataset.productId;
         var productDescription = article.querySelectorAll(".item_dsc")[1].innerText;
         
         article.querySelector(".booking_cancel").firstElementChild.innerText = "예매자 리뷰 남기기";

@@ -9,10 +9,10 @@ public class CommentImages {
 	private boolean deleteFlag; 
 	private int fileId;
 	private String fileName;
-	private int ImageId;
+	private int imageId;
 	private int reservationInfoId;
-
 	private String SaveFileName;
+	
 	public String getContentType() {
 		return contentType;
 	}
@@ -50,10 +50,10 @@ public class CommentImages {
 		this.fileName = fileName;
 	}
 	public int getImageId() {
-		return ImageId;
+		return imageId;
 	}
 	public void setImageId(int imageId) {
-		ImageId = imageId;
+		imageId = imageId;
 	}
 	public int getReservationInfoId() {
 		return reservationInfoId;
@@ -73,7 +73,7 @@ public class CommentImages {
 	public String toString() {
 		return "CommentImages [contentType=" + contentType + ", createDate=" + createDate + ", modifyDate=" + modifyDate
 				+ ", deleteFlag=" + deleteFlag + ", fileId=" + fileId + ", fileName=" + fileName + ", ImageId="
-				+ ImageId + ", reservationInfoId=" + reservationInfoId + 
+				+ imageId + ", reservationInfoId=" + reservationInfoId + 
 				", SaveFileName=" + SaveFileName + "]";
 	}
 }

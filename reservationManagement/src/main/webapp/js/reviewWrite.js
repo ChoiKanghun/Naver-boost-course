@@ -57,6 +57,7 @@ document.querySelector(".bk_btn").addEventListener("click", function(){
 	var comment = document.querySelector(".review_textarea").value;
 	var reservationInfoId = document.querySelector("#reservationInfoId").dataset.reservationInfoId;
 	var productId = document.querySelector("#productId").dataset.productId;
+	var score = document.querySelector(".star_rank").innerText * 1;
 	
 	if (comment.length < 5) {
 		window.alert("리뷰를 5글자 이상 남겨주세요.");
@@ -64,29 +65,30 @@ document.querySelector(".bk_btn").addEventListener("click", function(){
 	}
 	
 	var form = document.createElement("form"); //form생성
-	var hiddenField = document.createElement("input");
-
+	var imageFile = document.querySelector("#reviewImageFileOpenInput");
+	
+	imageFile.setAttribute("name", "file");
+	form.appendChild(imageFile);
 	form.setAttribute("charset", "UTF-8");//charset설정
 	form.setAttribute("method", "POST");//method설정
-	form.setAttribute("action", "");
+	form.setAttribute("enctype", "multipart/form-data")
+	form.setAttribute("action", "api/" + reservationInfoId + "/comments");
 
-	hiddenField.setAttribute("name", "score");
-	hiddenField.setAttribute("value", "");
-	form.appendChild(hiddenField);
+	var inputScore = document.createElement("input");
+	inputScore.setAttribute("name", "score");
+	inputScore.setAttribute("value", score);
+	form.appendChild(inputScore);
 
-	hiddenField.setAttribute("name", "comment");
-	hiddenField.setAttribute("value", comment);
-	form.appendChild(hiddenField);
+	var inputComment = document.createElement("input");
+	inputComment.setAttribute("name", "comment");
+	inputComment.setAttribute("value", comment);
+	form.appendChild(inputComment);
 	
-	hiddenField.setAttribute("name", "productId");
-	hiddenField.setAttribute("value", productId);
-	form.appendChild(hiddenField);
-	
-	hiddenField.setAttribute("name", "reservationInfoId");
-	hiddenField.setAttribute("value", reservationInfoId);
-	form.appendChild(hiddenField);
-	
-	
+	var inputProductId = document.createElement("input");
+	inputProductId.setAttribute("name", "productId");
+	inputProductId.setAttribute("value", productId);
+	form.appendChild(inputProductId);
+
 	document.body.appendChild(form);//body에 form을 추가.
 	form.submit();//form을 제출.
 		
