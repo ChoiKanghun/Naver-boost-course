@@ -292,12 +292,15 @@
 <script src="js/myreservation-addItem.js"></script>
 <script type="rv-template" id="article_template">
   <article class="card_item">
-  <a href="#" class="link_booking_details">
     <div class="card_body">
       <div class="left"></div>
       <div class="middle">
         <div class="card_detail">
-          <em class="booking_number">No.{{reservationInfoId}}</em>
+          <em class="booking_number" data-reservation-info-id="{{reservationInfoId}}">
+			No.{{reservationInfoId}}
+		  </em>
+		  <em class="product_id" data-product-id={{productId}} style="display:none;">
+		  </em>
           <h4 class="tit">서비스명/상품명</h4>
           <ul class="detail">
             <li class="item">
@@ -309,9 +312,7 @@
 		{{#displayInfo}}
             <li class="item">
               <span class="item_tit">내역</span>
-              <em class="item_dsc">
-                {{productDescription}}
-              </em>
+              <em class="item_dsc">{{productDescription}}</em>
             </li>
             <li class="item">
               <span class="item_tit">장소</span>
@@ -348,7 +349,6 @@
       <div class="middle"></div>
       <div class="right"></div>
     </div>
-  </a>
   <a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 </article>
 	</script>
