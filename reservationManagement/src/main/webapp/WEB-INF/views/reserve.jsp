@@ -32,7 +32,7 @@
                     <h2><span class="title"></span></h2>
                 </div>
                 <div class="group_visual">
-                    <div class="container_visual" style="width: 414px;">
+                    <div class="container_visual" style="width: 414px;height:350px">
                         <ul class="visual_img">
 
                         </ul>
@@ -127,7 +127,7 @@
 <script type="rv-template" id = "container_visual_template">
 {{#productImages}}
   <li class="item" style="width: 414px;">
-    <img alt="" class="img_thumb" src={{saveFileName}} style="height:100%">
+    <img alt="" class="img_thumb" src={{saveFileName}} style="height:auto">
     <span class="img_bg"> </span>
 {{/productImages}}
 {{#displayInfo}}
