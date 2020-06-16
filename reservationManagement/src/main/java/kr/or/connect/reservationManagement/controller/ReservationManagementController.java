@@ -2,10 +2,12 @@ package kr.or.connect.reservationManagement.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -48,9 +50,9 @@ public class ReservationManagementController {
 		return "bookinglogin";
 	}
 	
-	@PostMapping(path = "/checkMyBook")
+	@RequestMapping(path = "/checkMyBook")
 	public String checkMyBook(
-			@RequestParam(name="reservationEmail", required=true) String reservationEmail,
+			@RequestParam(name="reservationEmail") String reservationEmail,
 			RedirectAttributes redirectAttr) {
 		List<Reservations> reservations = reservationService.getReservations(reservationEmail);
 		if (reservations.size() <= 0)
@@ -58,5 +60,18 @@ public class ReservationManagementController {
 		else
 			redirectAttr.addFlashAttribute("reservationEmail", reservationEmail);
 		return "redirect:myreservation";
+	}
+	
+	@GetMapping(path = "reviewWrite")
+	public String reviewWrite(@RequestParam (name = "reservationEmail") String reservationEmail, 
+			@RequestParam (name = "reservationInfoId") String reservationInfoId,
+			@RequestParam (name = "productId") String productId,
+			@RequestParam (name = "productDescription") String productDescription,
+			HttpServletRequest request) {
+		request.setAttribute("reservationEmail", reservationEmail);
+		request.setAttribute("productId", productId);
+		request.setAttribute("reservationInfoId", reservationInfoId);
+		request.setAttribute("productDescription", productDescription);
+		return "reviewWrite";
 	}
 }
