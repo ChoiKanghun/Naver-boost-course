@@ -93,34 +93,8 @@ public class ReservationManagementAPIController {
 		DisplayInfoImage displayInfoImage = productPromotionService.getDisplayInfoImage(displayInfoId);
 		List<ProductImages> productImages = productPromotionService.getProductImages(displayInfoId);
 		List<ProductPrices> productPrices = productPromotionService.getProductPrices(displayInfoId);
+		productPromotionService.setPriceType(productPrices);
 		
-		for (ProductPrices productPrice : productPrices) {
-			String priceTypeName = productPrice.getPriceTypeName();
-			if (priceTypeName.equals("A"))
-				productPrice.setPriceTypeName("성인");
-			else if (priceTypeName.equals("Y"))
-				productPrice.setPriceTypeName("청소년");
-			else if (priceTypeName.equals("B"))
-				productPrice.setPriceTypeName("유아");
-			else if (priceTypeName.equals("S"))
-				productPrice.setPriceTypeName("셋트");
-			else if (priceTypeName.equals("D"))
-				productPrice.setPriceTypeName("장애인");
-			else if (priceTypeName.equals("C"))
-				productPrice.setPriceTypeName("지역주민");
-			else if (priceTypeName.equals("E"))
-				productPrice.setPriceTypeName("어얼리버드");
-			else if (priceTypeName.equals("V"))
-				productPrice.setPriceTypeName("VIP");
-			else if (priceTypeName.equals("R"))
-				productPrice.setPriceTypeName("R석");
-			else if (priceTypeName.equals("B"))
-				productPrice.setPriceTypeName("B석");
-			else if (priceTypeName.equals("S"))
-				productPrice.setPriceTypeName("S석");
-			else if (priceTypeName.equals("D"))
-				productPrice.setPriceTypeName("평일");
-		}
 		resBody.put("comments", comments);
 		resBody.put("averageScore", averageScore);
 		resBody.put("displayInfo", displayInfo);
@@ -160,7 +134,7 @@ public class ReservationManagementAPIController {
 	@PostMapping(path = "/reservations")
 	public ReserveItem reservation(
 			@ModelAttribute ReserveItem reserveItem,
-			@RequestParam(name="reservationYearMonthDay", required=true) String reservationYearMonthDay) {
+			@RequestParam(name="reservationYearMonthDay") String reservationYearMonthDay) {
 		reserveItem.setReservationDate(reservationYearMonthDay);
 		reserveItem = reservationService.reserveAnItem(reserveItem, reserveItem.getReserveItemPrices());
 		return reserveItem;
@@ -168,7 +142,7 @@ public class ReservationManagementAPIController {
 	
 	@PutMapping(path = "/cancelReservation")
 	public ReserveItem cancelReservation(
-			@RequestParam(name="reservationInfoId", required=true)int reservationInfoId) {
+			@RequestParam(name="reservationInfoId")int reservationInfoId) {
 		ReserveItem reserveItem = reservationService.cancelReservation(reservationInfoId);
 		List<ReserveItemPrice> prices = reservationService.getResereveItemPriceByReservationInfoId(reservationInfoId);
 		reserveItem.setReserveItemPrices(prices);
