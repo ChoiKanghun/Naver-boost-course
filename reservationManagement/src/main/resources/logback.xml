@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- <Pattern>%d{YYYY:MM:dd HH:mm:ss:SSS} %-5level %logger{5} - %msg%n</Pattern>  -->
+            <Pattern>%d{YYYY년 MM월 dd일 HH시 mm분 ss초.SSS} %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework" level="error"/>
+    <logger name="kr.or.connect" level="error"/>
+
+    <root level="error">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
