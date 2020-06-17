@@ -13,10 +13,10 @@ window.addEventListener('DOMContentLoaded', () => {
           DivsUnderClassNameSectionInfoTab.forEach(function(iterateDivTag) {
             iterateDivTag.classList.add("hide");
           });
-          this.classList.forEach(function(c) {
-            if (c == "_detail")
+          this.classList.forEach(function(className) {
+            if (className == "_detail")
               document.querySelector(".detail_area_wrap").classList.remove("hide");
-            else if (c == "_path")
+            else if (className == "_path")
               document.querySelector(".detail_location").classList.remove("hide");
           })
         });
@@ -49,6 +49,9 @@ window.addEventListener('DOMContentLoaded', () => {
       //아래함수에서 소개 정보 추가
       this.addIntroduction(json);
     },
+    trimString: function(input, length) {
+    	return input.substring(0, length);
+    },
     addComments: function(json) {
       var commentsTemplate = document.querySelector("#commentTemplate").innerHTML;
       var ulClassNameListShortReview = document.querySelector(".list_short_review");
@@ -58,8 +61,9 @@ window.addEventListener('DOMContentLoaded', () => {
       var bindResultHTML = "";
 
       Handlebars.registerHelper('emailTrim', function(input) {
-        return new Handlebars.SafeString(input.substring(0, 4));
-      });
+    	var trimmedEmail = this.trimString(input, 4);
+        return trimmedEmail;
+      }.bind(this));
       //표시해야 할 DATE FORMAT에 맞춰 출력
       Handlebars.registerHelper('customDateFormat', function(input) {
     	  var today = new Date(input);
