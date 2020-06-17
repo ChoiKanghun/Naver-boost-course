@@ -119,10 +119,10 @@
           <!-- [D] tab 선택 시 anchor에 active 추가 -->
           <ul class="info_tab_lst">
             <li class="item active _detail">
-              <a class="anchor active"> <span>상세정보</span> </a>
+              <a class="anchor active" tabindex="0"> <span>상세정보</span> </a>
             </li>
             <li class="item _path">
-              <a class="anchor"> <span>오시는길</span> </a>
+              <a class="anchor" tabindex="0"> <span>오시는길</span> </a>
             </li>
           </ul>
           <!-- [D] 상세정보 외 다른 탭 선택 시 detail_area_wrap에 hide 추가 -->
@@ -138,7 +138,7 @@
                   </li>
                   <li class="detail_info_lst"> <strong class="in_tit">[공지사항]</strong>
                     <ul class="in_img_group">
-                      <li class="in_img_lst"> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170131_238/14858250829398Pnx6_JPEG/%B0%F8%C1%F6%BB%E7%C7%D7.jpg?type=a1000"> </li>
+                      <li class="in_img_lst"> <img alt="공지사항" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170131_238/14858250829398Pnx6_JPEG/%B0%F8%C1%F6%BB%E7%C7%D7.jpg?type=a1000"> </li>
                     </ul>
                   </li>
                   <!-- <li class="detail_info_lst"> <strong class="in_tit">[공연정보]</strong>
