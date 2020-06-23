@@ -218,4 +218,10 @@ window.addEventListener('DOMContentLoaded', () => {
   addEventToPrevNextBtnObj.addEventToPrevNextBtn();
   addDisplayInfoIdObj.addDisplayInfoId();
   viewMoreWithJquery.viewMore();
+  var reservationEmailWrapper = document.querySelector(".viewReservation");
+  
+  if (reservationEmailWrapper.innerText != "예약확인") {
+	  reservationEmailWrapper.parentElement.href =
+		  "/reservationManagement/checkMyBook?reservationEmail=" + reservationEmailWrapper.innerText;
+  }
 });
