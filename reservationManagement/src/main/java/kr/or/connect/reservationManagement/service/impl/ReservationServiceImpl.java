@@ -1,11 +1,11 @@
 package kr.or.connect.reservationManagement.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.connect.reservationManagement.dao.DeleteResultDao;
 import kr.or.connect.reservationManagement.dao.ReservationsDao;
@@ -16,6 +16,7 @@ import kr.or.connect.reservationManagement.dto.DeleteReservationResult;
 import kr.or.connect.reservationManagement.dto.Reservations;
 import kr.or.connect.reservationManagement.dto.ReserveItem;
 import kr.or.connect.reservationManagement.dto.ReserveItemPrice;
+import kr.or.connect.reservationManagement.service.ProductPromotionService;
 import kr.or.connect.reservationManagement.service.ReservationService;
 
 @Service
@@ -28,7 +29,8 @@ public class ReservationServiceImpl implements ReservationService {
 	ReserveItemDao reserveItemDao;
 	@Autowired
 	ReserveItemPriceDao reserveItemPriceDao;
-
+	@Autowired
+	ProductPromotionService productPromotionService;
 
 	@Override
 	public List<Reservations> getReservations(String reservationEmail){
@@ -46,30 +48,29 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 	
 	@Override
-	@Transactional(readOnly=false)
 	public ReserveItem reserveAnItem(ReserveItem reserveItem, List<ReserveItemPrice> prices) {
-		System.out.println("service in");
 		Date now = new Date();
 		reserveItem.setCreateDate(now);
 		reserveItem.setModifyDate(now);
 		reserveItem.setCancelFlag(false);
+		
 		int reservationInfoId = reserveItemDao.reserveAnItem(reserveItem);
-		System.out.println("service middel");
 		reserveItem.setReservationInfoId(reservationInfoId);
-		System.out.println(prices.size());
-		int i = 0;
-		int pricesSize = prices.size();
-		while (i < pricesSize) {
+		
+		List<ReserveItemPrice> reserveItemPrices = new ArrayList<>();
+
+		for (ReserveItemPrice price : prices) {
 			ReserveItemPrice reserveItemPrice = new ReserveItemPrice();
-			reserveItemPrice.setCount(prices.get(i).getCount());
-			reserveItemPrice.setProductPriceId(prices.get(i).getProductPriceId());
+			reserveItemPrice.setCount(price.getCount());
+			reserveItemPrice.setProductPriceId(price.getProductPriceId());
 			reserveItemPrice.setReservationInfoId(reservationInfoId);
+			
 			int reservationInfoPriceId = reserveItemPriceDao.reserveAnItemPrice(reserveItemPrice);
+			
 			reserveItemPrice.setReservationInfoPriceId(reservationInfoPriceId);
-			reserveItem.getReserveItemPrices().set(i, reserveItemPrice);
-			System.out.println(i); 
-			i++;
+			reserveItemPrices.add(reserveItemPrice);
 		}
+		reserveItem.setReserveItemPrices(reserveItemPrices);
 		return reserveItem;
 	}
 	
@@ -81,5 +82,12 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public List<ReserveItemPrice> getResereveItemPriceByReservationInfoId(Integer reservationInfoId){
 		return reserveItemPriceDao.getPricesByReservationInfoId(reservationInfoId);
+	}
+	
+	@Override
+	public void setDisplayInfoOfReservations(List<Reservations> reservations) {
+		for (int i = 0; i < reservations.size(); i++) {
+			reservations.get(i).setDisplayInfo(productPromotionService.getDisplayInfo(reservations.get(i).getDisplayInfoId()));
+		}
 	}
 }
