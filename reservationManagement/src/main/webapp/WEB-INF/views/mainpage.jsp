@@ -28,13 +28,13 @@
 					</a>
 				</h1>
 				<a href="bookinglogin" class="btn_my"> 
-				<span class="viewReservation" title="예약확인">
+				
 				<%if (session.getAttribute("sessionReservationEmail") != null) { %>
-				${sessionScope.sessionReservationEmail}
+				<span class="viewReservation" title="예약확인">${sessionScope.sessionReservationEmail}</span>
 				<%} else {%>
-				예약확인
+				<span class="viewReservation" title="예약확인">예약확인</span>
 				<%} %>			
-				</span>
+				
 				</a>
 			</header>
 		</div>
