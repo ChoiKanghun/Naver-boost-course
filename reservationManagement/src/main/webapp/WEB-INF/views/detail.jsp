@@ -43,13 +43,13 @@
               <a href="mainpage" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
             </h1>
             <a href="bookinglogin" class="btn_my"> 
-            <span class="viewReservation" title="예약확인">
+            
            	<%if (session.getAttribute("sessionReservationEmail") != null) { %>
-				${sessionScope.sessionReservationEmail}
+				<span class="viewReservation" title="예약확인">${sessionScope.sessionReservationEmail}</span>
 			<%} else {%>
-				예약확인
+				<span class="viewReservation" title="예약확인">예약확인</span>
 			<%} %>
-            </span> </a>
+             </a>
           </header>
           <div class="pagination">
             <div class="bg_pagination"></div>
