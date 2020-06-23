@@ -89,5 +89,10 @@ document.addEventListener("DOMContentLoaded", () => {
     sendProductsAjax("/reservationManagement/api/products?start=" + start + "&categoryId=" + categoryId, "more", categoryId);
   })
 
-
+  var reservationEmailWrapper = document.querySelector(".viewReservation");
+  
+  if (reservationEmailWrapper.innerText != "예약확인") {
+	  reservationEmailWrapper.parentElement.href =
+		  "/reservationManagement/checkMyBook?reservationEmail=" + reservationEmailWrapper.innerText;
+  }
 });
