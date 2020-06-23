@@ -25,7 +25,7 @@ CancellationButtonClass.prototype.deleteCancellationButtonFromUndeletableItems =
   var undeletableItems = document.querySelectorAll(".used");
 
   undeletableItems.forEach(function(item) {
-    var reservationEmail = document.querySelector("#reservationEmailFromServer").innerText;
+	var reservationEmail = document.querySelector(".btn_my").innerText;
 
     if (item.classList.contains("cancel")) {
       item.querySelectorAll(".card_item").forEach(function(article) {
@@ -51,7 +51,7 @@ CancellationButtonClass.prototype.deleteCancellationButtonFromUndeletableItems =
 
 function ReloadPageClass() {}
 ReloadPageClass.prototype.reloadPageAfterSubmitCancellation = function(reservationInfoId) {
-  var reservationEmail = document.querySelector("#reservationEmailFromServer").innerText;
+  var reservationEmail = document.querySelector(".btn_my").innerText;
   var form = document.createElement("form");
 
   form.setAttribute("charset", "UTF-8");
@@ -197,8 +197,8 @@ ArticleClass.prototype.addReserveInfo = function(json) {
 
 function CheckMyBookExistsClass() {}
 CheckMyBookExistsClass.prototype.checkMyBookExists = function() {
-  var reservationEmail = document.querySelector("#reservationEmailFromServer").innerText;
-
+  var reservationEmail = document.querySelector(".btn_my").innerText;
+  
   if (reservationEmail === "" || reservationEmail === "none") {
     document.querySelector(".wrap_mylist").style.display = "none";
     document.querySelector(".my_summary").style.display = "none";
