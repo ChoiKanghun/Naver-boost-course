@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.connect.reservationManagement.dto.Reservations;
@@ -54,9 +53,8 @@ public class ReservationManagementController {
 	
 	@RequestMapping(path = "/checkMyBook")
 	public String checkMyBook(
-			@RequestParam(name="reservationEmail") String reservationEmail,
-			RedirectAttributes redirectAttr,
-			@SessionAttribute(name="reservationEmail", required=false) String sessionReservationEmail, 
+			@RequestParam String reservationEmail,
+			RedirectAttributes redirectAttr, 
 			HttpSession session) {
 		List<Reservations> reservations = reservationService.getReservations(reservationEmail);
 		if (reservations.size() <= 0)
@@ -64,16 +62,15 @@ public class ReservationManagementController {
 		else {
 			redirectAttr.addFlashAttribute("reservationEmail", reservationEmail);
 			session.setAttribute("sessionReservationEmail", reservationEmail);
-			System.out.println(session.getAttribute("sessionReservationEmail"));
 		}
 		return "redirect:myreservation";
 	}
-	
+
 	@GetMapping(path = "reviewWrite")
-	public String reviewWrite(@RequestParam (name = "reservationEmail") String reservationEmail, 
-			@RequestParam (name = "reservationInfoId") String reservationInfoId,
-			@RequestParam (name = "productId") String productId,
-			@RequestParam (name = "productDescription") String productDescription,
+	public String reviewWrite(@RequestParam String reservationEmail, 
+			@RequestParam String reservationInfoId,
+			@RequestParam String productId,
+			@RequestParam String productDescription,
 			HttpServletRequest request) {
 		request.setAttribute("reservationEmail", reservationEmail);
 		request.setAttribute("productId", productId);
