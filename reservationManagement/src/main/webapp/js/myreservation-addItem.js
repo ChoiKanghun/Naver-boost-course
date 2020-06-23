@@ -36,13 +36,13 @@ CancellationButtonClass.prototype.deleteCancellationButtonFromUndeletableItems =
         var reservationInfoId = article.querySelector(".booking_number").dataset.reservationInfoId;
         var productId = article.querySelector(".product_id").dataset.productId;
         var productDescription = article.querySelectorAll(".item_dsc")[1].innerText;
-        
+
         article.querySelector(".booking_cancel").firstElementChild.innerText = "예매자 리뷰 남기기";
         article.querySelector(".booking_cancel").firstElementChild.addEventListener("click", function() {
-          location.href = "reviewWrite?reservationEmail=" + reservationEmail
-            + "&productId=" + productId
-            + "&reservationInfoId=" + reservationInfoId
-          	+ "&productDescription=" + productDescription;
+          location.href = "reviewWrite?reservationEmail=" + reservationEmail +
+            "&productId=" + productId +
+            "&reservationInfoId=" + reservationInfoId +
+            "&productDescription=" + productDescription;
         })
       })
     }
@@ -82,16 +82,19 @@ AjaxClass.prototype.getParamValueFromUrl = function(paramName) {
   return resultParamValue;
 }
 AjaxClass.prototype.sendCancelAjax = function(reservationInfoId) {
-  var oReqCancel = new XMLHttpRequest;
+  if (confirm("정말 삭제하시겠습니까??") == true) {
+    var oReqCancel = new XMLHttpRequest;
 
-  oReqCancel.open('PUT',
-    "/reservationManagement/api/cancelReservation?reservationInfoId=" + reservationInfoId);
-  oReqCancel.setRequestHeader("Content-type", "application/json");
-  oReqCancel.addEventListener("load", function() {
-    var reloadPageObj = new ReloadPageClass();
-    reloadPageObj.reloadPageAfterSubmitCancellation(reservationInfoId);
-  })
-  oReqCancel.send();
+    oReqCancel.open('PUT', "/reservationManagement/api/cancelReservation?reservationInfoId=" + reservationInfoId);
+    oReqCancel.setRequestHeader("Content-type", "application/json");
+    oReqCancel.addEventListener("load", function() {
+      var reloadPageObj = new ReloadPageClass();
+      reloadPageObj.reloadPageAfterSubmitCancellation(reservationInfoId);
+    })
+    oReqCancel.send();
+  } else {
+    return false;
+  }
 }
 AjaxClass.prototype.getReservationInfoByAjax = function(url) {
   var oReq = new XMLHttpRequest;
