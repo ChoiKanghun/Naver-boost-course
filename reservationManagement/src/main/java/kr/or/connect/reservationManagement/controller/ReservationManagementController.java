@@ -3,12 +3,14 @@ package kr.or.connect.reservationManagement.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.connect.reservationManagement.dto.Reservations;
@@ -53,12 +55,17 @@ public class ReservationManagementController {
 	@RequestMapping(path = "/checkMyBook")
 	public String checkMyBook(
 			@RequestParam(name="reservationEmail") String reservationEmail,
-			RedirectAttributes redirectAttr) {
+			RedirectAttributes redirectAttr,
+			@SessionAttribute(name="reservationEmail", required=false) String sessionReservationEmail, 
+			HttpSession session) {
 		List<Reservations> reservations = reservationService.getReservations(reservationEmail);
 		if (reservations.size() <= 0)
 	  		redirectAttr.addFlashAttribute("reservationEmail", "none");
-		else
+		else {
 			redirectAttr.addFlashAttribute("reservationEmail", reservationEmail);
+			session.setAttribute("sessionReservationEmail", reservationEmail);
+			System.out.println(session.getAttribute("sessionReservationEmail"));
+		}
 		return "redirect:myreservation";
 	}
 	
