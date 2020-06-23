@@ -15,4 +15,5 @@ public interface ReservationService {
 	ReserveItem reserveAnItem(ReserveItem reserveItem, List<ReserveItemPrice> prices);
 	ReserveItem cancelReservation(Integer reservationInfoId);
 	List<ReserveItemPrice> getResereveItemPriceByReservationInfoId(Integer reservationInfoId);
+	void setDisplayInfoOfReservations(List<Reservations> reservations);
 }
