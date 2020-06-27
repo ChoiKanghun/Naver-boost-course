@@ -45,7 +45,9 @@ ReserveButtonClass.prototype.addReserveEvent = function(json) {
       form.setAttribute("charset", "UTF-8");
       form.setAttribute("method", "POST");
       form.setAttribute("action", "/reservationManagement/api/reservations");
-
+      document.querySelector("#footer").innerHTML += "<iframe name='ifrm' style='display:none'></iframe>";
+      form.setAttribute("target", "ifrm");
+      
       var hiddenFieldProductId = document.createElement("input");
       hiddenFieldProductId.setAttribute("type", "hidden");
       hiddenFieldProductId.setAttribute("name", "productId");
@@ -59,7 +61,7 @@ ReserveButtonClass.prototype.addReserveEvent = function(json) {
       form.appendChild(hiddenFieldDisplayInfoId);
 
       var hiddenFieldReservationEmail = document.createElement("input");
-      var reservationEmail = document.querySelector("#email").value
+      var reservationEmail = document.querySelector("#email").value;
       hiddenFieldReservationEmail.setAttribute("type", "hidden");
       hiddenFieldReservationEmail.setAttribute("name", "reservationEmail");
       hiddenFieldReservationEmail.setAttribute("value", reservationEmail);
@@ -108,9 +110,9 @@ ReserveButtonClass.prototype.addReserveEvent = function(json) {
           }
         }
       })
-
       document.body.appendChild(form);
       form.submit();
+      location.reload(true);
     } else {
       var warningMessage = "형식에 맞지 않는 필수정보가 입력됐거나 약관에 동의하지 않으셨습니다.";
       if (!document.querySelector(".unbookable")) {
