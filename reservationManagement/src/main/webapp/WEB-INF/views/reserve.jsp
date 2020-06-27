@@ -64,7 +64,7 @@
                                 <div class="inline_form"> <label class="label" for="email">  <span class="spr_book ico_nessasary">필수</span>  <span>이메일</span> </label>
                                     <div class="inline_control"> 
                                     <input type="email" name="email" id="email" class="email" value="" placeholder="crong@codesquad.kr" maxlength="50">
-                                    <span id="email_warning" style="display:none;color:red">형식이 틀렸거나 너무 짧아요</span>
+                                    <span id="email_warning" style="display:none;color:red">형식이 달라요</span>
                                 </div>
                                 </div>
                                 <div class="inline_form last"> <label class="label" for="message">예매내용</label>

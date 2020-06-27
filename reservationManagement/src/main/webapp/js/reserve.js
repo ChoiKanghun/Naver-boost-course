@@ -175,7 +175,7 @@ CheckValidityClass.prototype.inspectEmail = function() {
   var email = document.querySelector("#email");
 
   email.addEventListener("mouseleave", function() {
-    var regExpEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    var regExpEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;    
     var warningMessage = this.parentElement.querySelector("#email_warning");
 
     if (this.value != "" && !regExpEmail.test(this.value)) {
