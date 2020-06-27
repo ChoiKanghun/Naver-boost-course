@@ -36,7 +36,7 @@ public class ReservationsAPIController {
 
 	@PostMapping(path = "")
 	public ReserveItem reservation(@ModelAttribute ReserveItem reserveItem,
-			@RequestParam(name = "reservationYearMonthDay") String reservationYearMonthDay) {
+			@RequestParam String reservationYearMonthDay) {
 		reserveItem.setReservationDate(reservationYearMonthDay);
 		reserveItem = reservationService.reserveAnItem(reserveItem, reserveItem.getReserveItemPrices());
 		return reserveItem;
