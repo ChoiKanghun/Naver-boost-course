@@ -25,20 +25,20 @@ ReserveButtonClass.prototype.toggleReserveButton = function() {
   var inputEmail = document.getElementById("email");
   var checkReservableObj = new CheckReservableClass();
 
-  //inputTag에 이름, 전화번호, 이메일을 입력할 때마다 예약가능한지 확인
+  // inputTag에 이름, 전화번호, 이메일을 입력할 때마다 예약가능한지 확인
   inputTags.forEach(function(inputTag) {
     inputTag.addEventListener("mouseleave", function() {
       checkReservableObj.checkReservable(inputName.value, inputTel.value, inputEmail.value);
     })
   });
-  //+, - 버튼이 클릭될 때에도 확인.
+  // +, - 버튼이 클릭될 때에도 확인.
   clearfixes.forEach(function(clearfix) {
     clearfix.addEventListener("click", function() {
       checkReservableObj.checkReservable(inputName.value, inputTel.value, inputEmail.value);
     });
   })
 }
-ReserveButtonClass.prototype.addReserveEvent = function(json){
+ReserveButtonClass.prototype.addReserveEvent = function(json) {
   document.querySelector(".bk_btn_wrap").addEventListener("click", function() {
     if (!this.classList.contains("disable")) {
       var form = document.createElement("form");
@@ -86,24 +86,26 @@ ReserveButtonClass.prototype.addReserveEvent = function(json){
       hiddenFieldReservationYearMonthDay.setAttribute("value", reservationYearMonthDay);
       form.appendChild(hiddenFieldReservationYearMonthDay);
 
-
       var qtys = document.querySelectorAll(".qty");
 
       qtys.forEach(function(qty, index) {
-        var count = qty.querySelector(".count_control_input").value;
-        if (count != 0) {
-          var productPriceId = json.productPrices[index].productPriceId;
-          var hiddenFieldCount = document.createElement("input");
-          hiddenFieldCount.setAttribute("type", "hidden");
-          hiddenFieldCount.setAttribute("name", "reserveItemPrices[" + index + "].count");
-          hiddenFieldCount.setAttribute("value", Number(count));
-          form.appendChild(hiddenFieldCount);
+        if (qty.querySelector(".total_price").innerText != "0") {
+          var count = qty.querySelector(".count_control_input").value;
 
-          var hiddenFieldProductPriceId = document.createElement("input");
-          hiddenFieldProductPriceId.setAttribute("type", "hidden");
-          hiddenFieldProductPriceId.setAttribute("name", "reserveItemPrices[" + index + "].productPriceId");
-          hiddenFieldProductPriceId.setAttribute("value", productPriceId);
-          form.appendChild(hiddenFieldProductPriceId);
+          if (count != 0) {
+            var productPriceId = json.productPrices[index].productPriceId;
+            var hiddenFieldCount = document.createElement("input");
+            hiddenFieldCount.setAttribute("type", "hidden");
+            hiddenFieldCount.setAttribute("name", "reserveItemPrices[" + index + "].count");
+            hiddenFieldCount.setAttribute("value", Number(count));
+            form.appendChild(hiddenFieldCount);
+
+            var hiddenFieldProductPriceId = document.createElement("input");
+            hiddenFieldProductPriceId.setAttribute("type", "hidden");
+            hiddenFieldProductPriceId.setAttribute("name", "reserveItemPrices[" + index + "].productPriceId");
+            hiddenFieldProductPriceId.setAttribute("value", productPriceId);
+            form.appendChild(hiddenFieldProductPriceId);
+          }
         }
       })
 
@@ -136,7 +138,7 @@ TermsAgreementClass.prototype.showMoreAgreement = function() {
     })
   })
 }
-//이용약관에 동의할 때 필수정보들이 다 입력됐는지 확인.
+// 이용약관에 동의할 때 필수정보들이 다 입력됐는지 확인.
 TermsAgreementClass.prototype.OnClickCheckReservable = function() {
   var checkReservableObj = new CheckReservableClass();
   var inputTel = document.getElementById("tel");
@@ -151,7 +153,7 @@ TermsAgreementClass.prototype.OnClickCheckReservable = function() {
 
 /*--------유효성 검사--------*/
 function CheckValidityClass() {}
-//전화번호
+// 전화번호
 CheckValidityClass.prototype.inspectTel = function() {
   var tel = document.querySelector("#tel");
 
@@ -186,14 +188,14 @@ CheckValidityClass.prototype.inspectEmail = function() {
     }
   });
 }
-/*핸들바 이벤트들을 추가할 클래스*/
+/* 핸들바 이벤트들을 추가할 클래스 */
 function HandlebarsClass() {}
 HandlebarsClass.prototype.addHandlebarHelpers = function() {
-  //숫자를 금액처럼 표시해줌.
+  // 숫자를 금액처럼 표시해줌.
   Handlebars.registerHelper('priceFormatter', function(input) {
     return input.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   });
-  //현재날짜부터 현재날짜 + 2개월까지 표시
+  // 현재날짜부터 현재날짜 + 2개월까지 표시
   Handlebars.registerHelper('reservatablePeriod', function(input) {
     let startDate = new Date();
     let endDate = new Date();
@@ -246,7 +248,7 @@ function TitleClass() {}
 TitleClass.prototype.addTitle = function(json) {
   document.querySelector(".top_title .title").innerHTML +=
     json.displayInfo.productDescription;
-  //예매내용에 오늘을 기준으로 +5일 만큼 랜덤 일자 추가.
+  // 예매내용에 오늘을 기준으로 +5일 만큼 랜덤 일자 추가.
 }
 
 function TicketBodyClass() {}
@@ -256,18 +258,18 @@ TicketBodyClass.prototype.addTicketBody = function(json) {
   var ticketBodyBindTemplate = Handlebars.compile(ticketBodyTemplate);
 
   divClassNameTicketBody.innerHTML += ticketBodyBindTemplate(json);
-  //최상단 제목 추가
+  // 최상단 제목 추가
   var titleObj = new TitleClass();
   titleObj.addTitle(json);
 }
 TicketBodyClass.prototype.addPlusMinusButtonEvent = function() {
-  //값에 콤마(,)를 더해줌. ex) 10000->10,000
+  // 값에 콤마(,)를 더해줌. ex) 10000->10,000
   function addCommas(val) {
     return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
   var plusMinusButtonWrappers = document.querySelectorAll(".clearfix");
 
-  //plus, minus 버튼이 있는 칸 하나하나에 이벤트를 추가.
+  // plus, minus 버튼이 있는 칸 하나하나에 이벤트를 추가.
   plusMinusButtonWrappers.forEach(function(val) {
     var PlusMinusButtons = val.querySelectorAll("a");
     var totalItemCount = document.querySelector("#totalCount");
@@ -278,13 +280,13 @@ TicketBodyClass.prototype.addPlusMinusButtonEvent = function() {
       var parseNumberItemPrice = Number(itemPrice.innerText.replace(/,/g, ""));
       var totalItemPrice = btn.parentElement.parentElement.querySelector(".total_price");
 
-      //버튼이 '+'인 경우
+      // 버튼이 '+'인 경우
       if (btn.title === "더하기") {
         btn.addEventListener("click", function(b) {
           var count = this.parentElement.querySelector(".count_control_input");
           var countValue = count.value * 1;
 
-          //더하기 전 개수가 0개 일 때
+          // 더하기 전 개수가 0개 일 때
           if (countValue == 0) {
             this.parentElement.querySelector(".ico_minus3")
               .classList.remove("disabled");
@@ -294,20 +296,20 @@ TicketBodyClass.prototype.addPlusMinusButtonEvent = function() {
               .classList.add("on_color");
           }
           count.value = ++countValue;
-          //더하기를 누르면 더하기 버튼 밑의 총 금액도 증가.
+          // 더하기를 누르면 더하기 버튼 밑의 총 금액도 증가.
           var parseNumberTotalItemPrice = Number(totalItemPrice.innerText.replace(/,/g, ""));
           totalItemPrice.innerText = addCommas(parseNumberTotalItemPrice + parseNumberItemPrice);
-          //총 개수 증가.
+          // 총 개수 증가.
           totalItemCount.innerText = Number(totalItemCount.innerText) + 1;
         })
-      } else { //버튼이 '-'인 경우
+      } else { // 버튼이 '-'인 경우
         btn.addEventListener("click", function(btn) {
           var count = this.parentElement.querySelector(".count_control_input");
           var countValue = count.value * 1;
 
-          //1을 감소시킨 값이 0보다 클 때만 이벤트 발생.
+          // 1을 감소시킨 값이 0보다 클 때만 이벤트 발생.
           if (--countValue >= 0) {
-            //1을 감소시킨 값이 0일 때 -와 count 부분에 disabled 클래스 추가.
+            // 1을 감소시킨 값이 0일 때 -와 count 부분에 disabled 클래스 추가.
             if (countValue == 0) {
               this.parentElement.querySelector(".ico_minus3")
                 .classList.add("disabled");
@@ -319,7 +321,7 @@ TicketBodyClass.prototype.addPlusMinusButtonEvent = function() {
             count.value = countValue;
             var parseNumberTotalItemPrice = Number(totalItemPrice.innerText.replace(/,/g, ""));
             totalItemPrice.innerText = addCommas(parseNumberTotalItemPrice - parseNumberItemPrice);
-            //총 개수 감소.
+            // 총 개수 감소.
             totalItemCount.innerText = Number(totalItemCount.innerText) - 1;
           }
         })
@@ -335,7 +337,7 @@ ProductDescriptionClass.prototype.addProductDescription = function(json) {
   var storeDetailBindTemplate = Handlebars.compile(storeDetailTemplate);
 
   divClassNameSectionStoreDetails.innerHTML += storeDetailBindTemplate(json);
-  //+, - 버튼이 있는 ticket body부분 구현.
+  // +, - 버튼이 있는 ticket body부분 구현.
   var ticketBodyObj = new TicketBodyClass();
   ticketBodyObj.addTicketBody(json);
   ticketBodyObj.addPlusMinusButtonEvent();
@@ -350,15 +352,14 @@ ImageClass.prototype.addImages = function(json) {
   var handlebarsObj = new HandlebarsClass();
   handlebarsObj.addHandlebarHelpers();
 
-  //이미지 및 이미지 내에 있어야 할 글자 추가.
+  // 이미지 및 이미지 내에 있어야 할 글자 추가.
   ulClassNameVisualImg.innerHTML += visualBindTemplate(json);
-  //이미지 밑에 있어야 할 내용 추가.
+  // 이미지 밑에 있어야 할 내용 추가.
   var productDescriptionObj = new ProductDescriptionClass();
   productDescriptionObj.addProductDescription(json);
 }
 
-function AjaxClass() {
-}
+function AjaxClass() {}
 AjaxClass.prototype.getDisplayInfoByAjax = function(url) {
   var oReq = new XMLHttpRequest;
 
@@ -367,7 +368,7 @@ AjaxClass.prototype.getDisplayInfoByAjax = function(url) {
   oReq.responseType = "text";
   oReq.addEventListener('load', function() {
     var json = JSON.parse(this.responseText);
-    //화면 상단에 이미지 추가.
+    // 화면 상단에 이미지 추가.
     var imageObj = new ImageClass();
     imageObj.addImages(json);
 
