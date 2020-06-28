@@ -23,9 +23,10 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry)
 	{
-		registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(31556926);
-		registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(31556926);
-		registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(31556926);
+		final int CACHE_PERIOD = 31556926;
+		registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(CACHE_PERIOD);
+		registry.addResourceHandler("/img/**").addResourceLocations("file:///c:/tmp/img/").setCachePeriod(CACHE_PERIOD);
+		registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(CACHE_PERIOD);
 	}
 	
 	@Override
@@ -35,9 +36,7 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void addViewControllers(final ViewControllerRegistry registry) {
-		System.out.println("add view controllers call");
 		registry.addViewController("/").setViewName("index");
-		
 	}
 	
 	@Bean
@@ -45,7 +44,6 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp");
-		System.out.println(resolver);
 
 		return resolver;
 	}
