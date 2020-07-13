@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/file")
 public class FileController {
-	@GetMapping(path="")
+	@GetMapping
 	public void setImageBySaveFileName(@RequestParam String saveFileName,
 			HttpServletResponse response) throws IOException {
 		StringBuilder sb = new StringBuilder("file:///c:/tmp/");
