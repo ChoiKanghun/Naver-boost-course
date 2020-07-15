@@ -41,16 +41,14 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public float getAverageScore(List<Comments> comments) {
 		float averageScore = 0;
-		float division = 0;
-		
-		for(int i = 0; i < comments.size(); i++) {
-			if (comments.get(i).getScore() != null) {
-				averageScore += comments.get(i).getScore();
-				division += 1;
+
+		if (comments != null) {
+			for (Comments comment : comments) {
+				comment.setCommentImages(commentImagesDao.getCommentImages(comment.getCommentId()));
+				averageScore += comment.getScore();
 			}
+			averageScore = averageScore / comments.size();
 		}
-		if (division != 0)
-			averageScore = averageScore / division;
 		return averageScore;
 	}
 	
