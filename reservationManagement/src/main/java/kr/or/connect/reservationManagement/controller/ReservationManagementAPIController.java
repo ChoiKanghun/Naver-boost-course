@@ -73,7 +73,7 @@ public class ReservationManagementAPIController {
 		int fileId = -1;
 		int imageId = -1;
 		if (file != null) {
-			fileId = fileService.downloadImage(file);
+			fileId = fileService.saveImage(file);
 		}
 		int commentId = commentService.enrollComment(enrollComment);
 		if (fileId != -1) {

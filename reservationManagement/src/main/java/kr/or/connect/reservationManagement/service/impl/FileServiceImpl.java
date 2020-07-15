@@ -36,9 +36,9 @@ public class FileServiceImpl implements FileService {
 	}
 	
 	@Override
-	public int downloadImage(MultipartFile file) throws IOException {
+	public int saveImage(MultipartFile file) throws IOException {
 		FileServiceImpl fileServiceImpl = new FileServiceImpl();
-		final String SAVE_PATH = "c:/tmp/";
+		final String SAVE_PATH = "/tmp/";
 		String fileName = file.getOriginalFilename();
 		String fileExtName = fileName.substring(fileName.lastIndexOf("."), fileName.length());
 		String saveFileName = fileServiceImpl.genereateSaveFileName(fileExtName);
