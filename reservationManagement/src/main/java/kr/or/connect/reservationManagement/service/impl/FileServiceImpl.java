@@ -2,6 +2,7 @@ package kr.or.connect.reservationManagement.service.impl;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,29 @@ public class FileServiceImpl implements FileService {
 	CommentService commentService;
 	
 	@Override
+	public String genereateSaveFileName(String fileExtName) {
+		String saveFileName = "";
+		Calendar calendar = Calendar.getInstance();
+		
+		saveFileName += calendar.get(Calendar.YEAR);
+		saveFileName += calendar.get(Calendar.MONTH);
+		saveFileName += calendar.get(Calendar.DATE);
+		saveFileName += calendar.get(Calendar.HOUR);
+		saveFileName += calendar.get(Calendar.MINUTE);
+		saveFileName += calendar.get(Calendar.SECOND);
+		saveFileName += calendar.get(Calendar.MILLISECOND);
+		saveFileName += (int)(Math.random() * 1000);
+		saveFileName += fileExtName;
+		return saveFileName;
+	}
+	
+	@Override
 	public int downloadImage(MultipartFile file) throws IOException {
+		FileServiceImpl fileServiceImpl = new FileServiceImpl();
 		final String SAVE_PATH = "c:/tmp/";
 		String fileName = file.getOriginalFilename();
 		String fileExtName = fileName.substring(fileName.lastIndexOf("."), fileName.length());
-		String saveFileName = FileService.genereateSaveFileName(fileExtName);
+		String saveFileName = fileServiceImpl.genereateSaveFileName(fileExtName);
 		String contentType = file.getContentType();
 		
 		byte[] data = file.getBytes();
