@@ -52,8 +52,9 @@ public class ProductsAPIController {
 	public Map<String, Object> getProductsByDisplayInfoId(@PathVariable(name = "displayInfoId") int displayInfoId) {
 		Map<String, Object> resBody = new HashMap<>();
 		List<Comments> comments = commentService.getComments(displayInfoId);
-		float averageScore = commentService.setCommentImages(comments);
-
+		commentService.setCommentImages(comments);
+		float averageScore = commentService.getAverageScore(comments);
+		
 		DisplayInfo displayInfo = productPromotionService.getDisplayInfo(displayInfoId);
 		DisplayInfoImage displayInfoImage = productPromotionService.getDisplayInfoImage(displayInfoId);
 		List<ProductImages> productImages = productPromotionService.getProductImages(displayInfoId);

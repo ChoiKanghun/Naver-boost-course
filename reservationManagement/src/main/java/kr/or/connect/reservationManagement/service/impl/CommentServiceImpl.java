@@ -31,12 +31,19 @@ public class CommentServiceImpl implements CommentService {
 	EnrollCommentImageDao enrollCommentImageDao;
 	
 	@Override
-	public float setCommentImages(List<Comments> comments) {
+	public void setCommentImages(List<Comments> comments) {
+		for(int i = 0; i < comments.size(); i++) {
+			comments.get(i).setCommentImages(commentImagesDao.getCommentImages(comments.get(i).getCommentId()));
+		}
+		return;
+	}
+	
+	@Override
+	public float getAverageScore(List<Comments> comments) {
 		float averageScore = 0;
 		float division = 0;
 		
 		for(int i = 0; i < comments.size(); i++) {
-			comments.get(i).setCommentImages(commentImagesDao.getCommentImages(comments.get(i).getCommentId()));
 			if (comments.get(i).getScore() != null) {
 				averageScore += comments.get(i).getScore();
 				division += 1;
