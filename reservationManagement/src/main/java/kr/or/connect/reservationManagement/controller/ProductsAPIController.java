@@ -28,7 +28,7 @@ public class ProductsAPIController {
 	@Autowired
 	private CommentService commentService;
 	
-	@GetMapping(path="", produces = "application/json; charset=utf-8")
+	@GetMapping(produces = "application/json; charset=utf-8")
 	public Map<String, Object> getItemsTotalCount(@RequestParam(defaultValue = "0") int start,
 			@RequestParam(defaultValue = "0") int categoryId) {
 		Map<String, Object> resBody = new HashMap<>();
