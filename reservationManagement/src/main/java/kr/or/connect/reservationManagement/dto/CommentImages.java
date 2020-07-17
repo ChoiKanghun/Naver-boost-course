@@ -53,7 +53,7 @@ public class CommentImages {
 		return imageId;
 	}
 	public void setImageId(int imageId) {
-		imageId = imageId;
+		this.imageId = imageId;
 	}
 	public int getReservationInfoId() {
 		return reservationInfoId;
