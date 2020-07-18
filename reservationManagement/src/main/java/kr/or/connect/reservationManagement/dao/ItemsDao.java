@@ -77,9 +77,4 @@ public class ItemsDao {
 			return jdbc.query(PROMOTION_INFO, Collections.emptyMap(), rowMapper);
 		}
 
-
-
-		
-		
-
 }
