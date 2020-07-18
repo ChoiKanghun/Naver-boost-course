@@ -3,12 +3,15 @@ package kr.or.connect.reservationManagement.service.impl;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.connect.reservationManagement.dao.GetSaveFileNameByReservationUserCommentImageIdDao;
 import kr.or.connect.reservationManagement.dto.EnrollImageFile;
+import kr.or.connect.reservationManagement.dto.GetSaveFileNameByReservationUserCommentImageId;
 import kr.or.connect.reservationManagement.service.CommentService;
 import kr.or.connect.reservationManagement.service.FileService;
 
@@ -17,6 +20,8 @@ public class FileServiceImpl implements FileService {
 
 	@Autowired
 	CommentService commentService;
+	@Autowired
+	GetSaveFileNameByReservationUserCommentImageIdDao getSaveFileNameByReservationUserCommentByImageByIdDao;
 	
 	@Override
 	public String genereateSaveFileName(String fileExtName) {
@@ -53,5 +58,12 @@ public class FileServiceImpl implements FileService {
 		enrollImageFile.setContentType(contentType);
 		enrollImageFile.setFileName(fileName);
 		return commentService.enrollImageFile(enrollImageFile);
+	}
+	
+	@Override
+	public String getSaveFileNameByReservationUserCommentImageId(int reservationUserCommentImageId) {
+		List<GetSaveFileNameByReservationUserCommentImageId> saveFileNameList = getSaveFileNameByReservationUserCommentByImageByIdDao.getSaveFileNameByReservationUserCommentImageId(reservationUserCommentImageId);
+		return saveFileNameList.get(0).getSaveFileName();
+		
 	}
 }
