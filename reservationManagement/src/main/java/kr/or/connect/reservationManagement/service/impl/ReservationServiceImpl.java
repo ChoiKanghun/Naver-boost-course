@@ -86,8 +86,7 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Override
 	public void setDisplayInfoOfReservations(List<Reservations> reservations) {
-		for (int i = 0; i < reservations.size(); i++) {
+		for (int i = 0; i < reservations.size(); i++)
 			reservations.get(i).setDisplayInfo(productPromotionService.getDisplayInfo(reservations.get(i).getDisplayInfoId()));
-		}
 	}
 }
