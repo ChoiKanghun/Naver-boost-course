@@ -13,20 +13,20 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import kr.or.connect.reservationManagement.dto.GetSaveFileNameByReservationUserCommentImageId;
+import kr.or.connect.reservationManagement.dto.GetSaveFileNameByFileId;
 
 
 @Repository
 public class GetSaveFileNameByFileIdDao {
 	private NamedParameterJdbcTemplate jdbc;
-	private RowMapper<GetSaveFileNameByReservationUserCommentImageId> rowMapper
-	= BeanPropertyRowMapper.newInstance(GetSaveFileNameByReservationUserCommentImageId.class);
+	private RowMapper<GetSaveFileNameByFileId> rowMapper
+	= BeanPropertyRowMapper.newInstance(GetSaveFileNameByFileId.class);
 	
 	public GetSaveFileNameByFileIdDao(DataSource dataSource) {
 		jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
-	public List<GetSaveFileNameByReservationUserCommentImageId> getSaveFileNameByFileId(int fileId) {
+	public List<GetSaveFileNameByFileId> getSaveFileNameByFileId(int fileId) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("fileId", fileId);
 		

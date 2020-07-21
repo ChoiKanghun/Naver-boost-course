@@ -1,6 +1,6 @@
 package kr.or.connect.reservationManagement.dto;
 
-public class GetSaveFileNameByReservationUserCommentImageId {
+public class GetSaveFileNameByFileId {
 	private String saveFileName;
 
 	public String getSaveFileName() {
