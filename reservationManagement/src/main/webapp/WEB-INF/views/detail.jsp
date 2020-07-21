@@ -190,7 +190,7 @@
 <script src="js/detail.js"></script>
 <script type="container_visual_template" id="container_visual_template">
   <li class="item" style="width: 414px;"> 
-      <img alt="" class="img_thumb" src={{saveFileName}} style="height:auto"> 
+      <img alt="" class="img_thumb" src="api/file?fileId={{fileInfoId}}" style="height:auto"> 
       <span class="img_bg"></span>
       <div class="visual_txt">
         <div class="visual_txt_inn">
@@ -214,7 +214,7 @@
        <div class="thumb_area">
 {{#each commentImages}}
          <a href="#" class="thumb" title="이미지 크게 보기"> 
-            <img width="90" height="90" class="img_vertical_top" src="api/file?saveFileName={{saveFileName}}" alt="리뷰이미지">
+            <img width="90" height="90" class="img_vertical_top" src="api/file?fileId={{fileId}}" alt="리뷰이미지">
          </a>
 {{/each}} 
          <span class="img_count" style="display:none;">{{productId}}</span>
@@ -258,7 +258,7 @@
 <script type="pathTemplate" id="pathTemplate">
   <a href="#" class="store_location" title="지도웹으로 연결">
 {{#displayInfoImage}}
-    <img class="store_map img_thumb" alt="map" src={{saveFileName}}>
+    <img class="store_map img_thumb" alt="map" src="api/file?fileId={{fileId}}">
 {{/displayInfoImage}}
     <span class="img_border"></span>
     <span class="btn_map"><i class="spr_book2 ico_mapview"></i></span>
