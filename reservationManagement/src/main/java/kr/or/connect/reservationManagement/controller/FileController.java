@@ -21,9 +21,9 @@ public class FileController {
 	private FileService fileService;
 	
 	@GetMapping
-	public void downloadImageByImageId(@RequestParam int imageId,
+	public void downloadImageByImageId(@RequestParam int fileId,
 			HttpServletResponse response) throws IOException {
-		String saveFileName = fileService.getSaveFileNameByReservationUserCommentImageId(imageId);
+		String saveFileName = fileService.getSaveFileNameByFileId(fileId);
 		StringBuilder sb = new StringBuilder("file:///tmp/");
 		sb.append(saveFileName);
         URL fileUrl = new URL(sb.toString());
