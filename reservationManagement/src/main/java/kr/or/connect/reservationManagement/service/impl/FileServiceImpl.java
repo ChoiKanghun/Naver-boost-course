@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.connect.reservationManagement.dao.GetSaveFileNameByFileIdDao;
 import kr.or.connect.reservationManagement.dto.EnrollImageFile;
-import kr.or.connect.reservationManagement.dto.GetSaveFileNameByReservationUserCommentImageId;
+import kr.or.connect.reservationManagement.dto.GetSaveFileNameByFileId;
 import kr.or.connect.reservationManagement.service.CommentService;
 import kr.or.connect.reservationManagement.service.FileService;
 
@@ -62,7 +62,7 @@ public class FileServiceImpl implements FileService {
 	
 	@Override
 	public String getSaveFileNameByFileId(int fileId) {
-		List<GetSaveFileNameByReservationUserCommentImageId> saveFileNameList = getSaveFileNameByFileIdDao.getSaveFileNameByFileId(fileId);
+		List<GetSaveFileNameByFileId> saveFileNameList = getSaveFileNameByFileIdDao.getSaveFileNameByFileId(fileId);
 		return saveFileNameList.get(0).getSaveFileName();
 	}
 }
