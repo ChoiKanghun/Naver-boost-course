@@ -145,11 +145,10 @@ public class Sqls {
 			+ "reservation_tel, " + "reservation_email, " + "reservation_date, " + "cancel_flag, " + "create_date, "
 			+ "modify_date " + "FROM " + "reservation_info " + "WHERE " + "id = :reservationInfoId";
 
-	public static final String GET_SAVEFILENAME_BY_RESERVATIONUSERINFOID = 
+	public static final String GET_SAVEFILENAME_BY_FILE_ID = 
 			""
 			+ "SELECT save_file_name "
-			+ "FROM file_info " + "JOIN reservation_user_comment_image "
-			+ "ON reservation_user_comment_image.file_id = file_info.id "
-			+ "WHERE reservation_user_comment_image.id = :reservation_user_comment_image_id";
+			+ "FROM file_info "
+			+ "WHERE id = :fileId";
 
 }
