@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     for (var i = 0; i < json.items.length; i++) {
       itemListResult = itemListHTML.replace("{display_info_id}", json.items[i].displayInfoId)
-        .replace("{src}", json.items[i].productImageUrl)
+        .replace("{src}", "api/file/savefilename?saveFileName=" + json.items[i].productImageUrl)
         .replace("{description}", json.items[i].productDescription)
         .replace("{placeName}", json.items[i].placeName)
         .replace("{description}", json.items[i].productDescription)

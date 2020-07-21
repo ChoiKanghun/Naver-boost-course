@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     var imageCount = 0;
 
     for (var i = 0; i < json.items.length; i++) {
-      promotionItemResult += promotionItemHTML.replace("{src}", json.items[i].productImageUrl);
+      promotionItemResult += promotionItemHTML.replace("{src}", "api/file/savefilename?saveFileName=" + json.items[i].productImageUrl);
     };
     visualImg.innerHTML = promotionItemResult;
     visualImg.querySelectorAll("li").forEach(function() {
