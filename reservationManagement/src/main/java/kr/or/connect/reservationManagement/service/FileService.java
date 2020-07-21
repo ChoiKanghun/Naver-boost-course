@@ -7,5 +7,5 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FileService {
 	public String genereateSaveFileName(String fileExtName);
 	int saveImage(MultipartFile file) throws IOException;
-	String getSaveFileNameByReservationUserCommentImageId(int reservationUserCommentImageId);
+	String getSaveFileNameByFileId(int fileId);
 }

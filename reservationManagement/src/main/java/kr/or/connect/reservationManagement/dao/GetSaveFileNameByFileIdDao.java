@@ -1,6 +1,6 @@
 package kr.or.connect.reservationManagement.dao;
 
-import static kr.or.connect.reservationManagement.dao.Sqls.GET_SAVEFILENAME_BY_RESERVATIONUSERINFOID;
+import static kr.or.connect.reservationManagement.dao.Sqls.GET_SAVEFILENAME_BY_FILE_ID;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,19 +17,19 @@ import kr.or.connect.reservationManagement.dto.GetSaveFileNameByReservationUserC
 
 
 @Repository
-public class GetSaveFileNameByReservationUserCommentImageIdDao {
+public class GetSaveFileNameByFileIdDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<GetSaveFileNameByReservationUserCommentImageId> rowMapper
 	= BeanPropertyRowMapper.newInstance(GetSaveFileNameByReservationUserCommentImageId.class);
 	
-	public GetSaveFileNameByReservationUserCommentImageIdDao(DataSource dataSource) {
+	public GetSaveFileNameByFileIdDao(DataSource dataSource) {
 		jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
-	public List<GetSaveFileNameByReservationUserCommentImageId> getSaveFileNameByReservationUserCommentImageId(int reservationUserCommentImageId) {
+	public List<GetSaveFileNameByReservationUserCommentImageId> getSaveFileNameByFileId(int fileId) {
 		Map<String, Integer> params = new HashMap<>();
-		params.put("reservation_user_comment_image_id", reservationUserCommentImageId);
+		params.put("fileId", fileId);
 		
-		return jdbc.query(GET_SAVEFILENAME_BY_RESERVATIONUSERINFOID, params, rowMapper);
+		return jdbc.query(GET_SAVEFILENAME_BY_FILE_ID, params, rowMapper);
 	}
 }

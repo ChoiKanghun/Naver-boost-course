@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.or.connect.reservationManagement.dao.GetSaveFileNameByReservationUserCommentImageIdDao;
+import kr.or.connect.reservationManagement.dao.GetSaveFileNameByFileIdDao;
 import kr.or.connect.reservationManagement.dto.EnrollImageFile;
 import kr.or.connect.reservationManagement.dto.GetSaveFileNameByReservationUserCommentImageId;
 import kr.or.connect.reservationManagement.service.CommentService;
@@ -21,7 +21,7 @@ public class FileServiceImpl implements FileService {
 	@Autowired
 	CommentService commentService;
 	@Autowired
-	GetSaveFileNameByReservationUserCommentImageIdDao getSaveFileNameByReservationUserCommentByImageByIdDao;
+	GetSaveFileNameByFileIdDao getSaveFileNameByFileIdDao;
 	
 	@Override
 	public String genereateSaveFileName(String fileExtName) {
@@ -61,9 +61,8 @@ public class FileServiceImpl implements FileService {
 	}
 	
 	@Override
-	public String getSaveFileNameByReservationUserCommentImageId(int reservationUserCommentImageId) {
-		List<GetSaveFileNameByReservationUserCommentImageId> saveFileNameList = getSaveFileNameByReservationUserCommentByImageByIdDao.getSaveFileNameByReservationUserCommentImageId(reservationUserCommentImageId);
+	public String getSaveFileNameByFileId(int fileId) {
+		List<GetSaveFileNameByReservationUserCommentImageId> saveFileNameList = getSaveFileNameByFileIdDao.getSaveFileNameByFileId(fileId);
 		return saveFileNameList.get(0).getSaveFileName();
-		
 	}
 }
