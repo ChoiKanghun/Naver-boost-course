@@ -25,8 +25,9 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 	{
 		final int CACHE_PERIOD = 31556926;
 		registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(CACHE_PERIOD);
-		registry.addResourceHandler("/img/**").addResourceLocations("file:///c:/tmp/img/").setCachePeriod(CACHE_PERIOD);
+		registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(CACHE_PERIOD);
 		registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(CACHE_PERIOD);
+		// file:///c:/tmp/
 	}
 	
 	@Override
