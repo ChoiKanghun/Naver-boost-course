@@ -29,4 +29,13 @@ public class FileController {
         URL fileUrl = new URL(sb.toString());
         IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
 	}
+	
+	@GetMapping(path="/savefilename")
+	public void downloadImageBySaveFileName(@RequestParam String saveFileName,
+			HttpServletResponse response) throws IOException {
+		StringBuilder sb = new StringBuilder("file:///tmp/");
+		sb.append(saveFileName);
+        URL fileUrl = new URL(sb.toString());
+        IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
+	}
 }
