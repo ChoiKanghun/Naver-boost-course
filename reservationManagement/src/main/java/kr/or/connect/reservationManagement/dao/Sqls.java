@@ -150,5 +150,4 @@ public class Sqls {
 			+ "SELECT save_file_name "
 			+ "FROM file_info "
 			+ "WHERE id = :fileId";
-
 }
