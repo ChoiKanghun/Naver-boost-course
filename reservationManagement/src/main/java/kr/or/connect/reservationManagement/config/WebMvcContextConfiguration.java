@@ -21,13 +21,11 @@ import kr.or.connect.reservationManagement.interceptor.LogInterceptor;
 public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry)
-	{
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		final int CACHE_PERIOD = 31556926;
 		registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(CACHE_PERIOD);
 		registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(CACHE_PERIOD);
 		registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(CACHE_PERIOD);
-		// file:///c:/tmp/
 	}
 	
 	@Override
