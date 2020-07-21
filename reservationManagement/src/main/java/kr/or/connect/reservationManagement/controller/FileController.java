@@ -24,8 +24,9 @@ public class FileController {
 	public void downloadImageBySaveFileName(@RequestParam int imageId,
 			HttpServletResponse response) throws IOException {
 		String saveFileName = fileService.getSaveFileNameByReservationUserCommentImageId(imageId);
-		StringBuilder sb = new StringBuilder("file://c:/tmp/");
+		StringBuilder sb = new StringBuilder("file:///tmp/");
 		sb.append(saveFileName);
+		System.out.println(saveFileName);
         URL fileUrl = new URL(sb.toString());
         IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
 	}
