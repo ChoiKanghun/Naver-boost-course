@@ -56,8 +56,6 @@ public class ReservationManagementAPIController {
 		return resBody;
 	}
 
-	/* project5 */
-
 	@PutMapping(path = "/cancelReservation")
 	public ReserveItem cancelReservation(@RequestParam int reservationInfoId) {
 		ReserveItem reserveItem = reservationService.cancelReservation(reservationInfoId);
@@ -70,11 +68,9 @@ public class ReservationManagementAPIController {
 	public void addComment(@ModelAttribute EnrollComment enrollComment,
 			@RequestParam(name = "file", required = false) MultipartFile file, HttpServletResponse response)
 			throws IOException {
-		int fileId = -1;
-		int imageId = -1;
-		if (file != null) {
+		int fileId = -1, imageId = -1;
+		if (file != null)
 			fileId = fileService.saveImage(file);
-		}
 		int commentId = commentService.enrollComment(enrollComment);
 		if (fileId != -1) {
 			EnrollCommentImage enrollCommentImage = new EnrollCommentImage();

@@ -37,7 +37,6 @@ window.addEventListener('DOMContentLoaded', () => {
       var introductionArea = document.querySelectorAll(".detail_info_lst")[0].querySelector(".in_dsc");
 
       introductionArea.innerHTML += json.displayInfo.productContent;
-      
       //오시는 길 정보 추가
       this.addPathContent(json);
     },
