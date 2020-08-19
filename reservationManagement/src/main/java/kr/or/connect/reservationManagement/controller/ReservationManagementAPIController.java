@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import kr.or.connect.reservationManagement.dto.EnrollComment;
 import kr.or.connect.reservationManagement.dto.EnrollCommentImage;
@@ -64,21 +64,23 @@ public class ReservationManagementAPIController {
 		return reserveItem;
 	}
 
-	@PostMapping(path = "/{reservationInfoId}/comments")
-	public void addComment(@ModelAttribute EnrollComment enrollComment,
-			@RequestParam(name = "file", required = false) MultipartFile file, HttpServletResponse response)
+	@RequestMapping(path = "/{reservationInfoId}/comments")
+	public RedirectView addComment(@ModelAttribute EnrollComment enrollComment,
+			@RequestParam(name = "file", required = false) MultipartFile file,
+			HttpServletResponse response)
 			throws IOException {
 		int fileId = -1, imageId = -1;
-		if (file != null)
+		if (file.getOriginalFilename() != "")
 			fileId = fileService.saveImage(file);
 		int commentId = commentService.enrollComment(enrollComment);
 		if (fileId != -1) {
 			EnrollCommentImage enrollCommentImage = new EnrollCommentImage();
 			enrollCommentImage.setReservationInfoId(enrollComment.getReservationInfoId());
 			enrollCommentImage.setFileId(fileId);
-			enrollCommentImage.setReservationUserCommentId(commentId);;
+			enrollCommentImage.setReservationUserCommentId(commentId);
 			
 			imageId = commentService.enrollCommentImage(enrollCommentImage);
 		}
+		return new RedirectView("redirect:/myreservation");
 	}
 }
