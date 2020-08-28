@@ -18,4 +18,4 @@
 | ✔️ Reservation <br />Management |   1   |   200608   |      |
 |Reservation <br> Management2|1|200609||
 |Reservation <br> Management3|0|200631||
-|Reservation <br> Management4|1||200826|
+|Reservation <br> Management4|1|200826||
