@@ -68,7 +68,6 @@ BookingClass.prototype.addSubmitEvt = function() {
       window.alert("리뷰를 5글자 이상, 400자 이하로 남겨주세요.");
       return;
     }
-
     if (score < 0 || score > 5) {
       window.alert("평점은 반드시 0점 이상, 5점 이하여야 합니다.");
       return;
