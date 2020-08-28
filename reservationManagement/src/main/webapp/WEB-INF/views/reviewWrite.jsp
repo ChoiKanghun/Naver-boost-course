@@ -78,7 +78,7 @@
 							<i class="fn fn-image1" aria-hidden="true"></i>
 							<span class="text_add_photo">사진 추가</span>
 						</label>
-						<input type="file" class="hidden_input" id="reviewImageFileOpenInput" accept="image/*" multiple>
+						<input type="file" class="hidden_input" id="reviewImageFileOpenInput" accept=".png, .jpg" multiple>
 						<div class="guide_review">
 							<span>0</span>/400
 							<span>(최소5자이상)</span>
@@ -122,6 +122,6 @@
 		</div>
 	</footer>
 </body>
-<script src = "js/reviewWrite.js"></script>
+<script src = "js/reviewWrite.js?ver=1.01"></script>
 
 </html>

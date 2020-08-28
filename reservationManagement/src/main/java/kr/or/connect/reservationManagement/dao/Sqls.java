@@ -62,7 +62,8 @@ public class Sqls {
 			+ "" + "FROM reservation_user_comment " + "JOIN reservation_info "
 			+ "ON reservation_info.id = reservation_user_comment.reservation_info_id " + "JOIN product "
 			+ "ON product.id = reservation_user_comment.product_id " + "JOIN display_info "
-			+ "ON display_info.product_id = product.id " + "" + "WHERE display_info.id = :displayInfoId ";
+			+ "ON display_info.product_id = product.id " + "" + "WHERE display_info.id = :displayInfoId "
+			+ "ORDER BY comment_id DESC ";
 
 	public static final String SELECT_PRODUCT_IMAGES_BY_DISPLAY_INFO_ID = "SELECT "
 			+ "file_info.content_type AS content_type, " + "file_info.delete_flag AS delete_flag, "

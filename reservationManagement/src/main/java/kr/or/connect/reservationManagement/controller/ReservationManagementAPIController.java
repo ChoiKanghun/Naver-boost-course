@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.connect.reservationManagement.dto.EnrollComment;
 import kr.or.connect.reservationManagement.dto.EnrollCommentImage;
@@ -65,7 +65,7 @@ public class ReservationManagementAPIController {
 	}
 
 	@RequestMapping(path = "/{reservationInfoId}/comments")
-	public RedirectView addComment(@ModelAttribute EnrollComment enrollComment,
+	public ModelAndView  addComment(@ModelAttribute EnrollComment enrollComment,
 			@RequestParam(name = "file", required = false) MultipartFile file,
 			HttpServletResponse response)
 			throws IOException {
@@ -81,6 +81,6 @@ public class ReservationManagementAPIController {
 			
 			imageId = commentService.enrollCommentImage(enrollCommentImage);
 		}
-		return new RedirectView("redirect:/myreservation");
+		return new ModelAndView("redirect:../../");
 	}
 }
